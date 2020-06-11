@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "HTTP://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="data.dto.ChefDto" alias="chef_dto"/>
+		<typeAlias type="data.dto.RecipeDto" alias="recipe_dto"/>
+		<typeAlias type="data.dto.IngredientDto" alias="ingre_dto"/>
+		<typeAlias type="data.dto.RecipeOrderDto" alias="recipe_order_dto"/>
+	</typeAliases> 
+	<mappers>
+		<mapper resource="mybatis/setting/ChefSql.xml"/>
+		<mapper resource="mybatis/setting/ConnectSql.xml"/>
+		<mapper resource="mybatis/setting/RecipeSql.xml"/>
+	</mappers>
+</configuration>

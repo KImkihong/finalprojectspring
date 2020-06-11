@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="recipe">
+	<!-- 리스트 출력 -->
+	<select id="getRecipe" parameterType="HashMap" resultType="recipe_dto">
+		select * from recipe order by writeday desc limit #{start},#{end}
+	</select>
+	<!-- total카운트 구하기-->
+	<select id="getTotalCount" resultType="int">
+		select count(*) from recipe
+	</select>
+	<!-- 선택 레시피 출력 -->
+	<select id="getSelectOfRecipe" parameterType="int" resultType="recipe_dto">
+		select * from recipe where rec_num=#{rec_num}
+	</select>
+	<!-- 선택 레시피의 재료 -->
+	<select id="getIngre" parameterType="int" resultType="ingre_dto">
+		select * from ingredient where rec_num=#{rec_num}
+	</select>
+	<!-- 선택 레시피 조리순서 및 사진 -->
+	<select id="getOrder" parameterType="int" resultType="recipe_order_dto">
+		select * from recipe_order where rec_num=#{rec_num} order by order_num
+	</select>
+	
+	<!-- 삭제 -->
+	<delete id="deleteOrder" parameterType="int">
+		delete from recip_order where rec_num=#{rec_num}
+	</delete>
+	<delete id="deleteIngredient" parameterType="int">
+		delete from ingredient where rec_num=#{rec_num}
+	</delete>
+	<delete id="deleteRecipe" parameterType="int">
+		delete from recipe where rec_num=#{rec_num}
+	</delete>
+
+</mapper>
