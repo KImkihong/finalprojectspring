@@ -29,10 +29,10 @@ public class RecipeController {
 	@GetMapping("/recipe/list")
 	public List<RecipeDto> getList(){    
 
-	      List<RecipeDto> list = rdao.getList(start,end);
-	      start+=5;
-	      end+=5;
-	      return list;	
+		 List<RecipeDto> list = rdao.getList(start,end);
+		 start+=10;
+		 end+=10;
+		 return list;	
 	}
 	
 	@GetMapping("/recipe/select")
