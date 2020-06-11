@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="connection">
+	<!-- 1.스크랩 -->
+	<select id="checkScrap" parameterType="HashMap" resultType="int">
+		select count(*) from scrap where email=#{email} and rec_num=#{rec_num}
+	</select>
+	<insert id="insertScrap" parameterType="HashMap">
+		insert into scrap values (#{email},#{rec_num})
+	</insert>
+	<delete id="deleteScrap" parameterType="HashMap">
+		delete from scrap where email=#{email} and rec_num=#{rec_num}
+	</delete>
+	<select id="getCountOfScrap" parameterType="int" resultType="int">
+		select count(*) from scrap where rec_num=#{rec_num}
+	</select>
+	
+	<select id="getEmail" parameterType="int" resultType="String">
+		select email from recipe where rec_num=#{rec_num}
+	</select>
+	<update id="updateScrapCount" parameterType="HashMap">
+		update chef set
+		<if test="check==0">
+			scrapcount = scrapcount+1
+		</if>
+		<if test="check!=0">
+			scrapcount = scrapcount-1
+		</if>
+		where email=#{emial}
+	</update>
+	
+	<!-- 2.소식받기 -->
+	<insert id="receiveNews" parameterType="HashMap">
+		insert into scrap values (#{receiver},#{provider})
+	</insert>
+	<delete id="cutNews" parameterType="HashMap">
+		delete from scrap where receiver=#{receiver} and provider=#{provider}
+	</delete>
+	<select id="getNickname" parameterType="String" resultType="String">
+		select nickname from chef where provider=#{provider}
+	</select>
+	
+	<!-- 3.좋아요 -->
+	<select id="checkJoayo" parameterType="HashMap" resultType="int">
+		select count(*) from joayo where email=#{email} and rec_num=#{rec_num}
+	</select>
+	<insert id="insertJoayo" parameterType="HashMap">
+		insert into joayo values (#{email},#{rec_num})
+	</insert>
+	<delete id="deleteJoayo" parameterType="HashMap">
+		delete from joayo where email=#{email} and rec_num=#{rec_num}
+	</delete>
+	<select id="getCountOfJoayo" parameterType="int" resultType="int">
+		select count(*) from joayo where rec_num=#{rec_num}
+	</select>
+	<update id="updateJoayoCount" parameterType="HashMap">
+		update chef set
+		<if test="check==0">
+			joayocount = joayocount+1
+		</if>
+		<if test="check!=0">
+			joayocount = joayocount-1
+		</if>
+		where email=#{emial}
+	</update>
+</mapper>
