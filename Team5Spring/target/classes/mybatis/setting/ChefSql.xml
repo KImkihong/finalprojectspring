@@ -6,9 +6,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="chef">
 	<!-- 가입 -->
 	<select id="insertOfChef" parameterType="chef_dto">
-		insert into chef values (#{name},#{email},#{pass},#{nickname},STR_TO_DATE(#{birthday},'%Y-%m-%d'))
+		insert into chef values (#{name},#{email},#{pass},#{nickname},#{birthday},#{profile})
 	</select>
-	<!-- 로그인 -->
+	<!-- 로그인, 탈퇴시 비번확인 -->
 	<select id="login" parameterType="HashMap" resultType="int">
 		select count(*) from chef where email=#{email} and pass=#{pass}
 	</select>
@@ -16,22 +16,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteOfChef" parameterType="String">
 		delete from chef where email=#{email}
 	</delete>
+	<select id="getDataOfChef" parameterType="String" resultType="chef_dto">
+		select * from chef where email=#{email}
+	</select>
 	<!-- 일반정보 수정 -->
 	<update id="updateNormalinfoOfChef" parameterType="chef_dto">
-		update chef set name=#{name},nickname=#{nickname},birth=STR_TO_DATE(#{birthday},'%Y-%m-%d') where email=#{email}
+		update chef set name=#{name},nickname=#{nickname},profile=#{profile} where email=#{email}
 	</update>
+	<!-- 기존 프로필사진 이름 -->
+	<select id="getprofile" resultType="String">
+		select profile from chef where email=#{email}
+	</select>
 	<!-- 비밀번호 수정 -->
 	<update id="updatePassOfChef" parameterType="HashMap">
 		update chef set pass=#{newpass} where email=#{email} and pass=#{pass}
 	</update>
-	<!-- 소식받기 -->
-	<insert id="recieveNews" parameterType="HashMap">
-		insert into news values (#{receiver},#{provider})
-	</insert>
-	<!-- 소식 끊기 -->
-	<delete id="cutNews" parameterType="HashMap">
-		delete from news where receiver=#{receiver} and provider=#{provider}
-	</delete>
 	<!-- 아이디 중복체크 -->
 	<select id="checkEmailOfChef" parameterType="String" resultType="int">
 		select count(*) from chef where email=#{email}
@@ -42,7 +41,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<!-- 아이디 찾기 -->
 	<select id="findIdOfChef" parameterType="HashMap" resultType="String">
-		select email from chef where name=#{name} and birth=date(#{birthday})
+		select email from chef where name=#{name} and birth=#{birthday}
+	</select>
+	<!-- 비번찾기 -->
+	<select id="findPassOfChef" parameterType="HashMap" resultType="String">
+		select pass from chef where name=#{name} and email=#{email}
 	</select>
 </mapper>
 

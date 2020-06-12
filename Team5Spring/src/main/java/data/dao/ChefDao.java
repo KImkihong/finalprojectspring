@@ -2,6 +2,7 @@ package data.dao;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -49,24 +50,6 @@ public class ChefDao extends SqlSessionDaoSupport implements ChefDaoInter {
 	}
 
 	@Override
-	public void receiveNews(String receiver, String provider) {
-		// TODO Auto-generated method stub
-		Map<String,String> map = new HashMap<String, String>();
-		map.put("receiver", receiver);
-		map.put("provider", provider);
-		getSqlSession().insert("recieveNews", map);
-	}
-
-	@Override
-	public void cutNews(String receiver, String provider) {
-		// TODO Auto-generated method stub
-		Map<String,String> map = new HashMap<String, String>();
-		map.put("receiver", receiver);
-		map.put("provider", provider);
-		getSqlSession().delete("cutNews", map);
-	}
-
-	@Override
 	public int checkEamil(String email) {
 		// TODO Auto-generated method stub
 		return getSqlSession().selectOne("checkEmailOfChef", email);
@@ -85,6 +68,43 @@ public class ChefDao extends SqlSessionDaoSupport implements ChefDaoInter {
 		map.put("name", name);
 		map.put("birthday", birthday);
 		return getSqlSession().selectOne("findIdOfChef", map);
+	}
+
+	@Override
+	public String findPass(String name, String email) {
+		// TODO Auto-generated method stub
+		Map<String,String> map = new HashMap<String, String>();
+		map.put("name", name);
+		map.put("email", email);
+		return getSqlSession().selectOne("findPassOfChef", map);
+	}
+
+	@Override
+	public String RandomPass() {
+		// TODO Auto-generated method stub
+		Random rnd =new Random();
+	    StringBuffer buf =new StringBuffer();
+
+	    for(int i=0;i<10;i++){
+		    if(rnd.nextBoolean()){
+		        buf.append((char)((int)(rnd.nextInt(26))+97));
+		    }else{
+		        buf.append((rnd.nextInt(10)));
+		    }
+	    }	      
+	    return buf.toString();
+	}
+
+	@Override
+	public ChefDto getChef(String email) {
+		// TODO Auto-generated method stub
+		return getSqlSession().selectOne("getDataOfChef", email);
+	}
+
+	@Override
+	public String getprofile(String email) {
+		// TODO Auto-generated method stub
+		return getSqlSession().selectOne("getprofile", email);
 	}
 
 }
