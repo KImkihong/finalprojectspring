@@ -1,10 +1,19 @@
 package data.dto;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class RecipeOrderDto {
 	private int rec_num;
 	private int order_num;
 	private String content;
+	private MultipartFile photofile;
 	private String photo;
+	public MultipartFile getPhotofile() {
+		return photofile;
+	}
+	public void setPhotofile(MultipartFile photofile) {
+		this.photofile = photofile;
+	}	
 	public int getRec_num() {
 		return rec_num;
 	}

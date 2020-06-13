@@ -1,18 +1,15 @@
 package data.dto;
 
-import java.sql.Timestamp;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class ChefDto {
 	private String name;
 	private String email;
 	private String pass;
 	private String nickname;
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private Timestamp birth;
+	private String birth;
 	private MultipartFile profileimage;
 	private String profile;
 	public MultipartFile getProfileimage() {
@@ -51,10 +48,10 @@ public class ChefDto {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	public Timestamp getBirth() {
+	public String getBirth() {
 		return birth;
 	}
-	public void setBirth(Timestamp birth) {
+	public void setBirth(String birth) {
 		this.birth = birth;
 	}
 }

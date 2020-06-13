@@ -2,10 +2,15 @@ package spring.form.acorn;
 
 
 import java.io.File;
+import java.util.Date;
+
+import javax.naming.Binding;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import data.dao.ChefDaoInter;
 import data.dto.ChefDto;
@@ -53,12 +57,16 @@ public class ChefController {
 	
 	//가입
 	@RequestMapping(value="/chef/regist", consumes = {"multipart/form-data"}, method = RequestMethod.POST)
-	public int register(MultipartHttpServletRequest request, @RequestBody ChefDto dto) {
-		String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
-		String fileName = dto.getProfileimage().getOriginalFilename();
-		dto.setProfile(fileName);
-		SpringFileWrite sfw = new SpringFileWrite();
-		sfw.writeFileRename(dto.getProfileimage(), path, fileName);
+	public int register(MultipartHttpServletRequest request, @ModelAttribute ChefDto dto) {
+	
+		if(dto.getProfileimage()!=null) {
+			String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
+			String fileName = new Date().getTime()+"_"+dto.getProfileimage().getOriginalFilename();
+			dto.setProfile(fileName);
+			SpringFileWrite sfw = new SpringFileWrite();
+			sfw.writeFileRename(dto.getProfileimage(), path, fileName);
+		}else
+			dto.setProfile("basic_user.png");	
 		dao.insertChef(dto);	
 		
 		return 1;
@@ -87,7 +95,7 @@ public class ChefController {
 	}
 	//비번찾기
 	@PostMapping("/chef/findpass")
-	public int findPass(@RequestParam String name, @RequestParam String email, RedirectAttributes redirectAttributes) {
+	public int findPass(@RequestParam String name, @RequestParam String email) {
 		int success=0;
 		String pass = dao.findPass(name, email);
 		if(pass!=null) {
@@ -112,14 +120,14 @@ public class ChefController {
 	
 	//일반정보수정
 	@RequestMapping(value="/chef/mod", consumes = {"multipart/form-data"}, method = RequestMethod.POST)
-	public int mod(MultipartHttpServletRequest request, @RequestBody ChefDto dto) {
+	public int mod(MultipartHttpServletRequest request, @ModelAttribute ChefDto dto) {
 		String preprofile=dao.getprofile(dto.getEmail());
 		if(dto.getProfileimage()==null)
 			//사진이 안바꼈을 경우 기존 프로필 사진 저장해두기
 			dto.setProfile(preprofile);
 		else {
 			String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
-			String fileName = dto.getProfileimage().getOriginalFilename();
+			String fileName = new Date().getTime()+"_"+dto.getProfileimage().getOriginalFilename();
 			dto.setProfile(fileName);
 			SpringFileWrite sfw = new SpringFileWrite();
 			sfw.writeFileRename(dto.getProfileimage(), path, fileName);
@@ -132,5 +140,11 @@ public class ChefController {
 	}	
 	
 	//비밀번호 변경
-	
+	@PostMapping("/chef/modpass")
+	public int modpass(@RequestParam String pass, @RequestParam String newpass, @RequestParam String email) {
+		int success=0;
+		dao.updatePass(pass, newpass, email);
+		success=1;
+		return success;
+	}
 }

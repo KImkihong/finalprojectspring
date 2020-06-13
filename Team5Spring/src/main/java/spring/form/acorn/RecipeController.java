@@ -8,8 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import data.dao.RecipeDaoInter;
 import data.dto.IngredientDto;
@@ -45,6 +52,11 @@ public class RecipeController {
 		rlist.add(ilist);
 		rlist.add(olist);
 		return rlist;
+	}
+	
+	@RequestMapping(value="/recipe/regist",consumes = {"multipart/form-data"}, method = RequestMethod.POST)
+	public void regist(MultipartHttpServletRequest request, @ModelAttribute RecipeOrderDto dto) {
+		System.out.println(dto.getPhotofile().getOriginalFilename());
 	}
 	
 	@GetMapping("/recipe/delete")
