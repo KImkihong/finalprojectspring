@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="chef">
 	<!-- 가입 -->
 	<select id="insertOfChef" parameterType="chef_dto">
-		insert into chef values (#{name},#{email},#{pass},#{nickname},#{birth},#{profile},0,0)
+		insert into chef values (#{name},#{email},#{pass},#{nickname},#{profile},0,0,#{hp},#{joindate})
 	</select>
 	<!-- 로그인, 탈퇴시 비번확인 -->
 	<select id="login" parameterType="HashMap" resultType="int">
@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<!-- 아이디 찾기 -->
 	<select id="findIdOfChef" parameterType="HashMap" resultType="String">
-		select email from chef where name=#{name} and birth=#{birthday}
+		select email from chef where name=#{name} and hp=#{hp}
 	</select>
 	<!-- 비번찾기 -->
 	<select id="findPassOfChef" parameterType="HashMap" resultType="String">

@@ -4,15 +4,12 @@ package spring.form.acorn;
 import java.io.File;
 import java.util.Date;
 
-import javax.naming.Binding;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,8 +53,8 @@ public class ChefController {
 	}
 	
 	//가입
-	@RequestMapping(value="/chef/regist", consumes = {"multipart/form-data"}, method = RequestMethod.POST)
-	public int register(MultipartHttpServletRequest request, @ModelAttribute ChefDto dto) {
+	@RequestMapping(value="/chef/regist", consumes = {"multipart/form-data"} ,method = RequestMethod.POST)
+	public int register(MultipartHttpServletRequest request, @ModelAttribute("ChefDto") ChefDto dto, BindingResult result) {
 	
 		if(dto.getProfileimage()!=null) {
 			String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
@@ -95,8 +92,8 @@ public class ChefController {
 	}
 	//아이디 찾기
 	@PostMapping("/chef/findid")
-	public String findid(@RequestParam String name, @RequestParam String birthday) {
-		String id = dao.findId(name, birthday);
+	public String findid(@RequestParam String name, @RequestParam String hp) {
+		String id = dao.findId(name, hp);
 		System.out.println(id);
 		return id;
 	}

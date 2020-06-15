@@ -9,9 +9,12 @@ public class ChefDto {
 	private String email;
 	private String pass;
 	private String nickname;
-	private String birth;
+	private String hp;
+	private String joindate;
 	private MultipartFile profileimage;
 	private String profile;
+	private int scrapcount;
+	private int joayocount;
 	public MultipartFile getProfileimage() {
 		return profileimage;
 	}
@@ -48,10 +51,29 @@ public class ChefDto {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	public String getBirth() {
-		return birth;
+	public String getHp() {
+		return hp;
 	}
-	public void setBirth(String birth) {
-		this.birth = birth;
+	public void setHp(String hp) {
+		this.hp = hp;
 	}
+	public String getJoindate() {
+		return joindate;
+	}
+	public void setJoindate(String joindate) {
+		this.joindate = joindate;
+	}
+	public int getScrapcount() {
+		return scrapcount;
+	}
+	public void setScrapcount(int scrapcount) {
+		this.scrapcount = scrapcount;
+	}
+	public int getJoayocount() {
+		return joayocount;
+	}
+	public void setJoayocount(int joayocount) {
+		this.joayocount = joayocount;
+	}
+	
 }

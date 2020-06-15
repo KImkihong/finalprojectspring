@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mypage">
+	<!-- 로그인된 회원의 레시피들 -->
+	<select id="getMyRecipe" parameterType="String" resultType="recipe_dto">
+		select * from recipe where email=#{email}
+	</select>
+	<!-- 선택 레시피의 재료 -->
+	<select id="getIngre" parameterType="int" resultType="ingre_dto">
+		select * from ingredient where rec_num=#{rec_num}
+	</select>
+	<!-- 선택 레시피 조리순서 및 사진 -->
+	<select id="getOrder" parameterType="int" resultType="recipe_order_dto">
+		select * from recipe_order where rec_num=#{rec_num} order by order_num
+	</select>
+</mapper>

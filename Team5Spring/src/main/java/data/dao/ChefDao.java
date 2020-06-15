@@ -62,11 +62,11 @@ public class ChefDao extends SqlSessionDaoSupport implements ChefDaoInter {
 	}
 
 	@Override
-	public String findId(String name, String birthday) {
+	public String findId(String name, String hp) {
 		// TODO Auto-generated method stub
 		Map<String,String> map = new HashMap<String, String>();
 		map.put("name", name);
-		map.put("birthday", birthday);
+		map.put("hp", hp);
 		return getSqlSession().selectOne("findIdOfChef", map);
 	}
 

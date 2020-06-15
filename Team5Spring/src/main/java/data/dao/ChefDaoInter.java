@@ -22,7 +22,7 @@ public interface ChefDaoInter {
 	//닉네임 중복체크
 	public int checkNickname(String nickname);
 	//아이디 찾기
-	public String findId(String name, String birthday);
+	public String findId(String name, String hp);
 	//비번찾기 할때 기존 비번얻기
 	public String findPass(String name, String email);
 	//새로운 비밀번호 랜덤문자 생성

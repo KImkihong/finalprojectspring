@@ -8,6 +8,7 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -54,7 +55,7 @@ public class RecipeController {
 	}
 	
 	@RequestMapping(value="/recipe/regist",consumes = {"multipart/form-data"}, method = RequestMethod.POST)
-	public void regist(MultipartHttpServletRequest request, @ModelAttribute RecipeDto rdto) {
+	public void regist(MultipartHttpServletRequest request, @ModelAttribute("RecipeDto") RecipeDto rdto, BindingResult result) {
 		String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/recipe");
 		SpringFileWrite sfw = new SpringFileWrite();
 		String comp_photo="";
@@ -135,7 +136,7 @@ public class RecipeController {
 	}
 	
 	@RequestMapping(value="/recipe/update",consumes = {"multipart/form-data"}, method = RequestMethod.POST)
-	public void update(MultipartHttpServletRequest request, @ModelAttribute RecipeDto rdto) {
+	public void update(MultipartHttpServletRequest request, @ModelAttribute("RecipeDto") RecipeDto rdto, BindingResult result) {
 		
 		
 	}
