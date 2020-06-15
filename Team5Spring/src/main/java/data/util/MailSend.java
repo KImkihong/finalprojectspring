@@ -17,7 +17,7 @@ public class MailSend {
 
 	    	  
 
-            messageHelper.setFrom("보내는 사람 네이버 메일 주소"); // 보내는사람 생략하면 정상작동을 안함
+            messageHelper.setFrom("acorn555@naver.com"); // 보내는사람 생략하면 정상작동을 안함
             messageHelper.setTo(mailaddr); // 받는사람 이메일
             messageHelper.setSubject(subject); // 메일제목은 생략이 가능하다
             messageHelper.setText(content); // 메일 내용

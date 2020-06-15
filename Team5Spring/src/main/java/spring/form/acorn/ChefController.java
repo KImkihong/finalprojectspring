@@ -73,11 +73,18 @@ public class ChefController {
 	}
 	//Å»Åð
 	@PostMapping("/chef/withdraw")
-	public int withdraw(@RequestParam String email, @RequestParam String pass) {
+	public int withdraw(MultipartHttpServletRequest request, @RequestParam String email, @RequestParam String pass) {
 		int success=0;
 		int check = dao.login(email, pass);
-		if(check==1)
+		if(check==1) {
+			String preprofile=dao.getprofile(email);
+			String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
+			File file = new File(path+"\\"+preprofile);
+			if(file.exists())
+				file.delete();
 			dao.deleteChef(email);
+			success=1;
+		}
 		return success;
 	}
 	//·Î±×ÀÎ

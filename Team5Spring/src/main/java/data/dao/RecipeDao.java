@@ -62,6 +62,30 @@ public class RecipeDao extends SqlSessionDaoSupport implements RecipeDaoInter {
 	public void deleteRecipe(int rec_num) {
 		// TODO Auto-generated method stub
 		getSqlSession().delete("deleteRecipe", rec_num);
+	}
+
+	@Override
+	public int getMaxCount() {
+		// TODO Auto-generated method stub
+		return getSqlSession().selectOne("getMaxCount");
+	}
+
+	@Override
+	public void insertRecipe(RecipeDto rdto) {
+		// TODO Auto-generated method stub
+		getSqlSession().insert("insertOfRecipe", rdto);
+	}
+
+	@Override
+	public void insertIngre(IngredientDto idto) {
+		// TODO Auto-generated method stub
+		getSqlSession().insert("insertOfingre", idto);
+	}
+
+	@Override
+	public void insertOrder(RecipeOrderDto odto) {
+		// TODO Auto-generated method stub
+		getSqlSession().insert("insertOfOrder", odto);
 	}	
 
 }

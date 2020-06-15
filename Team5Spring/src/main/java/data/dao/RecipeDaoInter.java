@@ -10,6 +10,11 @@ public interface RecipeDaoInter {
 	//selectList
 	public List<RecipeDto> getList(int start,int end);
 	public int getTotalCount();
+	//insertData
+	public int getMaxCount();
+	public void insertRecipe(RecipeDto rdto);
+	public void insertIngre(IngredientDto idto);
+	public void insertOrder(RecipeOrderDto odto);
 	//oneSelectData
 	public RecipeDto getSelectedRecipe(int rec_num);
 	public List<IngredientDto> getIngre(int rec_num);
