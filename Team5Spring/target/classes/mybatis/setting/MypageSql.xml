@@ -8,12 +8,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getMyRecipe" parameterType="String" resultType="recipe_dto">
 		select * from recipe where email=#{email}
 	</select>
-	<!-- 선택 레시피의 재료 -->
-	<select id="getIngre" parameterType="int" resultType="ingre_dto">
-		select * from ingredient where rec_num=#{rec_num}
+	<!-- 로그인된 회원이 스크랩한 레시피번호 -->
+	<select id="getMyScrap" parameterType="String" resultType="int">
+		select rec_num from scrap where email=#{email}
 	</select>
-	<!-- 선택 레시피 조리순서 및 사진 -->
-	<select id="getOrder" parameterType="int" resultType="recipe_order_dto">
-		select * from recipe_order where rec_num=#{rec_num} order by order_num
+	<!-- 스크랩한 레시피 -->
+	<select id="getMyScrapRecipe" parameterType="int" resultType="recipe_dto">
+		select * from recipe where rec_num=#{rec_num}
 	</select>
 </mapper>

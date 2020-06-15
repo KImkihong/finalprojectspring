@@ -15,19 +15,19 @@ public class MypageDao extends SqlSessionDaoSupport implements MypageDaoInter {
 	@Override
 	public List<RecipeDto> getMyRecipe(String email) {
 		// TODO Auto-generated method stub
-		return null;
+		return getSqlSession().selectList("getMyRecipe", email);
 	}
 
 	@Override
-	public List<IngredientDto> getIngre(int rec_num) {
+	public List<Integer> getMyScrap(String email) {
 		// TODO Auto-generated method stub
-		return null;
+		return getSqlSession().selectList("getMyScrap", email);
 	}
 
 	@Override
-	public List<RecipeOrderDto> getOrder(int rec_num) {
+	public RecipeDto getMyScrapRecipe(int rec_num) {
 		// TODO Auto-generated method stub
-		return null;
+		return getSqlSession().selectOne("getMyScrapRecipe", rec_num);
 	}
 
 }

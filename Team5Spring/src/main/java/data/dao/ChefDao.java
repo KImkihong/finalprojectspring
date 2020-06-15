@@ -107,4 +107,20 @@ public class ChefDao extends SqlSessionDaoSupport implements ChefDaoInter {
 		return getSqlSession().selectOne("getprofile", email);
 	}
 
+	@Override
+	public void insertWithdraw(String email) {
+		// TODO Auto-generated method stub
+		getSqlSession().insert("insertWithdraw", email);
+	}
+
+	@Override
+	public void updateWithdraq(String email, String reason) {
+		// TODO Auto-generated method stub
+		Map<String,String> map = new HashMap<String, String>();
+		map.put("reason", reason);
+		map.put("email", email);
+		
+		getSqlSession().update("updateWithdraw", map);
+	}
+
 }

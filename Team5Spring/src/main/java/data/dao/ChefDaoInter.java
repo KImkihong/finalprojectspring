@@ -7,6 +7,8 @@ public interface ChefDaoInter {
 	public void insertChef(ChefDto dto);
 	//탈퇴
 	public void deleteChef(String email);
+	public void insertWithdraw(String email);
+	public void updateWithdraq(String email,String reason);
 	//로그인
 	public int login(String email,String pass);
 	//회원정보 수정시 기존 정보

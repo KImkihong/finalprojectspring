@@ -70,19 +70,16 @@ public class ChefController {
 	}
 	//탈퇴
 	@PostMapping("/chef/withdraw")
-	public int withdraw(MultipartHttpServletRequest request, @RequestParam String email, @RequestParam String pass) {
-		int success=0;
-		int check = dao.login(email, pass);
-		if(check==1) {
+	public void withdraw(MultipartHttpServletRequest request, @RequestParam String email, @RequestParam String reason) {
+	
 			String preprofile=dao.getprofile(email);
 			String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
 			File file = new File(path+"\\"+preprofile);
 			if(file.exists())
 				file.delete();
+			dao.insertWithdraw(email);
+			dao.updateWithdraq(email, reason);
 			dao.deleteChef(email);
-			success=1;
-		}
-		return success;
 	}
 	//로그인
 	@PostMapping("/chef/login")
@@ -124,7 +121,7 @@ public class ChefController {
 	
 	//일반정보수정
 	@RequestMapping(value="/chef/mod", consumes = {"multipart/form-data"}, method = RequestMethod.POST)
-	public int mod(MultipartHttpServletRequest request, @ModelAttribute ChefDto dto) {
+	public int mod(MultipartHttpServletRequest request, @ModelAttribute("ChefDto") ChefDto dto, BindingResult result) {
 		String preprofile=dao.getprofile(dto.getEmail());
 		if(dto.getProfileimage()==null)
 			//사진이 안바꼈을 경우 기존 프로필 사진 저장해두기
