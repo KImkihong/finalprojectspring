@@ -14,11 +14,12 @@ import data.dto.RecipeOrderDto;
 public class RecipeDao extends SqlSessionDaoSupport implements RecipeDaoInter {
 
 	@Override
-	public List<RecipeDto> getList(int start, int end) {
+	public List<RecipeDto> getList(int start, int end,String search) {
 		// TODO Auto-generated method stub
-		HashMap<String,Integer> map = new HashMap<String, Integer>();
+		HashMap<String,Object> map = new HashMap<String, Object>();
 		map.put("start",start);
 		map.put("end",end);
+		map.put("search",search);
 		return getSqlSession().selectList("getRecipe",map);
 	}
 	
@@ -62,6 +63,46 @@ public class RecipeDao extends SqlSessionDaoSupport implements RecipeDaoInter {
 	public void deleteRecipe(int rec_num) {
 		// TODO Auto-generated method stub
 		getSqlSession().delete("deleteRecipe", rec_num);
+	}
+
+	@Override
+	public int getMaxCount() {
+		// TODO Auto-generated method stub
+		return getSqlSession().selectOne("getMaxCount");
+	}
+
+	@Override
+	public void insertRecipe(RecipeDto rdto) {
+		// TODO Auto-generated method stub
+		getSqlSession().insert("insertOfRecipe", rdto);
+	}
+
+	@Override
+	public void insertIngre(IngredientDto idto) {
+		// TODO Auto-generated method stub
+		getSqlSession().insert("insertOfingre", idto);
+	}
+
+	@Override
+	public void insertOrder(RecipeOrderDto odto) {
+		// TODO Auto-generated method stub
+		getSqlSession().insert("insertOfOrder", odto);
+	}
+
+	@Override
+	public List<Integer> getRec_nums(int start, int end, String search) {
+		// TODO Auto-generated method stub
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		map.put("start",start);
+		map.put("end",end);
+		map.put("search",search);
+		return getSqlSession().selectList("getRec_nums", map);
+	}
+
+	@Override
+	public RecipeDto getIngreRecipe(int rec_num) {
+		// TODO Auto-generated method stub
+		return getSqlSession().selectOne("getIngreRecipe", rec_num);
 	}	
 
 }

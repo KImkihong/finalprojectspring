@@ -4,10 +4,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="recipe">
+	<select id="getMaxCount" resultType="int">
+		select max(rec_num) from recipe
+	</select>
+	<!-- 추가 -->
+	<insert id="insertOfRecipe" parameterType="recipe_dto">
+		insert into recipe values (0,#{portion},#{time},#{difficult},#{repre_photo},#{comp_photo},#{food_cate},
+		#{subject},#{summary},0,now(),#{email})
+	</insert>
+	<insert id="insertOfingre" parameterType="ingre_dto">
+		insert into ingredient values (#{rec_num},#{ingre_name},#{quantity},#{sort})
+	</insert>
+	<insert id="insertOfOrder" parameterType="recipe_order_dto">
+		insert into recipe_order values (#{rec_num},#{order_num},#{content},#{photo})
+	</insert>
+
 	<!-- 리스트 출력 -->
 	<select id="getRecipe" parameterType="HashMap" resultType="recipe_dto">
-		select * from recipe order by writeday desc limit #{start},#{end}
+		select * from recipe 
+		<if test="search!=''">
+			where subject like '%'||#{search}||'%'
+		</if>
+		order by writeday desc limit #{start},#{end}
 	</select>
+	<!-- 재료를 검색해서 rec_num 구하기 -->
+	<select id="getRec_nums" parameterType="HashMap" resultType="int">
+		select distinct rec_num from (select * from ingredient where ingre_name=#{search})a
+		order by rec_num desc limit #{start},#{end}
+	</select>
+	<!-- rec_num으로 recipe가져오기 -->
+	<select id="getIngreRecipe" parameterType="int" resultType="recipe_dto">
+		select * from recipe where rec_num=#{rec_num}
+	</select>
+	
 	<!-- total카운트 구하기-->
 	<select id="getTotalCount" resultType="int">
 		select count(*) from recipe
@@ -35,5 +64,5 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteRecipe" parameterType="int">
 		delete from recipe where rec_num=#{rec_num}
 	</delete>
-
+	
 </mapper>

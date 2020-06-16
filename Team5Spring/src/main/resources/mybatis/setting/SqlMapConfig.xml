@@ -6,10 +6,13 @@
 		<typeAlias type="data.dto.RecipeDto" alias="recipe_dto"/>
 		<typeAlias type="data.dto.IngredientDto" alias="ingre_dto"/>
 		<typeAlias type="data.dto.RecipeOrderDto" alias="recipe_order_dto"/>
+		<typeAlias type="data.dto.CommentDto" alias="comment_dto"/>
 	</typeAliases> 
 	<mappers>
 		<mapper resource="mybatis/setting/ChefSql.xml"/>
 		<mapper resource="mybatis/setting/ConnectSql.xml"/>
 		<mapper resource="mybatis/setting/RecipeSql.xml"/>
+		<mapper resource="mybatis/setting/CommentSql.xml"/>
+		<mapper resource="mybatis/setting/RankingSql.xml"/>
 	</mappers>
 </configuration>

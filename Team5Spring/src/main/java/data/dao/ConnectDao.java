@@ -120,6 +120,18 @@ public class ConnectDao extends SqlSessionDaoSupport implements ConnectDaoInter 
 		map.put("email",email);
 		map.put("check",check);
 		getSqlSession().update("updateJoayoCount", map);
+	}
+
+	@Override
+	public void upNewsCount(String email) {
+		// TODO Auto-generated method stub
+		getSqlSession().update("upNewsCount", email);
+	}
+
+	@Override
+	public void downNewsCount(String email) {
+		// TODO Auto-generated method stub
+		getSqlSession().update("downNewsCount", email);
 	}		
 
 }

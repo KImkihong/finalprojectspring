@@ -1,14 +1,32 @@
 package data.dto;
 
-import java.sql.Timestamp;
+
+import org.springframework.web.multipart.MultipartFile;
+
 
 public class ChefDto {
 	private String name;
 	private String email;
 	private String pass;
 	private String nickname;
-	private String birthday;
-	private Timestamp birth;
+	private String hp;
+	private String joindate;
+	private MultipartFile profileimage;
+	private String profile;
+	private int scrapcount;
+	private int joayocount;
+	public MultipartFile getProfileimage() {
+		return profileimage;
+	}
+	public void setProfileimage(MultipartFile profileimage) {
+		this.profileimage = profileimage;
+	}
+	public String getProfile() {
+		return profile;
+	}
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
 	public String getName() {
 		return name;
 	}
@@ -33,16 +51,29 @@ public class ChefDto {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
-	public String getBirthday() {
-		return birthday;
+	public String getHp() {
+		return hp;
 	}
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
+	public void setHp(String hp) {
+		this.hp = hp;
 	}
-	public Timestamp getBirth() {
-		return birth;
+	public String getJoindate() {
+		return joindate;
 	}
-	public void setBirth(Timestamp birth) {
-		this.birth = birth;
+	public void setJoindate(String joindate) {
+		this.joindate = joindate;
 	}
+	public int getScrapcount() {
+		return scrapcount;
+	}
+	public void setScrapcount(int scrapcount) {
+		this.scrapcount = scrapcount;
+	}
+	public int getJoayocount() {
+		return joayocount;
+	}
+	public void setJoayocount(int joayocount) {
+		this.joayocount = joayocount;
+	}
+	
 }
