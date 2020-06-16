@@ -13,14 +13,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{subject},#{summary},0,now(),#{email})
 	</insert>
 	<insert id="insertOfingre" parameterType="ingre_dto">
-		insert into ingredient values (#{rec_num},#{ingre_name},#{quantity},#{sort},
-		<if test="ingre_cate!=null">
-			#{ingre_cate}
-		</if>
-		<if test="ingre_cate==null">
-			null
-		</if>
-		)
+		insert into ingredient values (#{rec_num},#{ingre_name},#{quantity},#{sort})
 	</insert>
 	<insert id="insertOfOrder" parameterType="recipe_order_dto">
 		insert into recipe_order values (#{rec_num},#{order_num},#{content},#{photo})

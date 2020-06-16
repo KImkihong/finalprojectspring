@@ -7,8 +7,13 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 public class MailSend {
-	private JavaMailSender mailSender;
+	private JavaMailSender mailSender;	
 	
+	public MailSend(JavaMailSender mailSender) {
+		this.mailSender = mailSender;
+	}
+
+
 	public int MailGo(String mailaddr,String subject,String content) {
 		MimeMessage message = mailSender.createMimeMessage();
 	      int success=0;

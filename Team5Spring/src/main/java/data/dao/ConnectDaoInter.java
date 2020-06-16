@@ -14,6 +14,8 @@ public interface ConnectDaoInter {
 	public void receiveNews(String receiver, String provider);
 	public void cutNews(String receiver, String provider);
 	public String getNickname(String provider);
+	public void upNewsCount(String email);
+	public void downNewsCount(String email);
 	//¡¡æ∆ø‰
 	public int checkJoayo(String email, int rec_num);
 	public void insertJoayo(String email, int rec_num);

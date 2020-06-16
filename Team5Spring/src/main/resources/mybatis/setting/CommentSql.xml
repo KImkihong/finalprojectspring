@@ -17,4 +17,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertOfComment" parameterType="comment_dto">
 		insert into comment values (0,#{content},#{image},#{regroup},#{restep},#{relevel},now(),#{rec_num},#{email})
 	</insert>
+	<select id="getListOfComment" parameterType="int" resultMap="comment_dto">
+		select * from comment order by regroup desc,restep asc where rec_num=#{rec_num}
+	</select>
+	<!-- 삭제 -->
+	<update id="deleteComment" parameterType="int">
+		update comment set content='삭제된 댓글입니다',image=null,email='알수없음' where com_num=#{com_num}
+	</update>
+	<select id="getComment" parameterType="int" resultType="comment_dto">
+		select * from comment where com_num=#{com_num}
+	</select>
 </mapper>

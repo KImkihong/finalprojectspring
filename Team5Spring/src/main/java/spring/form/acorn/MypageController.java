@@ -38,8 +38,5 @@ public class MypageController {
 		return list;
 	}
 	
-	@GetMapping("/mypage/comment")
-	public 
-	
 	
 }

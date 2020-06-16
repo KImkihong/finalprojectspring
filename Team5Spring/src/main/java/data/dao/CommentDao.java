@@ -1,6 +1,7 @@
 package data.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
@@ -53,6 +54,24 @@ public class CommentDao extends SqlSessionDaoSupport implements CommentDaoInter 
 		dto.setRestep(restep);
 		
 		getSqlSession().insert("insertOfComment", dto);
+	}
+
+	@Override
+	public List<CommentDto> getCommentlist(int rec_num) {
+		// TODO Auto-generated method stub
+		return getSqlSession().selectList("getListOfComment", rec_num);
+	}
+
+	@Override
+	public void deleteCommenet(int com_num) {
+		// TODO Auto-generated method stub
+		getSqlSession().update("deleteComment", com_num);
+	}
+
+	@Override
+	public CommentDto getComment(int com_num) {
+		// TODO Auto-generated method stub
+		return getSqlSession().selectOne("getComment", com_num) ;
 	}
 	
 }

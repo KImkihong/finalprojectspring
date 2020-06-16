@@ -13,5 +13,6 @@
 		<mapper resource="mybatis/setting/ConnectSql.xml"/>
 		<mapper resource="mybatis/setting/RecipeSql.xml"/>
 		<mapper resource="mybatis/setting/CommentSql.xml"/>
+		<mapper resource="mybatis/setting/RankingSql.xml"/>
 	</mappers>
 </configuration>
