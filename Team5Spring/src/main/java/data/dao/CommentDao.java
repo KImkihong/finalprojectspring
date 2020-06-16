@@ -14,7 +14,7 @@ public class CommentDao extends SqlSessionDaoSupport implements CommentDaoInter 
 	@Override
 	public int getMaxNum() {
 		// TODO Auto-generated method stub
-		return getSqlSession().selectOne("maxNumOfCommenet");
+		return getSqlSession().selectOne("maxNumOfComment");
 	}
 
 	@Override
