@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="refrigerator">
+	<insert id="putRefrig" parameterType="HashMap">
+		insert into refrigerator values (#{email},#{refrig_name})
+	</insert>
+	<delete id="deleteRefrig" parameterType="HashMap">
+		delete from refrigerator where email=#{email} and refrig_name=#{refrig_name}
+	</delete>
+	<select id="getRefrig" parameterType="String" resultType="String">
+		select * from refrigerator where email=#{email}
+	</select>
+</mapper>
