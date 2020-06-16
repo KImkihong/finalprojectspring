@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,8 +29,10 @@ public class ChefController {
 	
 	@Autowired
 	private ChefDaoInter dao;
+	@Autowired
+	JavaMailSender mailSender;
 	
-	//¾ÆÀÌµğ À¯È¿¼º °Ë»ç
+	//ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½È¿ï¿½ï¿½ ï¿½Ë»ï¿½
 	@PostMapping("/chef/checkid")
 	public int checkid(@RequestParam String email) {
 		int possible = dao.checkEamil(email);
@@ -40,7 +43,7 @@ public class ChefController {
 		
 		return possible;
 	}
-	//´Ğ³×ÀÓ À¯È¿¼º °Ë»ç
+	//ï¿½Ğ³ï¿½ï¿½ï¿½ ï¿½ï¿½È¿ï¿½ï¿½ ï¿½Ë»ï¿½
 	@PostMapping("/chef/checknick")
 	public int checknick(@RequestParam String nickname) {
 		int possible = dao.checkNickname(nickname);
@@ -52,11 +55,12 @@ public class ChefController {
 		return possible;
 	}
 	
-	//°¡ÀÔ
+	//ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="/chef/regist", consumes = {"multipart/form-data"} ,method = RequestMethod.POST)
 	public int register(MultipartHttpServletRequest request, @ModelAttribute("ChefDto") ChefDto dto, BindingResult result) {
 	
 		if(dto.getProfileimage()!=null) {
+			System.out.println("path");
 			String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
 			String fileName = new Date().getTime()+"_"+dto.getProfileimage().getOriginalFilename();
 			dto.setProfile(fileName);
@@ -68,12 +72,16 @@ public class ChefController {
 		
 		return 1;
 	}
-	//Å»Åğ
+	//Å»ï¿½ï¿½
 	@PostMapping("/chef/withdraw")
 	public void withdraw(MultipartHttpServletRequest request, @RequestParam String email, @RequestParam String reason) {
 	
+		System.out.println(email);
+		System.out.println(reason);
+		
 			String preprofile=dao.getprofile(email);
 			String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
+			System.out.println(path);
 			File file = new File(path+"\\"+preprofile);
 			if(file.exists())
 				file.delete();
@@ -81,29 +89,31 @@ public class ChefController {
 			dao.updateWithdraq(email, reason);
 			dao.deleteChef(email);
 	}
-	//·Î±×ÀÎ
+	//ï¿½Î±ï¿½ï¿½ï¿½
 	@PostMapping("/chef/login")
 	public int login(@RequestParam String email, @RequestParam String pass) {
 		int success=dao.login(email, pass);
 		return success;
 	}
-	//¾ÆÀÌµğ Ã£±â
+	//ï¿½ï¿½ï¿½Ìµï¿½ Ã£ï¿½ï¿½
 	@PostMapping("/chef/findid")
 	public String findid(@RequestParam String name, @RequestParam String hp) {
 		String id = dao.findId(name, hp);
 		System.out.println(id);
 		return id;
 	}
-	//ºñ¹øÃ£±â
+	//ë¹„ë²ˆì°¾ê¸°
 	@PostMapping("/chef/findpass")
-	public int findPass(@RequestParam String name, @RequestParam String email) {
+	public int findPass(@RequestParam String name, @RequestParam String email) {		
 		int success=0;
+		System.out.println(name);
+		System.out.println(email);
 		String pass = dao.findPass(name, email);
 		if(pass!=null) {
-			String subject = "½½±â·Î¿î ³ÃÀå°í ºñ¹Ğ¹øÈ£ º¯°æ¾È³»";
+			String subject = "ìŠ¬ê¸°ë¡œìš´ ëƒ‰ì¥ê³  ë¹„ë°€ë²ˆí˜¸ ë³€ê²½ì•ˆë‚´";
 			String newpass = dao.RandomPass();
-			String content = "ºñ¹Ğ¹øÈ£°¡ º¯°æµÇ¾ú½À´Ï´Ù. »õ·Î¿î ºñ¹Ğ¹øÈ£: "+newpass;
-			MailSend mail = new MailSend();
+			String content = "ë¹„ë°€ë²ˆí˜¸ê°€ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤. ìƒˆë¡œìš´ ë¹„ë°€ë²ˆí˜¸: "+newpass;
+			MailSend mail = new MailSend(mailSender);
 			int checkemail= mail.MailGo(email, subject, content);
 			dao.updatePass(pass, newpass, email);
 			if(checkemail==1)
@@ -112,19 +122,22 @@ public class ChefController {
 		return success;
 	}
 	
-	//ÀÏ¹İÁ¤º¸ ¼öÁ¤Æû
+	//ï¿½Ï¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@GetMapping("/chef/modform")
 	public ChefDto modform(@RequestParam String email) {
+		System.out.println(email);
 		ChefDto dto = dao.getChef(email);
 		return dto;
 	}
 	
-	//ÀÏ¹İÁ¤º¸¼öÁ¤
+	//ï¿½Ï¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping(value="/chef/mod", consumes = {"multipart/form-data"}, method = RequestMethod.POST)
 	public int mod(MultipartHttpServletRequest request, @ModelAttribute("ChefDto") ChefDto dto, BindingResult result) {
+		
+		
 		String preprofile=dao.getprofile(dto.getEmail());
 		if(dto.getProfileimage()==null)
-			//»çÁøÀÌ ¾È¹Ù²¼À» °æ¿ì ±âÁ¸ ÇÁ·ÎÇÊ »çÁø ÀúÀåÇØµÎ±â
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½È¹Ù²ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ØµÎ±ï¿½
 			dto.setProfile(preprofile);
 		else {
 			String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
@@ -140,7 +153,7 @@ public class ChefController {
 		return 1;
 	}	
 	
-	//ºñ¹Ğ¹øÈ£ º¯°æ
+	//ï¿½ï¿½Ğ¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½
 	@PostMapping("/chef/modpass")
 	public int modpass(@RequestParam String pass, @RequestParam String newpass, @RequestParam String email) {
 		int success=0;
