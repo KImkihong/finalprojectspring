@@ -5,12 +5,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="refrigerator">
 	<insert id="putRefrig" parameterType="HashMap">
-		insert into refrigerator values (#{email},#{refrig_name})
+		insert into refrigerator values (0,#{email},#{refrig_name})
 	</insert>
 	<delete id="deleteRefrig" parameterType="HashMap">
-		delete from refrigerator where email=#{email} and refrig_name=#{refrig_name}
+		delete from refrigerator where refrig_num=#{refrig_num}
 	</delete>
 	<select id="getRefrig" parameterType="String" resultType="String">
 		select * from refrigerator where email=#{email}
+	</select>
+	<!-- 솥검색 -->
+	<select id="getRefrigIngre" parameterType="int" resultType="String">
+		select refrig_name from refrigerator where refrig_num=#{refrig_num}
+	</select>
+	<!-- 재료를 검색해서 rec_num 구하기 -->
+	<select id="getRefrigRec_nums" parameterType="java.util.ArrayList" resultType="int">
+		select rec_num from (select * from ingredient where
+		<foreach collection="array" item="list" index="index" open="(" close=")" separator="or">
+			ingre_name=#{list}
+		</foreach>
+		and sort='주재료') a
+		group by rec_num having count(rec_num)>1
+		order by count(rec_num) desc
+	</select>
+	<!-- rec_num으로 recipe가져오기 -->
+	<select id="getRefrigIngreRecipe" parameterType="int" resultType="recipe_dto">
+		select * from recipe where rec_num=#{rec_num}
 	</select>
 </mapper>

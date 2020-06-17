@@ -6,7 +6,6 @@ public class IngredientDto {
 	private String ingre_name;
 	private String quantity;
 	private String sort;
-	private String ingre_cate;
 	public int getRec_num() {
 		return rec_num;
 	}
@@ -30,11 +29,5 @@ public class IngredientDto {
 	}
 	public void setSort(String sort) {
 		this.sort = sort;
-	}
-	public String getIngre_cate() {
-		return ingre_cate;
-	}
-	public void setIngre_cate(String ingre_cate) {
-		this.ingre_cate = ingre_cate;
 	}
 }

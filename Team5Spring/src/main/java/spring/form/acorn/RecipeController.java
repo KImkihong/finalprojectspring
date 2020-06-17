@@ -47,19 +47,23 @@ public class RecipeController {
 				start=0;
 				end=10;
 			}
-			list = dao.getList(start,end,search);
-			 start+=10;
-			 end+=10;
-		}else {		//전체리스트나 제목으로 검색일 때
-			if(scroll==0) {
-				start=0;
-				end=10;
-			}
-			List<Integer> numList = dao.getRec_nums(start, end, search);
+			
+			List<Integer> numList = dao.getRec_nums(start, end, search);			
 			for(int rec_num : numList) {
 				RecipeDto dto = dao.getIngreRecipe(rec_num);
 				list.add(dto);
 			}
+			start+=10;
+			end+=10;
+		}else {		//전체리스트나 제목으로 검색일 때
+			if(scroll==0) {
+				start=0;
+				end=10;
+			}		
+			
+			list = dao.getList(start,end,search);
+			 start+=10;
+			 end+=10;
 		}
 		 
 		return list;	
@@ -71,7 +75,8 @@ public class RecipeController {
 		List<IngredientDto> ilist = dao.getIngre(rec_num);
 		List<RecipeOrderDto> olist = dao.getOrder(rec_num);
 		dto.setIngreList(ilist);
-		dto.setOrderList(olist);		
+		dto.setOrderList(olist);
+		dao.updateReadcount(rec_num);
 		return dto;
 	}
 	

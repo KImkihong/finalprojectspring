@@ -29,7 +29,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<!-- 재료를 검색해서 rec_num 구하기 -->
 	<select id="getRec_nums" parameterType="HashMap" resultType="int">
-		select distinct rec_num from (select * from ingredient where ingre_name=#{search})a
+		select rec_num from (select * from ingredient where
+		<foreach collection="ingreList" item="list" index="index" separator="or">
+			ingre_name=#{list[index]}
+		</foreach>
+		) a
+		group by rec_num having count(rec_num)>#{count}
 		order by rec_num desc limit #{start},#{end}
 	</select>
 	<!-- rec_num으로 recipe가져오기 -->
@@ -64,5 +69,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteRecipe" parameterType="int">
 		delete from recipe where rec_num=#{rec_num}
 	</delete>
+	
+	<!-- readcount 증가 -->
+	<update id="updateReadcount" parameterType="int">
+		update recipe set readcount=readcount+1 where rec_num=#{rec_num}
+	</update>
 	
 </mapper>

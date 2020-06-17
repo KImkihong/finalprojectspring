@@ -1,5 +1,6 @@
 package data.dao;
 
+import java.awt.geom.Area;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import data.dto.IngredientDto;
 import data.dto.RecipeDto;
 import data.dto.RecipeOrderDto;
+
 
 @Repository
 public class RecipeDao extends SqlSessionDaoSupport implements RecipeDaoInter {
@@ -92,10 +94,14 @@ public class RecipeDao extends SqlSessionDaoSupport implements RecipeDaoInter {
 	@Override
 	public List<Integer> getRec_nums(int start, int end, String search) {
 		// TODO Auto-generated method stub
+		String searchlist = search.substring(1, search.length());
+		String [] ingreList = searchlist.split("#");
+		
 		HashMap<String,Object> map = new HashMap<String, Object>();
 		map.put("start",start);
 		map.put("end",end);
-		map.put("search",search);
+		map.put("ingreList",ingreList);
+		map.put("count",ingreList.length);
 		return getSqlSession().selectList("getRec_nums", map);
 	}
 
@@ -103,6 +109,12 @@ public class RecipeDao extends SqlSessionDaoSupport implements RecipeDaoInter {
 	public RecipeDto getIngreRecipe(int rec_num) {
 		// TODO Auto-generated method stub
 		return getSqlSession().selectOne("getIngreRecipe", rec_num);
+	}
+
+	@Override
+	public void updateReadcount(int rec_num) {
+		// TODO Auto-generated method stub
+		getSqlSession().update("updateReadcount", rec_num);
 	}	
 
 }
