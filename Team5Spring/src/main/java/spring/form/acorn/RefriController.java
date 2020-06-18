@@ -33,6 +33,8 @@ public class RefriController {
 	
 	@GetMapping("/refri/list")
 	public List<HashMap<String, String>> getingre(@RequestParam String email){
+		
+		System.out.println(email);
 		return dao.getRefri(email);
 	}
 	
