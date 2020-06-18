@@ -7,11 +7,12 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 public class MailSend {
-	private JavaMailSender mailSender;
-
+	private JavaMailSender mailSender;	
+	
 	public MailSend(JavaMailSender mailSender) {
 		this.mailSender = mailSender;
 	}
+
 
 	public int MailGo(String mailaddr,String subject,String content) {
 		MimeMessage message = mailSender.createMimeMessage();
@@ -21,23 +22,23 @@ public class MailSend {
 
 	    	  
 
-            messageHelper.setFrom("acorn555@naver.com"); // ï¿½ï¿½ï¿½ï¿½ï¿½Â»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ûµï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-            messageHelper.setTo(mailaddr); // ï¿½Þ´Â»ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½
-            messageHelper.setSubject(subject); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½
-            messageHelper.setText(content); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            messageHelper.setFrom("acorn555@naver.com"); // º¸³»´Â»ç¶÷ »ý·«ÇÏ¸é Á¤»óÀÛµ¿À» ¾ÈÇÔ
+            messageHelper.setTo(mailaddr); // ¹Þ´Â»ç¶÷ ÀÌ¸ÞÀÏ
+            messageHelper.setSubject(subject); // ¸ÞÀÏÁ¦¸ñÀº »ý·«ÀÌ °¡´ÉÇÏ´Ù
+            messageHelper.setText(content); // ¸ÞÀÏ ³»¿ë
             mailSender.send(message);
            
             success=1;
 	          
-	         /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	         /* ¿©·¯¸í¿¡°Ô º¸³»±â
 	          * String []addr = mailaddr.split(",");
 	          * for(String a:addr) {
 	          * message.setRecipients(MimeMessage.RecipientType.TO,InternetAddress.parse(
-	          * mailaddr));//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½
+	          * mailaddr));//º¸³¾ ¸ÞÀÏÁÖ¼Ò
 	          * mailSender.send(message);
 	          * }
 	          * model.addAttribute("msg",
-	          * mailaddr+"ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â½ï¿½ï¿½Ï´ï¿½");
+	          * mailaddr+"¿¡ ¸ÞÀÏÀ» º¸³Â½À´Ï´Ù");
 	          */
 	      } catch (MessagingException e) {
 	         // TODO Auto-generated catch block

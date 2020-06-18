@@ -1,6 +1,7 @@
 package spring.form.acorn;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
@@ -36,12 +37,36 @@ public class RecipeController {
 	int end=10;
 	
 	@GetMapping("/recipe/list")
-	public List<RecipeDto> getList(){    
+	public List<RecipeDto> getList(@RequestParam(required = false) String field,
+	         @RequestParam(required = false) String search,@RequestParam int scroll){    
 
-		 List<RecipeDto> list = dao.getList(start,end);
-		 start+=10;
-		 end+=10;
-		 return list;	
+		List<RecipeDto> list = new ArrayList<RecipeDto>();
+		
+		if(field!="" && field=="재료") {	//재료검색일 떄
+			if(scroll==0) {
+				start=0;
+				end=10;
+			}
+			
+			List<Integer> numList = dao.getRec_nums(start, end, search);			
+			for(int rec_num : numList) {
+				RecipeDto dto = dao.getIngreRecipe(rec_num);
+				list.add(dto);
+			}
+			start+=10;
+			end+=10;
+		}else {		//전체리스트나 제목으로 검색일 때
+			if(scroll==0) {
+				start=0;
+				end=10;
+			}		
+			
+			list = dao.getList(start,end,search);
+			 start+=10;
+			 end+=10;
+		}
+		 
+		return list;	
 	}
 	
 	@GetMapping("/recipe/select")
@@ -50,7 +75,8 @@ public class RecipeController {
 		List<IngredientDto> ilist = dao.getIngre(rec_num);
 		List<RecipeOrderDto> olist = dao.getOrder(rec_num);
 		dto.setIngreList(ilist);
-		dto.setOrderList(olist);		
+		dto.setOrderList(olist);
+		dao.updateReadcount(rec_num);
 		return dto;
 	}
 	

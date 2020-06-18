@@ -16,4 +16,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getMyScrapRecipe" parameterType="int" resultType="recipe_dto">
 		select * from recipe where rec_num=#{rec_num}
 	</select>
+	<!-- 내가 쓴 댓글 가져오기 -->
+	<select id="getMyComment" parameterType="String" resultType="comment_recipe">
+		select * from comment where email=#{email}
+	</select>
+	<!-- 댓글정보에서 레시피정보 가지고 오기 -->
+	<select id="getCommentRecipe" parameterType="int" resultType="recipe_dto">
+		select * from recipe where rec_num=#{rec_num}
+	</select>
 </mapper>

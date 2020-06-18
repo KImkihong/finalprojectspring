@@ -36,6 +36,7 @@ public class ConnectController {
 	@GetMapping("/connect/onnews")
 	public String onnews(@RequestParam String provider, @RequestParam String receiver) {
 		dao.receiveNews(receiver, provider);
+		dao.upNewsCount(provider);
 		String msg = dao.getNickname(provider)+"님의 소식받기가 완료되었습니다";
 		return msg;
 	}
@@ -43,6 +44,7 @@ public class ConnectController {
 	@GetMapping("/connect/offnews")
 	public String offnews(@RequestParam String provider, @RequestParam String receiver) {
 		dao.cutNews(receiver, provider);
+		dao.downNewsCount(provider);
 		String msg = dao.getNickname(provider)+"님의 소식받기가 취소되었습니다";
 		return msg;
 	}

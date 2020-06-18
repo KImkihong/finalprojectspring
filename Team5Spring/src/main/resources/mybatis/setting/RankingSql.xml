@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ranking">
+	<!-- 쉐프 순위 가져오기 -->
+	<select id="chefSorting" parameterType="String" resultType="chef_dto">
+		select * from chef order by ${standard} desc
+	</select>
+	
+	<!-- 내가 소식받기한 provider들 -->
+	<select id="getProviders" parameterType="String" resultType="String">
+		select provider from news where receiver=#{receiver}
+	</select>
+	<!-- provider들의 정보-->
+	<select id="getProviderInfo" parameterType="String" resultType="chef_dto">
+		select * from chef where email=#{provider}
+	</select>
+	<!-- provider들의 recipe -->
+	<select id="getProvderRecipe" parameterType="String" resultType="recipe_dto">
+		select * from recipe where email=#{provider}
+	</select>
+	
+</mapper>

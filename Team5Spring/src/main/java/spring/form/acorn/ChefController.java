@@ -32,7 +32,7 @@ public class ChefController {
 	@Autowired
 	JavaMailSender mailSender;
 	
-	//ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½È¿ï¿½ï¿½ ï¿½Ë»ï¿½
+	//¾ÆÀÌµğ À¯È¿¼º °Ë»ç
 	@PostMapping("/chef/checkid")
 	public int checkid(@RequestParam String email) {
 		int possible = dao.checkEamil(email);
@@ -43,7 +43,7 @@ public class ChefController {
 		
 		return possible;
 	}
-	//ï¿½Ğ³ï¿½ï¿½ï¿½ ï¿½ï¿½È¿ï¿½ï¿½ ï¿½Ë»ï¿½
+	//´Ğ³×ÀÓ À¯È¿¼º °Ë»ç
 	@PostMapping("/chef/checknick")
 	public int checknick(@RequestParam String nickname) {
 		int possible = dao.checkNickname(nickname);
@@ -55,12 +55,11 @@ public class ChefController {
 		return possible;
 	}
 	
-	//ï¿½ï¿½ï¿½ï¿½
+	//°¡ÀÔ
 	@RequestMapping(value="/chef/regist", consumes = {"multipart/form-data"} ,method = RequestMethod.POST)
 	public int register(MultipartHttpServletRequest request, @ModelAttribute("ChefDto") ChefDto dto, BindingResult result) {
 	
 		if(dto.getProfileimage()!=null) {
-			System.out.println("path");
 			String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
 			String fileName = new Date().getTime()+"_"+dto.getProfileimage().getOriginalFilename();
 			dto.setProfile(fileName);
@@ -72,16 +71,12 @@ public class ChefController {
 		
 		return 1;
 	}
-	//Å»ï¿½ï¿½
+	//Å»Åğ
 	@PostMapping("/chef/withdraw")
 	public void withdraw(MultipartHttpServletRequest request, @RequestParam String email, @RequestParam String reason) {
 	
-		System.out.println(email);
-		System.out.println(reason);
-		
 			String preprofile=dao.getprofile(email);
 			String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
-			System.out.println(path);
 			File file = new File(path+"\\"+preprofile);
 			if(file.exists())
 				file.delete();
@@ -89,30 +84,28 @@ public class ChefController {
 			dao.updateWithdraq(email, reason);
 			dao.deleteChef(email);
 	}
-	//ï¿½Î±ï¿½ï¿½ï¿½
+	//·Î±×ÀÎ
 	@PostMapping("/chef/login")
 	public int login(@RequestParam String email, @RequestParam String pass) {
 		int success=dao.login(email, pass);
 		return success;
 	}
-	//ï¿½ï¿½ï¿½Ìµï¿½ Ã£ï¿½ï¿½
+	//¾ÆÀÌµğ Ã£±â
 	@PostMapping("/chef/findid")
 	public String findid(@RequestParam String name, @RequestParam String hp) {
 		String id = dao.findId(name, hp);
 		System.out.println(id);
 		return id;
 	}
-	//ë¹„ë²ˆì°¾ê¸°
+	//ºñ¹øÃ£±â
 	@PostMapping("/chef/findpass")
-	public int findPass(@RequestParam String name, @RequestParam String email) {		
+	public int findPass(@RequestParam String name, @RequestParam String email) {
 		int success=0;
-		System.out.println(name);
-		System.out.println(email);
 		String pass = dao.findPass(name, email);
 		if(pass!=null) {
-			String subject = "ìŠ¬ê¸°ë¡œìš´ ëƒ‰ì¥ê³  ë¹„ë°€ë²ˆí˜¸ ë³€ê²½ì•ˆë‚´";
+			String subject = "½½±â·Î¿î ³ÃÀå°í ºñ¹Ğ¹øÈ£ º¯°æ¾È³»";
 			String newpass = dao.RandomPass();
-			String content = "ë¹„ë°€ë²ˆí˜¸ê°€ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤. ìƒˆë¡œìš´ ë¹„ë°€ë²ˆí˜¸: "+newpass;
+			String content = "ºñ¹Ğ¹øÈ£°¡ º¯°æµÇ¾ú½À´Ï´Ù.\r»õ·Î¿î ºñ¹Ğ¹øÈ£: "+newpass;
 			MailSend mail = new MailSend(mailSender);
 			int checkemail= mail.MailGo(email, subject, content);
 			dao.updatePass(pass, newpass, email);
@@ -122,50 +115,47 @@ public class ChefController {
 		return success;
 	}
 	
-	//ï¿½Ï¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	//ÀÏ¹İÁ¤º¸ ¼öÁ¤Æû
 	@GetMapping("/chef/modform")
 	public ChefDto modform(@RequestParam String email) {
-		System.out.println(email);
 		ChefDto dto = dao.getChef(email);
 		return dto;
 	}
 	
-	//ì¼ë°˜ì •ë³´ìˆ˜ì •
-	   @RequestMapping(value="/chef/mod", consumes = {"multipart/form-data"}, method = RequestMethod.POST)
-	   public int mod(MultipartHttpServletRequest request, @RequestParam int change, @ModelAttribute("ChefDto") ChefDto dto, BindingResult result) {
-	      String preprofile=dao.getprofile(dto.getEmail());
-	      if(change==1) {
-	         if(dto.getProfileimage()==null) {
-	            String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
-	            File file = new File(path+"\\"+preprofile);
-	            if(file.exists())
-	               file.delete();
-	            dto.setProfile("basic_user.png");            
-	         }else {
-	            String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
-	            String fileName = new Date().getTime()+"_"+dto.getProfileimage().getOriginalFilename();
-	            dto.setProfile(fileName);
-	            SpringFileWrite sfw = new SpringFileWrite();
-	            sfw.writeFileRename(dto.getProfileimage(), path, fileName);
-	            File file = new File(path+"\\"+preprofile);
-	            if(file.exists())
-	               file.delete();
-	         }
-	      }else {
-	         //ì‚¬ì§„ì´ ì•ˆë°”ê¼ˆì„ ê²½ìš° ê¸°ì¡´ í”„ë¡œí•„ ì‚¬ì§„ ì €ì¥í•´ë‘ê¸°
-	         dto.setProfile(preprofile);
-	      }
-	      System.out.println(dto.getProfile());
-	      dao.updateInfo(dto);
-	      return 1;
-	   }   
+	//ÀÏ¹İÁ¤º¸¼öÁ¤
+	@RequestMapping(value="/chef/mod", consumes = {"multipart/form-data"}, method = RequestMethod.POST)
+	public int mod(MultipartHttpServletRequest request, @RequestParam int change, @ModelAttribute("ChefDto") ChefDto dto, BindingResult result) {
+		String preprofile=dao.getprofile(dto.getEmail());
+		if(change==1) {
+			if(dto.getProfileimage()==null) {
+				String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
+				File file = new File(path+"\\"+preprofile);
+				if(file.exists())
+					file.delete();
+				dto.setProfile("basic_user.png");				
+			}else {
+				String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
+				String fileName = new Date().getTime()+"_"+dto.getProfileimage().getOriginalFilename();
+				dto.setProfile(fileName);
+				SpringFileWrite sfw = new SpringFileWrite();
+				sfw.writeFileRename(dto.getProfileimage(), path, fileName);
+				File file = new File(path+"\\"+preprofile);
+				if(file.exists())
+					file.delete();
+			}
+		}else {
+			//»çÁøÀÌ ¾È¹Ù²¼À» °æ¿ì ±âÁ¸ ÇÁ·ÎÇÊ »çÁø ÀúÀåÇØµÎ±â
+			dto.setProfile(preprofile);
+		}
+		
+		dao.updateInfo(dto);
+		return 1;
+	}	
 	
-	//ï¿½ï¿½Ğ¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½
+	//ºñ¹Ğ¹øÈ£ º¯°æ
 	@PostMapping("/chef/modpass")
 	public int modpass(@RequestParam String pass, @RequestParam String newpass, @RequestParam String email) {
 		int success=0;
-		System.out.println(pass);
-		System.out.println(newpass);
 		dao.updatePass(pass, newpass, email);
 		success=1;
 		return success;

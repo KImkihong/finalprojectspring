@@ -42,6 +42,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getNickname" parameterType="String" resultType="String">
 		select nickname from chef where provider=#{provider}
 	</select>
+	<update id="upNewsCount" parameterType="String">
+		update chef set newscount= newscount+1 where email=#{emial}
+	</update>
+	<update id="downNewsCount" parameterType="String">
+		update chef set newscount= newscount-1 where email=#{emial}
+	</update>
 	
 	<!-- 3.좋아요 -->
 	<select id="checkJoayo" parameterType="HashMap" resultType="int">

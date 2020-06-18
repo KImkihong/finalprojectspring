@@ -1,13 +1,17 @@
 package spring.form.acorn;
 
+import java.io.File;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -38,5 +42,21 @@ public class CommentController {
 		return 1;
 	}
 	
+	@GetMapping("/comment/list")
+	public List<CommentDto> getlist(@RequestParam int rec_num){
+		List<CommentDto> list = dao.getCommentlist(rec_num);
+		return list;
+	}
 	
+	@GetMapping("/comment/delete")
+	public void delete(MultipartHttpServletRequest request, @RequestParam int com_num) {
+		String image=dao.getComment(com_num).getImage();
+		if(image!=null) {
+			String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/comment");
+			File file = new File(path+"\\"+image);
+			if(file.exists())
+				file.delete();
+		}
+		dao.deleteCommenet(com_num);
+	}
 }
