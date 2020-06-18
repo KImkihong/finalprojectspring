@@ -10,8 +10,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteRefrig" parameterType="HashMap">
 		delete from refrigerator where refrig_num=#{refrig_num}
 	</delete>
-	<select id="getRefrig" parameterType="String" resultType="String">
-		select * from refrigerator where email=#{email}
+	<select id="getRefrig" parameterType="String" resultType="HashMap">
+		select refrig_num, refrig_name from refrigerator where email=#{email}
 	</select>
 	<!-- 솥검색 -->
 	<select id="getRefrigIngre" parameterType="int" resultType="String">
