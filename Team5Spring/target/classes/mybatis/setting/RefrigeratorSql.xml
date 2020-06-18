@@ -5,13 +5,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="refrigerator">
 	<insert id="putRefrig" parameterType="HashMap">
-		insert into refrigerator values (0,#{email},#{refrig_name})
+		insert into refrigerator values (0,#{refrig_name},#{email})
 	</insert>
 	<delete id="deleteRefrig" parameterType="HashMap">
 		delete from refrigerator where refrig_num=#{refrig_num}
 	</delete>
-	<select id="getRefrig" parameterType="String" resultType="String">
-		select * from refrigerator where email=#{email}
+	<select id="getRefrig" parameterType="String" resultType="HashMap">
+		select refrig_num, refrig_name from refrigerator where email=#{email}
 	</select>
 	<!-- 솥검색 -->
 	<select id="getRefrigIngre" parameterType="int" resultType="String">

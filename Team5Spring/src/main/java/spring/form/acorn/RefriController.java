@@ -1,6 +1,7 @@
 package spring.form.acorn;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class RefriController {
 	}
 	
 	@GetMapping("/refri/list")
-	public List<String> getingre(@RequestParam String email){
+	public List<HashMap<String, String>> getingre(@RequestParam String email){
 		return dao.getRefri(email);
 	}
 	

@@ -27,7 +27,7 @@ public class RefriDao extends SqlSessionDaoSupport implements RefriDaoInter {
 	}
 
 	@Override
-	public List<String> getRefri(String email) {
+	public List<HashMap<String, String>> getRefri(String email) {
 		// TODO Auto-generated method stub
 		return getSqlSession().selectList("getRefrig", email);
 	}
