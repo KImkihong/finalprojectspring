@@ -130,33 +130,42 @@ public class ChefController {
 		return dto;
 	}
 	
-	//�Ϲ���������
-	@RequestMapping(value="/chef/mod", consumes = {"multipart/form-data"}, method = RequestMethod.POST)
-	public int mod(MultipartHttpServletRequest request, @ModelAttribute("ChefDto") ChefDto dto, BindingResult result) {
-		
-		
-		String preprofile=dao.getprofile(dto.getEmail());
-		if(dto.getProfileimage()==null)
-			//������ �ȹٲ��� ��� ���� ������ ���� �����صα�
-			dto.setProfile(preprofile);
-		else {
-			String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
-			String fileName = new Date().getTime()+"_"+dto.getProfileimage().getOriginalFilename();
-			dto.setProfile(fileName);
-			SpringFileWrite sfw = new SpringFileWrite();
-			sfw.writeFileRename(dto.getProfileimage(), path, fileName);
-			File file = new File(path+"\\"+preprofile);
-			if(file.exists())
-				file.delete();
-		}
-		dao.updateInfo(dto);
-		return 1;
-	}	
+	//일반정보수정
+	   @RequestMapping(value="/chef/mod", consumes = {"multipart/form-data"}, method = RequestMethod.POST)
+	   public int mod(MultipartHttpServletRequest request, @RequestParam int change, @ModelAttribute("ChefDto") ChefDto dto, BindingResult result) {
+	      String preprofile=dao.getprofile(dto.getEmail());
+	      if(change==1) {
+	         if(dto.getProfileimage()==null) {
+	            String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
+	            File file = new File(path+"\\"+preprofile);
+	            if(file.exists())
+	               file.delete();
+	            dto.setProfile("basic_user.png");            
+	         }else {
+	            String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
+	            String fileName = new Date().getTime()+"_"+dto.getProfileimage().getOriginalFilename();
+	            dto.setProfile(fileName);
+	            SpringFileWrite sfw = new SpringFileWrite();
+	            sfw.writeFileRename(dto.getProfileimage(), path, fileName);
+	            File file = new File(path+"\\"+preprofile);
+	            if(file.exists())
+	               file.delete();
+	         }
+	      }else {
+	         //사진이 안바꼈을 경우 기존 프로필 사진 저장해두기
+	         dto.setProfile(preprofile);
+	      }
+	      System.out.println(dto.getProfile());
+	      dao.updateInfo(dto);
+	      return 1;
+	   }   
 	
 	//��й�ȣ ����
 	@PostMapping("/chef/modpass")
 	public int modpass(@RequestParam String pass, @RequestParam String newpass, @RequestParam String email) {
 		int success=0;
+		System.out.println(pass);
+		System.out.println(newpass);
 		dao.updatePass(pass, newpass, email);
 		success=1;
 		return success;
