@@ -101,7 +101,7 @@ public class RecipeDao extends SqlSessionDaoSupport implements RecipeDaoInter {
 		map.put("start",start);
 		map.put("end",end);
 		map.put("ingreList",ingreList);
-		map.put("count",ingreList.length);
+		map.put("count",ingreList.length-1);
 		return getSqlSession().selectList("getRec_nums", map);
 	}
 

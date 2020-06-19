@@ -38,17 +38,14 @@ public class RecipeController {
 	
 	@GetMapping("/recipe/list")
 	public List<RecipeDto> getList(@RequestParam(required = false) String field,
-	         @RequestParam(required = false) String search,@RequestParam int scroll){    
-
+	         @RequestParam(required = false) String search,@RequestParam(required=false, defaultValue="0") int scroll){    
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
-		
-		if(field!="" && field=="재료") {	//재료검색일 떄
+		if(field!=null && field.equals("재료")) {	//재료검색일 떄
 			if(scroll==0) {
 				start=0;
 				end=10;
 			}
-			
-			List<Integer> numList = dao.getRec_nums(start, end, search);			
+			List<Integer> numList = dao.getRec_nums(start, end, search);
 			for(int rec_num : numList) {
 				RecipeDto dto = dao.getIngreRecipe(rec_num);
 				list.add(dto);
@@ -65,7 +62,6 @@ public class RecipeController {
 			 start+=10;
 			 end+=10;
 		}
-		 
 		return list;	
 	}
 	
