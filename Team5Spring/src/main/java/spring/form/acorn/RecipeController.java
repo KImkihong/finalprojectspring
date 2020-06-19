@@ -42,7 +42,7 @@ public class RecipeController {
 
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
 		
-		if(field!="" && field=="Àç·á") {	//Àç·á°Ë»öÀÏ ‹š
+		if(field!="" && field=="ï¿½ï¿½ï¿½") {	//ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½
 			if(scroll==0) {
 				start=0;
 				end=10;
@@ -55,7 +55,7 @@ public class RecipeController {
 			}
 			start+=10;
 			end+=10;
-		}else {		//ÀüÃ¼¸®½ºÆ®³ª Á¦¸ñÀ¸·Î °Ë»öÀÏ ¶§
+		}else {		//ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½
 			if(scroll==0) {
 				start=0;
 				end=10;
@@ -81,43 +81,44 @@ public class RecipeController {
 	}
 	
 	@RequestMapping(value="/recipe/regist",consumes = {"multipart/form-data"}, method = RequestMethod.POST)
-	public void regist(MultipartHttpServletRequest request, @ModelAttribute("RecipeDto") RecipeDto rdto, BindingResult result) {
-		String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/recipe");
-		SpringFileWrite sfw = new SpringFileWrite();
-		String comp_photo="";
-		for(MultipartFile file:rdto.getComp_photoList()) {
-			if(!file.getOriginalFilename().equals("") && !(file.getOriginalFilename()==null)) {
-				String fileName = new Date().getTime()+"_"+file.getOriginalFilename();
-				sfw.writeFileRename(file, path, fileName);
-				comp_photo+=fileName+",";
-			}			
-		}		
-		//¸¶Áö¸· ÄÞ¸¶Á¦°Å
-		if(comp_photo.length()>0)
-			comp_photo = comp_photo.substring(0,comp_photo.length()-1);
-		rdto.setComp_photo(comp_photo);
-		
-		if(rdto.getRepre_photofile()!=null) {
-			String fileName = new Date().getTime()+"_"+rdto.getRepre_photofile().getOriginalFilename();
-			rdto.setRepre_photo(fileName);
-			sfw.writeFileRename(rdto.getRepre_photofile(), path, fileName);
-		}
-		dao.insertRecipe(rdto);
-		int rec_num = dao.getMaxCount();
-		
-		for(IngredientDto idto: rdto.getIngreList()) {
-			idto.setRec_num(rec_num);
-			dao.insertIngre(idto);
-		}
-		for(RecipeOrderDto odto: rdto.getOrderList()) {
-			odto.setRec_num(rec_num);
-			if(odto.getPhotofile()!=null) {
-				String fileName = new Date().getTime()+"_"+odto.getPhotofile().getOriginalFilename();
-				odto.setPhoto(fileName);
-				sfw.writeFileRename(odto.getPhotofile(), path, fileName);
-			}
-			dao.insertOrder(odto);
-		}
+	public void regist(MultipartHttpServletRequest request, @ModelAttribute IngredientDto ingreList , BindingResult result) {
+		System.out.println(dto.length);
+		//		String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/recipe");
+//		SpringFileWrite sfw = new SpringFileWrite();
+//		String comp_photo="";
+//		for(MultipartFile file:rdto.getComp_photoList()) {
+//			if(!file.getOriginalFilename().equals("") && !(file.getOriginalFilename()==null)) {
+//				String fileName = new Date().getTime()+"_"+file.getOriginalFilename();
+//				sfw.writeFileRename(file, path, fileName);
+//				comp_photo+=fileName+",";
+//			}			
+//		}		
+//		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½
+//		if(comp_photo.length()>0)
+//			comp_photo = comp_photo.substring(0,comp_photo.length()-1);
+//		rdto.setComp_photo(comp_photo);
+//		
+//		if(rdto.getRepre_photofile()!=null) {
+//			String fileName = new Date().getTime()+"_"+rdto.getRepre_photofile().getOriginalFilename();
+//			rdto.setRepre_photo(fileName);
+//			sfw.writeFileRename(rdto.getRepre_photofile(), path, fileName);
+//		}
+//		dao.insertRecipe(rdto);
+//		int rec_num = dao.getMaxCount();
+//		
+//		for(IngredientDto idto: rdto.getIngreList()) {
+//			idto.setRec_num(rec_num);
+//			dao.insertIngre(idto);
+//		}
+//		for(RecipeOrderDto odto: rdto.getOrderList()) {
+//			odto.setRec_num(rec_num);
+//			if(odto.getPhotofile()!=null) {
+//				String fileName = new Date().getTime()+"_"+odto.getPhotofile().getOriginalFilename();
+//				odto.setPhoto(fileName);
+//				sfw.writeFileRename(odto.getPhotofile(), path, fileName);
+//			}
+//			dao.insertOrder(odto);
+//		}
 		
 	}
 	
@@ -131,7 +132,7 @@ public class RecipeController {
 			while(st.hasMoreTokens()) {
 				File file = new File(path+"\\"+st.nextToken());
 				if(file.exists())
-					file.delete();	//ÆÄÀÏÀÌ Á¸ÀçÇÏ¸é Áö¿ì±â
+					file.delete();	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 			}
 		}
 		String repre_photo=dto.getRepre_photo();
