@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 추가 -->
 	<insert id="insertOfRecipe" parameterType="recipe_dto">
 		insert into recipe values (0,#{portion},#{time},#{difficult},#{repre_photo},#{comp_photo},#{food_cate},
-		#{subject},#{summary},0,now(),#{email})
+		#{subject},#{summary},0,now(),#{email},#{tip})
 	</insert>
 	<insert id="insertOfingre" parameterType="ingre_dto">
 		insert into ingredient values (#{rec_num},#{ingre_name},#{quantity},#{sort})
@@ -22,20 +22,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 리스트 출력 -->
 	<select id="getRecipe" parameterType="HashMap" resultType="recipe_dto">
 		select * from recipe 
-		<if test="search!=''">
-			where subject like '%'||#{search}||'%'
+		<if test="search!=''and search!=null">
+			where subject like CONCAT('%',#{search},'%')
 		</if>
 		order by writeday desc limit #{start},#{end}
 	</select>
 	<!-- 재료를 검색해서 rec_num 구하기 -->
 	<select id="getRec_nums" parameterType="HashMap" resultType="int">
-		select rec_num from (select * from ingredient where
+		<![CDATA[
+			select rec_num from (select * from ingredient where
+		]]>
 		<foreach collection="ingreList" item="list" index="index" separator="or">
-			ingre_name=#{list[index]}
+			ingre_name like CONCAT('%',#{list},'%')
 		</foreach>
-		) a
-		group by rec_num having count(rec_num)>#{count}
-		order by rec_num desc limit #{start},#{end}
+		<![CDATA[
+			) a
+			group by rec_num having count(rec_num)>#{count}
+			order by rec_num desc limit #{start},#{end}
+		]]>
 	</select>
 	<!-- rec_num으로 recipe가져오기 -->
 	<select id="getIngreRecipe" parameterType="int" resultType="recipe_dto">
@@ -74,5 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateReadcount" parameterType="int">
 		update recipe set readcount=readcount+1 where rec_num=#{rec_num}
 	</update>
+	
+	<!-- 업데이트 -->
 	
 </mapper>

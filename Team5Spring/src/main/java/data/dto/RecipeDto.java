@@ -21,6 +21,13 @@ public class RecipeDto {
 	private String email;
 	private List<RecipeOrderDto> orderList;
 	private List<IngredientDto> ingreList;
+	private String tip;
+	public String getTip() {
+		return tip;
+	}
+	public void setTip(String tip) {
+		this.tip = tip;
+	}
 	public MultipartFile getRepre_photofile() {
 		return repre_photofile;
 	}
