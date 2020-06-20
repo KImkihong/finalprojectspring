@@ -31,6 +31,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			order by count(rec_num) desc
 		]]>
 	</select>
+	<!-- 주재료가 하나만 있는 레시피에서의 검색 -->
+	<select id="getOneIngreRec_num" parameterType="java.util.ArrayList" resultType="int">
+		select distinct rec_num from ingredient where rec_num in 
+		(select rec_num from ingredient where sort='주재료'and
+		<foreach collection="array" item="list" index="index" open="(" close=")" separator="or"> 
+			ingre_name like  CONCAT('%',#{list},'%')
+		</foreach>
+		group by rec_num having count(rec_num)=1)
+	</select>
 	<!-- rec_num으로 recipe가져오기 -->
 	<select id="getRefrigIngreRecipe" parameterType="int" resultType="recipe_dto">
 		select * from recipe where rec_num=#{rec_num}

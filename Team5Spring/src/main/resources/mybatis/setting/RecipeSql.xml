@@ -25,6 +25,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="search!=''and search!=null">
 			where subject like CONCAT('%',#{search},'%')
 		</if>
+		<if test="food_cate!=''and food_cate!=null">
+			where food_cate = #{food_cate}
+		</if>
 		order by writeday desc limit #{start},#{end}
 	</select>
 	<!-- 재료를 검색해서 rec_num 구하기 -->

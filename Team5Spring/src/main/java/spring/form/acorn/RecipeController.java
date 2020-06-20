@@ -38,17 +38,24 @@ public class RecipeController {
 	
 	@GetMapping("/recipe/list")
 	public List<RecipeDto> getList(@RequestParam(required = false) String field,
-	         @RequestParam(required = false) String search,@RequestParam(required=false, defaultValue="0") int scroll){    
+	         @RequestParam(required = false) String search,
+	         @RequestParam(required = false) String food_cate,@RequestParam(required=false, defaultValue="0") int scroll){    
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
-		if(field!=null && field.equals("재료")) {	//재료검색일 떄
+		if(field!=null) {	//재료검색일 떄
 			if(scroll==0) {
 				start=0;
 				end=10;
 			}
-			List<Integer> numList = dao.getRec_nums(start, end, search);
-			for(int rec_num : numList) {
-				RecipeDto dto = dao.getIngreRecipe(rec_num);
-				list.add(dto);
+			if(field.equals("재료")) {
+				List<Integer> numList = dao.getRec_nums(start, end, search);
+				for(int rec_num : numList) {
+					RecipeDto dto = dao.getIngreRecipe(rec_num);
+					list.add(dto);
+				}
+			}else {
+				list = dao.getList(start,end,search,"");
+				start+=10;
+				end+=10;
 			}
 			start+=10;
 			end+=10;
@@ -58,7 +65,7 @@ public class RecipeController {
 				end=10;
 			}		
 			
-			list = dao.getList(start,end,search);
+			list = dao.getList(start,end,"",food_cate);
 			 start+=10;
 			 end+=10;
 		}
@@ -67,12 +74,12 @@ public class RecipeController {
 	
 	@GetMapping("/recipe/select")
 	public RecipeDto selectData(@RequestParam int rec_num){
+		dao.updateReadcount(rec_num);
 		RecipeDto dto = dao.getSelectedRecipe(rec_num);
 		List<IngredientDto> ilist = dao.getIngre(rec_num);
 		List<RecipeOrderDto> olist = dao.getOrder(rec_num);
 		dto.setIngreList(ilist);
 		dto.setOrderList(olist);
-		dao.updateReadcount(rec_num);
 		return dto;
 	}
 	

@@ -8,7 +8,7 @@ import data.dto.RecipeOrderDto;
 
 public interface RecipeDaoInter {
 	//selectList
-	public List<RecipeDto> getList(int start,int end,String search);
+	public List<RecipeDto> getList(int start,int end,String search,String food_cate);
 	public List<Integer> getRec_nums(int start,int end,String search);
 	public RecipeDto getIngreRecipe(int rec_num);
 	public int getTotalCount();
