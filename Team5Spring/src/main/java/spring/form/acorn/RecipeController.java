@@ -38,26 +38,30 @@ public class RecipeController {
 	
 	@GetMapping("/recipe/list")
 	public List<RecipeDto> getList(@RequestParam(required = false) String field,
-	         @RequestParam(required = false) String search,@RequestParam(required=false, defaultValue="0") int scroll){    
-		
-			System.out.println(scroll);
+	         @RequestParam(required = false) String search,
+	         @RequestParam(required = false) String food_cate,@RequestParam(required=false, defaultValue="0") int scroll){    
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
-		if(field!=null && field.equals("ìž¬ë£Œ")) {	//ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½
+		if(field!=null) {	//Àç·á°Ë»öÀÏ ‹š
 			if(scroll==0) {
 				start=0;
 			}
-			List<Integer> numList = dao.getRec_nums(start, end, search);
-			for(int rec_num : numList) {
-				RecipeDto dto = dao.getIngreRecipe(rec_num);
-				list.add(dto);
+			if(field.equals("Àç·á")) {
+				List<Integer> numList = dao.getRec_nums(start, end, search);
+				for(int rec_num : numList) {
+					RecipeDto dto = dao.getIngreRecipe(rec_num);
+					list.add(dto);
+				}
+			}else {
+				list = dao.getList(start,end,search,"");
+				start+=3;
 			}
 			start+=3;
-		}else {		//ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½
+		}else {		//ÀüÃ¼¸®½ºÆ®³ª Á¦¸ñÀ¸·Î °Ë»öÀÏ ¶§
 			if(scroll==0) {
 				start=0;
 			}		
 			
-			list = dao.getList(start,end,search);
+			list = dao.getList(start,end,"",food_cate);
 			 start+=3;
 		}
 		return list;	
@@ -65,12 +69,12 @@ public class RecipeController {
 	
 	@GetMapping("/recipe/select")
 	public RecipeDto selectData(@RequestParam int rec_num){
+		dao.updateReadcount(rec_num);
 		RecipeDto dto = dao.getSelectedRecipe(rec_num);
 		List<IngredientDto> ilist = dao.getIngre(rec_num);
 		List<RecipeOrderDto> olist = dao.getOrder(rec_num);
 		dto.setIngreList(ilist);
 		dto.setOrderList(olist);
-		dao.updateReadcount(rec_num);
 		return dto;
 	}
 	
@@ -86,7 +90,7 @@ public class RecipeController {
 				comp_photo+=fileName+",";
 			}			
 		}		
-		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½
+		//¸¶Áö¸· ÄÞ¸¶Á¦°Å
 		if(comp_photo.length()>0)
 			comp_photo = comp_photo.substring(0,comp_photo.length()-1);
 		rdto.setComp_photo(comp_photo);
@@ -125,7 +129,7 @@ public class RecipeController {
 			while(st.hasMoreTokens()) {
 				File file = new File(path+"\\"+st.nextToken());
 				if(file.exists())
-					file.delete();	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+					file.delete();	//ÆÄÀÏÀÌ Á¸ÀçÇÏ¸é Áö¿ì±â
 			}
 		}
 		String repre_photo=dto.getRepre_photo();

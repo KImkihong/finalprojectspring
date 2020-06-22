@@ -55,6 +55,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="findPassOfChef" parameterType="HashMap" resultType="String">
 		select pass from chef where name=#{name} and email=#{email}
 	</select>
+	<!-- 닉네임 -->
+	<select id="getNickname" parameterType="String" resultType="String">
+		select nickname from chef where email=#{email}
+	</select>
 </mapper>
 
 	<!-- 페이징처리 LIST -->

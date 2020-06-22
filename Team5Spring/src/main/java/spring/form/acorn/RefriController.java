@@ -51,6 +51,8 @@ public class RefriController {
 		}
 		
 		List<Integer> numList = dao.getRec_nums(ingrelist);			
+		List<Integer> numList2 = dao.getOneIngreRec_nums(ingrelist);
+		numList.addAll(numList2);
 		for(int rec_num : numList) {
 			RecipeDto dto = dao.getIngreRecipe(rec_num);
 			list.add(dto);
