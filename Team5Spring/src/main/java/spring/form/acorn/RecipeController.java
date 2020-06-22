@@ -34,7 +34,7 @@ public class RecipeController {
 	private RecipeDaoInter dao;
 	
 	int start=0;
-	int end=10;
+	int end=3;
 	
 	@GetMapping("/recipe/list")
 	public List<RecipeDto> getList(@RequestParam(required = false) String field,
@@ -44,7 +44,6 @@ public class RecipeController {
 		if(field!=null) {	//재료검색일 떄
 			if(scroll==0) {
 				start=0;
-				end=10;
 			}
 			if(field.equals("재료")) {
 				List<Integer> numList = dao.getRec_nums(start, end, search);
@@ -54,20 +53,16 @@ public class RecipeController {
 				}
 			}else {
 				list = dao.getList(start,end,search,"");
-				start+=10;
-				end+=10;
+				start+=3;
 			}
-			start+=10;
-			end+=10;
+			start+=3;
 		}else {		//전체리스트나 제목으로 검색일 때
 			if(scroll==0) {
 				start=0;
-				end=10;
 			}		
 			
 			list = dao.getList(start,end,"",food_cate);
-			 start+=10;
-			 end+=10;
+			 start+=3;
 		}
 		return list;	
 	}
