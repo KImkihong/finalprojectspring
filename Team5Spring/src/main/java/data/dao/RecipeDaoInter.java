@@ -26,5 +26,7 @@ public interface RecipeDaoInter {
 	public void deleteOrder(int rec_num);
 	public void deleteIngre(int rec_num);
 	public void deleteRecipe(int rec_num);
+	//count
+	public int getReadcount(int rec_num);
 	
 }

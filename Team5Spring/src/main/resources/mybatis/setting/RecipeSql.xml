@@ -81,6 +81,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="updateReadcount" parameterType="int">
 		update recipe set readcount=readcount+1 where rec_num=#{rec_num}
 	</update>
+	<select id="getCountOfread" parameterType="int" resultType="int">
+		select readcount from recipe where rec_num=#{rec_num}
+	</select>
 	
 	<!-- 업데이트 -->
 	
