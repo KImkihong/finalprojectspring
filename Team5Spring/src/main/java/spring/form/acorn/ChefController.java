@@ -161,11 +161,5 @@ public class ChefController {
 		return success;
 	}
 	
-	//닉네임 불러오기
-	@GetMapping("/chef/nickname")
-	public String getnickname(@RequestParam String email) {
-		String nickname = dao.getNickname(email);
-		return nickname;
-	}
 	
 }

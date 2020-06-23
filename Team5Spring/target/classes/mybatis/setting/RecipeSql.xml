@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 추가 -->
 	<insert id="insertOfRecipe" parameterType="recipe_dto">
 		insert into recipe values (0,#{portion},#{time},#{difficult},#{repre_photo},#{comp_photo},#{food_cate},
-		#{subject},#{summary},0,now(),#{email},#{tip})
+		#{subject},#{summary},0,now(),#{email},#{tip},#{profile},#{nickname})
 	</insert>
 	<insert id="insertOfingre" parameterType="ingre_dto">
 		insert into ingredient values (#{rec_num},#{ingre_name},#{quantity},#{sort})
