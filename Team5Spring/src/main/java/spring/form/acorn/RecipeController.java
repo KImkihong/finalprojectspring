@@ -39,7 +39,7 @@ public class RecipeController {
 	
 	int start=0;
 	int end=3;
-	
+	//count
 	@GetMapping("/recipe/count")
 	public HashMap<String, Integer> getCount(@RequestParam int rec_num){
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
