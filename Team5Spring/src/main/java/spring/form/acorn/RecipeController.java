@@ -3,6 +3,7 @@ package spring.form.acorn;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import data.dao.ConnectDaoInter;
 import data.dao.RecipeDaoInter;
 import data.dto.IngredientDto;
 import data.dto.RecipeDto;
@@ -32,9 +34,21 @@ public class RecipeController {
 	
 	@Autowired
 	private RecipeDaoInter dao;
+	@Autowired
+	private ConnectDaoInter cdao;
 	
 	int start=0;
 	int end=3;
+	
+	@GetMapping("/recipe/count")
+	public HashMap<String, Integer> getCount(@RequestParam int rec_num){
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("readcount", dao.getReadcount(rec_num));
+		map.put("joayo", cdao.getCountJoayo(rec_num));
+		map.put("scrap", cdao.getCountScrap(rec_num));
+		
+		return map;
+	}
 	
 	@GetMapping("/recipe/list")
 	public List<RecipeDto> getList(@RequestParam(required = false) String field,
