@@ -38,6 +38,10 @@ public class RefriController {
 	
 	@PostMapping("/refri/search")
 	public List<RecipeDto> search(@RequestParam List<Integer> refrig_num) {
+		
+		for(int a: refrig_num) {
+			System.out.println(a);
+		}
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
 		
 		String [] ingrelist = new String[refrig_num.size()];
