@@ -10,8 +10,8 @@ public class TimeDiffrence {
 		public static final int SEC = 60;
 		public static final int MIN = 60;
 		public static final int HOUR = 24;
-		//public static final int DAY = 30;
-		//public static final int MONTH = 12;
+		public static final int DAY = 30;
+		public static final int MONTH = 12;
 	}
 
 
@@ -31,15 +31,17 @@ public class TimeDiffrence {
 			
 			if (diffTime < TIME_MAXIMUM.SEC) {
 				// sec
-				msg = "ë°©ê¸ˆ ì „";
+				msg = "¹æ±Ý Àü";
 			} else if ((diffTime /= TIME_MAXIMUM.SEC) < TIME_MAXIMUM.MIN) {
 				// min
-				msg = diffTime + "ë¶„ ì „";
+				msg = diffTime + "ºÐ Àü";
 			} else if ((diffTime /= TIME_MAXIMUM.MIN) < TIME_MAXIMUM.HOUR) {
 				// hour
-				msg = (diffTime) + "ì‹œê°„ ì „";
+				msg = (diffTime) + "½Ã°£ Àü";
+			} else if ((diffTime /= TIME_MAXIMUM.HOUR) < TIME_MAXIMUM.DAY ||(diffTime /= TIME_MAXIMUM.HOUR) < TIME_MAXIMUM.DAY){
+				msg = date.substring(0, 4)+"¿ù "+date.substring(8, 10)+"ÀÏ";
 			} else {
-				msg = date.substring(0, 10);
+				msg = date.substring(5, 7)+"³â "+date.substring(5, 7)+"¿ù "+date.substring(8, 10)+"ÀÏ";
 			}
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
