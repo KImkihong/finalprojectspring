@@ -55,6 +55,15 @@ public class ConnectDao extends SqlSessionDaoSupport implements ConnectDaoInter 
 		// TODO Auto-generated method stub
 		return getSqlSession().selectOne("getCountOfScrap", rec_num);
 	}
+	
+	@Override
+	public int checkNews(String receiver, String provider) {
+		// TODO Auto-generated method stub
+		HashMap<String,String> map = new HashMap<String, String>();
+		map.put("receiver",receiver);
+		map.put("provider",provider);
+		return getSqlSession().selectOne("checkNews", map);
+	}		
 
 	@Override
 	public void receiveNews(String receiver, String provider) {
@@ -132,6 +141,6 @@ public class ConnectDao extends SqlSessionDaoSupport implements ConnectDaoInter 
 	public void downNewsCount(String email) {
 		// TODO Auto-generated method stub
 		getSqlSession().update("downNewsCount", email);
-	}		
+	}	
 
 }

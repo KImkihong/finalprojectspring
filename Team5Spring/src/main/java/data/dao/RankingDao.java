@@ -1,5 +1,6 @@
 package data.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
@@ -12,9 +13,13 @@ import data.dto.RecipeDto;
 public class RankingDao extends SqlSessionDaoSupport implements RankingDaoInter {
 
 	@Override
-	public List<ChefDto> chefSorting(String standard) {
+	public List<ChefDto> chefSorting(String standard,int start,int end) {
 		// TODO Auto-generated method stub
-		return getSqlSession().selectList("chefSorting", standard);
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		map.put("start",start);
+		map.put("end",end);
+		map.put("standard",standard);
+		return getSqlSession().selectList("chefSorting", map);
 	}
 
 	@Override

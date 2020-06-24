@@ -26,9 +26,10 @@ public class CommentController {
 	@Autowired
 	private CommentDaoInter dao;
 	
+	final int end =5;
+	
 	@RequestMapping(value="/comment/regist", consumes = {"multipart/form-data"} ,method = RequestMethod.POST)
 	public int register(MultipartHttpServletRequest request, @ModelAttribute("CommentDto") CommentDto dto, BindingResult result) {
-		
 		if(dto.getImagefile()!=null) {
 			String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/comment");
 			String fileName = new Date().getTime()+"_"+dto.getImagefile().getOriginalFilename();
@@ -43,8 +44,10 @@ public class CommentController {
 	}
 	
 	@GetMapping("/comment/list")
-	public List<CommentDto> getlist(@RequestParam int rec_num){
-		List<CommentDto> list = dao.getCommentlist(rec_num);
+	public List<CommentDto> getlist(@RequestParam int rec_num,
+			@RequestParam(required=false, defaultValue="0") int scroll){
+		
+		List<CommentDto> list = dao.getCommentlist(rec_num,scroll*5,end);
 		return list;
 	}
 	
