@@ -31,13 +31,13 @@ public class TimeDiffrence {
 			
 			if (diffTime < TIME_MAXIMUM.SEC) {
 				// sec
-				msg = "¹æ±Ý Àü";
+				msg = "ë°©ê¸ˆ ì „";
 			} else if ((diffTime /= TIME_MAXIMUM.SEC) < TIME_MAXIMUM.MIN) {
 				// min
-				msg = diffTime + "ºÐ Àü";
+				msg = diffTime + "ë¶„ ì „";
 			} else if ((diffTime /= TIME_MAXIMUM.MIN) < TIME_MAXIMUM.HOUR) {
 				// hour
-				msg = (diffTime) + "½Ã°£ Àü";
+				msg = (diffTime) + "ì‹œê°„ ì „";
 			} else {
 				msg = date.substring(0, 10);
 			}
