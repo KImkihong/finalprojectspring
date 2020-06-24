@@ -35,6 +35,12 @@ public class ConnectController {
 		dao.updateScrapCount(chefemail, check);
 	}
 	
+	@GetMapping("/connect/newscheck")
+	public int checkjoayo(@RequestParam String provider, @RequestParam String receiver) {
+		int check =dao.checkNews(provider, receiver);
+		return check;
+	}
+	
 	@GetMapping("/connect/onnews")
 	public String onnews(@RequestParam String provider, @RequestParam String receiver) {
 		dao.receiveNews(receiver, provider);

@@ -1,5 +1,6 @@
 package data.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.support.SqlSessionDaoSupport;
@@ -12,9 +13,13 @@ import data.dto.RecipeDto;
 public class MypageDao extends SqlSessionDaoSupport implements MypageDaoInter {
 
 	@Override
-	public List<RecipeDto> getMyRecipe(String email) {
+	public List<RecipeDto> getMyRecipe(String email,int start,int end) {
 		// TODO Auto-generated method stub
-		return getSqlSession().selectList("getMyRecipe", email);
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		map.put("start",start);
+		map.put("end",end);
+		map.put("email",email);
+		return getSqlSession().selectList("getMyRecipe", map);
 	}
 
 	@Override

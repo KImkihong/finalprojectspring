@@ -5,8 +5,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="ranking">
 	<!-- 쉐프 순위 가져오기 -->
-	<select id="chefSorting" parameterType="String" resultType="chef_dto">
-		select * from chef order by ${standard} desc
+	<select id="chefSorting" parameterType="HashMap" resultType="chef_dto">
+		select * from chef order by ${standard} desc limit #{start},#{end}
 	</select>
 	
 	<!-- 내가 소식받기한 provider들 -->
@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<!-- provider들의 recipe -->
 	<select id="getProvderRecipe" parameterType="String" resultType="recipe_dto">
-		select * from recipe where email=#{provider}
+		select * from recipe where email=#{provider} order by writeday desc limit 0,3
 	</select>
 	
 </mapper>
