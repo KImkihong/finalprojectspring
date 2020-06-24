@@ -69,9 +69,10 @@ public class RecipeController {
 			
 			list = dao.getList(scroll*3,end,"",food_cate);
 		}
-		for(int i=0;i<3;i++) {
-			System.out.println(list.get(i).getRec_num());	
-		}
+		
+		
+		//날짜판단 list
+		
 		
 		return list;	
 	}
