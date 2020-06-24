@@ -54,6 +54,7 @@ public class RecipeController {
 	public List<RecipeDto> getList(@RequestParam(required = false) String field,
 	         @RequestParam(required = false) String search,
 	         @RequestParam(required = false) String food_cate,@RequestParam(required=false, defaultValue="0") int scroll){    
+		System.out.println("접속:"+start);
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
 		if(field!=null) {	//���˻��� ��
 			if(scroll==0) {
@@ -82,7 +83,10 @@ public class RecipeController {
 	}
 	
 	@GetMapping("/recipe/select")
-	public RecipeDto selectData(@RequestParam int rec_num){
+	public RecipeDto selectData(@RequestParam int rec_num, HttpServletRequest r){
+		
+		String path=r.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
+		System.out.println(path);
 		dao.updateReadcount(rec_num);
 		RecipeDto dto = dao.getSelectedRecipe(rec_num);
 		List<IngredientDto> ilist = dao.getIngre(rec_num);
