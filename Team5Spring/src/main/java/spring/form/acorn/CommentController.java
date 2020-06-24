@@ -36,6 +36,7 @@ public class CommentController {
 	
 	@RequestMapping(value="/comment/regist", consumes = {"multipart/form-data"} ,method = RequestMethod.POST)
 	public int register(MultipartHttpServletRequest request, @ModelAttribute("CommentDto") CommentDto dto, BindingResult result) {
+		
 		if(dto.getImagefile()!=null) {
 			String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/comment");
 			String fileName = new Date().getTime()+"_"+dto.getImagefile().getOriginalFilename();
