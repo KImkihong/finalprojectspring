@@ -2,6 +2,7 @@ package spring.form.acorn;
 
 import java.io.File;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import data.dao.CommentDaoInter;
 import data.dto.CommentDto;
 import data.util.SpringFileWrite;
+import data.util.TimeDiffrence;
 
 @RestController
 @CrossOrigin
@@ -44,11 +46,20 @@ public class CommentController {
 	}
 	
 	@GetMapping("/comment/list")
-	public List<CommentDto> getlist(@RequestParam int rec_num,
+	public HashMap<String, Object> getlist(@RequestParam int rec_num,
 			@RequestParam(required=false, defaultValue="0") int scroll){
 		
 		List<CommentDto> list = dao.getCommentlist(rec_num,scroll*5,end);
-		return list;
+		
+		TimeDiffrence td = new TimeDiffrence();
+		for(CommentDto dto:list) {
+			String timeDiffer = td.formatTimeString(dto.getCom_writeday());
+			dto.setTimeDiffer(timeDiffer);
+		}
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("totalcount", list.size());
+		map.put("list", list);
+		return map;
 	}
 	
 	@GetMapping("/comment/delete")
