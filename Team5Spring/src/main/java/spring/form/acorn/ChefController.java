@@ -61,6 +61,7 @@ public class ChefController {
 	
 		if(dto.getProfileimage()!=null) {
 			String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
+			System.out.println(path);
 			String fileName = new Date().getTime()+"_"+dto.getProfileimage().getOriginalFilename();
 			dto.setProfile(fileName);
 			SpringFileWrite sfw = new SpringFileWrite();
