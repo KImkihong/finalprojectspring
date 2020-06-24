@@ -11,4 +11,5 @@ public interface CommentDaoInter {
 	public List<CommentDto> getCommentlist(int rec_num, int start, int end);
 	public void deleteCommenet(int com_num);
 	public CommentDto getComment(int com_num);
+	public int getCount(int rec_num);
 }

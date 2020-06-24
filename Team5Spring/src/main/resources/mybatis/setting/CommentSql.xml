@@ -28,4 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getComment" parameterType="int" resultType="comment_dto">
 		select * from comment where com_num=#{com_num}
 	</select>
+	<select id="getCount" parameterType="int" resultType="int">
+		select count(*) from comment where rec_num=#{rec_num}
+	</select>
 </mapper>
