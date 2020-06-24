@@ -27,6 +27,7 @@ import data.dto.IngredientDto;
 import data.dto.RecipeDto;
 import data.dto.RecipeOrderDto;
 import data.util.SpringFileWrite;
+import data.util.TimeDiffrence;
 
 @RestController
 @CrossOrigin
@@ -68,6 +69,13 @@ public class RecipeController {
 			
 			list = dao.getList(scroll*3,end,"",food_cate);
 		}
+		
+		TimeDiffrence td = new TimeDiffrence();
+		for(RecipeDto dto:list) {
+			String timeDiffer = td.formatTimeString(dto.getWriteday());
+			dto.setTimeDiffer(timeDiffer);
+		}
+		
 		return list;	
 	}
 	

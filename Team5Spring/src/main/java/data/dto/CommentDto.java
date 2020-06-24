@@ -13,6 +13,13 @@ public class CommentDto {
 	private String com_writeday;	
 	private int rec_num;
 	private String email;
+	private String timeDiffer;
+	public String getTimeDiffer() {
+		return timeDiffer;
+	}
+	public void setTimeDiffer(String timeDiffer) {
+		this.timeDiffer = timeDiffer;
+	}
 	public String getCom_writeday() {
 		return com_writeday;
 	}
