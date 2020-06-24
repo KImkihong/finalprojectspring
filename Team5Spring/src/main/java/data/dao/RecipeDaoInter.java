@@ -10,7 +10,6 @@ public interface RecipeDaoInter {
 	//selectList
 	public List<RecipeDto> getList(int start,int end,String search,String food_cate);
 	public List<Integer> getRec_nums(int start,int end,String search);
-	public RecipeDto getIngreRecipe(int rec_num);
 	public int getTotalCount();
 	public void updateReadcount(int rec_num);
 	//insertData
@@ -26,5 +25,7 @@ public interface RecipeDaoInter {
 	public void deleteOrder(int rec_num);
 	public void deleteIngre(int rec_num);
 	public void deleteRecipe(int rec_num);
+	//count
+	public int getReadcount(int rec_num);
 	
 }

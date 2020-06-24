@@ -22,6 +22,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<!-- 댓글정보에서 레시피정보 가지고 오기 -->
 	<select id="getCommentRecipe" parameterType="int" resultType="recipe_dto">
-		select * from recipe where rec_num=#{rec_num}
+		select r.*,c.nickname,c.profile from recipe r left join chef c on r.email=c.email where rec_num=#{rec_num}
 	</select>
 </mapper>

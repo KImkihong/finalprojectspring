@@ -3,6 +3,7 @@ package spring.form.acorn;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import data.dao.ConnectDaoInter;
 import data.dao.RecipeDaoInter;
 import data.dto.IngredientDto;
 import data.dto.RecipeDto;
@@ -32,9 +34,20 @@ public class RecipeController {
 	
 	@Autowired
 	private RecipeDaoInter dao;
+	@Autowired
+	private ConnectDaoInter cdao;
 	
-	int start=0;
-	int end=10;
+	final int end =3;
+	
+	@GetMapping("/recipe/count")
+	public HashMap<String, Integer> getCount(@RequestParam int rec_num){
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("readcount", dao.getReadcount(rec_num));
+		map.put("joayo", cdao.getCountJoayo(rec_num));
+		map.put("scrap", cdao.getCountScrap(rec_num));
+		
+		return map;
+	}
 	
 	@GetMapping("/recipe/list")
 	public List<RecipeDto> getList(@RequestParam(required = false) String field,
@@ -42,32 +55,18 @@ public class RecipeController {
 	         @RequestParam(required = false) String food_cate,@RequestParam(required=false, defaultValue="0") int scroll){    
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
 		if(field!=null) {	//재료검색일 떄
-			if(scroll==0) {
-				start=0;
-				end=10;
-			}
 			if(field.equals("재료")) {
-				List<Integer> numList = dao.getRec_nums(start, end, search);
+				List<Integer> numList = dao.getRec_nums(scroll*3, end, search);
 				for(int rec_num : numList) {
-					RecipeDto dto = dao.getIngreRecipe(rec_num);
+					RecipeDto dto = dao.getSelectedRecipe(rec_num);
 					list.add(dto);
 				}
 			}else {
-				list = dao.getList(start,end,search,"");
-				start+=10;
-				end+=10;
+				list = dao.getList(scroll*3,end,search,"");
 			}
-			start+=10;
-			end+=10;
 		}else {		//전체리스트나 제목으로 검색일 때
-			if(scroll==0) {
-				start=0;
-				end=10;
-			}		
 			
-			list = dao.getList(start,end,"",food_cate);
-			 start+=10;
-			 end+=10;
+			list = dao.getList(scroll*3,end,"",food_cate);
 		}
 		return list;	
 	}

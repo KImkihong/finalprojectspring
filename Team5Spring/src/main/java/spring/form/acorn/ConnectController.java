@@ -16,21 +16,23 @@ public class ConnectController {
 	@Autowired
 	private ConnectDaoInter dao;
 	
+	@GetMapping("/connect/scrapcheck")
+	public int checkscrap(@RequestParam String email, @RequestParam int rec_num) {
+		int check =dao.checkScrap(email, rec_num);
+		return check;
+	}
+	
 	@GetMapping("/connect/scrap")
-	public String onscrap(@RequestParam String email, @RequestParam int rec_num) {
-		String msg="";
+	public void onscrap(@RequestParam String email, @RequestParam int rec_num) {
 		String chefemail=dao.getEmail(rec_num);
 		int check =dao.checkScrap(email, rec_num);
 		if(check==0) {
 			dao.insertScrap(email, rec_num);
-			msg = "스크랩되었습니다. 나만의 냉장고에서 확인가능합니다";
 		}
 		else {
 			dao.deleteScrap(email, rec_num);
-			msg = "스크랩이 취소 되었습니다";
 		}
 		dao.updateScrapCount(chefemail, check);
-		return msg;
 	}
 	
 	@GetMapping("/connect/onnews")
@@ -47,6 +49,12 @@ public class ConnectController {
 		dao.downNewsCount(provider);
 		String msg = dao.getNickname(provider)+"님의 소식받기가 취소되었습니다";
 		return msg;
+	}
+	
+	@GetMapping("/connect/joayocheck")
+	public int checkjoayo(@RequestParam String email, @RequestParam int rec_num) {
+		int check =dao.checkJoayo(email, rec_num);
+		return check;
 	}
 	
 	@GetMapping("/connect/joayo")

@@ -22,6 +22,20 @@ public class RecipeDto {
 	private List<RecipeOrderDto> orderList;
 	private List<IngredientDto> ingreList;
 	private String tip;
+	private String profile;
+	private String nickname;
+	public String getProfile() {
+		return profile;
+	}
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 	public String getTip() {
 		return tip;
 	}
