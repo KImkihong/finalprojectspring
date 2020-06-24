@@ -44,18 +44,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			order by rec_num desc limit #{start},#{end}
 		]]>
 	</select>
-	<!-- rec_num으로 recipe가져오기 -->
-	<select id="getIngreRecipe" parameterType="int" resultType="recipe_dto">
-		select r.*,c.nickname,c.profile from recipe r left join chef c on (r.email=c.email) where r.rec_num=#{rec_num}
-	</select>
 	
 	<!-- total카운트 구하기-->
 	<select id="getTotalCount" resultType="int">
 		select count(*) from recipe
 	</select>
-	<!-- 선택 레시피 출력 -->
+	<!-- 선택 레시피 출력,rec_num으로 recipe가져오기 -->
 	<select id="getSelectOfRecipe" parameterType="int" resultType="recipe_dto">
-		select r.*,c.nickname,c.profile from recipe r left join chef c on (r.email=c.email) where rec_num=#{rec_num}
+		select r.*,c.nickname,c.profile from recipe r left join chef c on r.email=c.email where rec_num=#{rec_num}
 	</select>
 	<!-- 선택 레시피의 재료 -->
 	<select id="getIngre" parameterType="int" resultType="ingre_dto">

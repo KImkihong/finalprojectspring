@@ -37,9 +37,8 @@ public class RecipeController {
 	@Autowired
 	private ConnectDaoInter cdao;
 	
-	int start=0;
-	int end=3;
-	//count
+	final int end =3;
+	
 	@GetMapping("/recipe/count")
 	public HashMap<String, Integer> getCount(@RequestParam int rec_num){
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
@@ -54,39 +53,26 @@ public class RecipeController {
 	public List<RecipeDto> getList(@RequestParam(required = false) String field,
 	         @RequestParam(required = false) String search,
 	         @RequestParam(required = false) String food_cate,@RequestParam(required=false, defaultValue="0") int scroll){    
-		System.out.println("ì ‘ì†:"+start);
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
-		if(field!=null) {	//ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½
-			if(scroll==0) {
-				start=0;
-			}
-			if(field.equals("ï¿½ï¿½ï¿½")) {
-				List<Integer> numList = dao.getRec_nums(start, end, search);
+		if(field!=null) {	//Àç·á°Ë»öÀÏ ‹š
+			if(field.equals("Àç·á")) {
+				List<Integer> numList = dao.getRec_nums(scroll*3, end, search);
 				for(int rec_num : numList) {
-					RecipeDto dto = dao.getIngreRecipe(rec_num);
+					RecipeDto dto = dao.getSelectedRecipe(rec_num);
 					list.add(dto);
 				}
 			}else {
-				list = dao.getList(start,end,search,"");
-				start+=3;
+				list = dao.getList(scroll*3,end,search,"");
 			}
-			start+=3;
-		}else {		//ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½
-			if(scroll==0) {
-				start=0;
-			}		
+		}else {		//ÀüÃ¼¸®½ºÆ®³ª Á¦¸ñÀ¸·Î °Ë»öÀÏ ¶§
 			
-			list = dao.getList(start,end,"",food_cate);
-			 start+=3;
+			list = dao.getList(scroll*3,end,"",food_cate);
 		}
 		return list;	
 	}
 	
 	@GetMapping("/recipe/select")
-	public RecipeDto selectData(@RequestParam int rec_num, HttpServletRequest r){
-		
-		String path=r.getSession().getServletContext().getRealPath("/WEB-INF/image/profile");
-		System.out.println(path);
+	public RecipeDto selectData(@RequestParam int rec_num){
 		dao.updateReadcount(rec_num);
 		RecipeDto dto = dao.getSelectedRecipe(rec_num);
 		List<IngredientDto> ilist = dao.getIngre(rec_num);
@@ -108,7 +94,7 @@ public class RecipeController {
 				comp_photo+=fileName+",";
 			}			
 		}		
-		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ş¸ï¿½ï¿½ï¿½ï¿½ï¿½
+		//¸¶Áö¸· ÄŞ¸¶Á¦°Å
 		if(comp_photo.length()>0)
 			comp_photo = comp_photo.substring(0,comp_photo.length()-1);
 		rdto.setComp_photo(comp_photo);
@@ -147,7 +133,7 @@ public class RecipeController {
 			while(st.hasMoreTokens()) {
 				File file = new File(path+"\\"+st.nextToken());
 				if(file.exists())
-					file.delete();	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
+					file.delete();	//ÆÄÀÏÀÌ Á¸ÀçÇÏ¸é Áö¿ì±â
 			}
 		}
 		String repre_photo=dto.getRepre_photo();
