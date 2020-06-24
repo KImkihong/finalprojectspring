@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="food_cate!=''and food_cate!=null">
 			where food_cate = #{food_cate}
 		</if>
-		order by writeday desc limit #{start},#{end}
+		order by r.rec_num desc limit #{start},#{end}
 	</select>
 	<!-- 재료를 검색해서 rec_num 구하기 -->
 	<select id="getRec_nums" parameterType="HashMap" resultType="int">

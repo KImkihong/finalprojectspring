@@ -19,22 +19,32 @@ import data.dto.RecipeDto;
 public class RankingController {
 	
 	@Autowired
-	private RankingDaoInter dao;
+	private RankingDaoInter dao;	
+	
 	
 	@GetMapping("/ranking/sorting")
-	public List<ChefDto> chefSorting(@RequestParam String standard){
-		return dao.chefSorting(standard);
+	public List<ChefDto> chefSorting(@RequestParam String standard,
+			@RequestParam(required=false, defaultValue="0") int scroll){
+		final int end =8;
+		return dao.chefSorting(standard,scroll*8,end);
 	}
 	
 	@GetMapping("/ranking/news")
-	public List<HashMap<String,Object>> mynews(@RequestParam String email){
+	public List<HashMap<String,Object>> mynews(@RequestParam String email,
+			@RequestParam(required=false, defaultValue="0") int scroll){
+		int start = scroll*4;
+		int end = start+4;
 		List<HashMap<String,Object>> list= new ArrayList<HashMap<String,Object>>();
 		List<String> providerList= dao.getProviders(email);
-		for(String provider : providerList) {
+		if(start>=providerList.size())
+			return list;
+		if(end>providerList.size())
+			end = providerList.size();
+		for(int i=start;i<end;i++) {
 			HashMap<String,Object> map = new HashMap<String, Object>();
-			ChefDto chef = dao.getProviderInfo(provider);
+			ChefDto chef = dao.getProviderInfo(providerList.get(i));
 			map.put("chef",chef);
-			List<RecipeDto> recipes = dao.getProvderRecipe(provider);
+			List<RecipeDto> recipes = dao.getProvderRecipe(providerList.get(i));
 			map.put("recipes",recipes);
 			list.add(map);
 		}

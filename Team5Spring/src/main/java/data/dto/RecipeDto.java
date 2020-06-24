@@ -24,6 +24,13 @@ public class RecipeDto {
 	private String tip;
 	private String profile;
 	private String nickname;
+	private String timeDiffer;
+	public String getTimeDiffer() {
+		return timeDiffer;
+	}
+	public void setTimeDiffer(String timeDiffer) {
+		this.timeDiffer = timeDiffer;
+	}
 	public String getProfile() {
 		return profile;
 	}

@@ -57,9 +57,13 @@ public class CommentDao extends SqlSessionDaoSupport implements CommentDaoInter 
 	}
 
 	@Override
-	public List<CommentDto> getCommentlist(int rec_num) {
+	public List<CommentDto> getCommentlist(int rec_num,int start, int end) {
 		// TODO Auto-generated method stub
-		return getSqlSession().selectList("getListOfComment", rec_num);
+		HashMap<String,Integer> map = new HashMap<String, Integer>();
+		map.put("start",start);
+		map.put("end",end);
+		map.put("rec_num",rec_num);
+		return getSqlSession().selectList("getListOfComment", map);
 	}
 
 	@Override

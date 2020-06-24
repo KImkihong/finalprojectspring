@@ -7,7 +7,7 @@ import data.dto.RecipeDto;
 
 public interface MypageDaoInter {
 	//내가 쓴 레시피
-	public List<RecipeDto> getMyRecipe(String email);
+	public List<RecipeDto> getMyRecipe(String email,int start,int end);
 	//내가 스크랩한 레시피
 	public List<Integer> getMyScrap(String email);
 	public RecipeDto getMyScrapRecipe(int rec_num);

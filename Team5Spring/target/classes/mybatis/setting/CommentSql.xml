@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="comment">
 	<!-- maxnum구하기 -->
    <select id="maxNumOfComment" resultType="int">
-      select nvl(max(com_num),0) from comment
+      select ifnull(max(com_num),0) from comment
    </select>
    <!-- 같은 그룹 중 restep보다 큰 값은 모두 +1 -->
    <update id="updateRestepOfCommenet" parameterType="HashMap">
@@ -17,8 +17,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertOfComment" parameterType="comment_dto">
 		insert into comment values (0,#{content},#{image},#{regroup},#{restep},#{relevel},now(),#{rec_num},#{email})
 	</insert>
-	<select id="getListOfComment" parameterType="int" resultType="comment_dto">
-		select * from comment order by regroup desc,restep asc where rec_num=#{rec_num}
+	<select id="getListOfComment" parameterType="HashMap" resultType="comment_dto">
+		select a.*,c.nickname,c.profile from comment a left join chef c on a.email=c.email
+		where rec_num=#{rec_num} order by regroup desc,restep asc limit #{start},#{end}
 	</select>
 	<!-- 삭제 -->
 	<update id="deleteComment" parameterType="int">
@@ -26,5 +27,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	<select id="getComment" parameterType="int" resultType="comment_dto">
 		select * from comment where com_num=#{com_num}
+	</select>
+	<select id="getCount" parameterType="int" resultType="int">
+		select count(*) from comment where rec_num=#{rec_num}
 	</select>
 </mapper>

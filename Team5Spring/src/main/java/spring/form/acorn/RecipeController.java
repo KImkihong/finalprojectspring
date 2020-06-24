@@ -27,6 +27,7 @@ import data.dto.IngredientDto;
 import data.dto.RecipeDto;
 import data.dto.RecipeOrderDto;
 import data.util.SpringFileWrite;
+import data.util.TimeDiffrence;
 
 @RestController
 @CrossOrigin
@@ -68,6 +69,13 @@ public class RecipeController {
 			
 			list = dao.getList(scroll*3,end,"",food_cate);
 		}
+		
+		TimeDiffrence td = new TimeDiffrence();
+		for(RecipeDto dto:list) {
+			String timeDiffer = td.formatTimeString(dto.getWriteday());
+			dto.setTimeDiffer(timeDiffer);
+		}
+		
 		return list;	
 	}
 	
@@ -83,7 +91,7 @@ public class RecipeController {
 	}
 	
 	@RequestMapping(value="/recipe/regist",consumes = {"multipart/form-data"}, method = RequestMethod.POST)
-	public void regist(MultipartHttpServletRequest request, @ModelAttribute("RecipeDto") RecipeDto rdto, BindingResult result) {
+	public int regist(MultipartHttpServletRequest request, @ModelAttribute("RecipeDto") RecipeDto rdto, BindingResult result) {
 		String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/recipe");
 		SpringFileWrite sfw = new SpringFileWrite();
 		String comp_photo="";
@@ -120,6 +128,8 @@ public class RecipeController {
 			}
 			dao.insertOrder(odto);
 		}
+		
+		return dao.getMaxCount();
 		
 	}
 	
