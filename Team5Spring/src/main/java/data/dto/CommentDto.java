@@ -14,6 +14,20 @@ public class CommentDto {
 	private int rec_num;
 	private String email;
 	private String timeDiffer;
+	private String profile;
+	private String nickname;
+	public String getProfile() {
+		return profile;
+	}
+	public void setProfile(String profile) {
+		this.profile = profile;
+	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 	public String getTimeDiffer() {
 		return timeDiffer;
 	}
