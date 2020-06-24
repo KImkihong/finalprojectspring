@@ -27,6 +27,7 @@ import data.dto.IngredientDto;
 import data.dto.RecipeDto;
 import data.dto.RecipeOrderDto;
 import data.util.SpringFileWrite;
+import data.util.TimeDiffrence;
 
 @RestController
 @CrossOrigin
@@ -37,9 +38,8 @@ public class RecipeController {
 	@Autowired
 	private ConnectDaoInter cdao;
 	
-	int start=0;
-	int end=3;
-	//count
+	final int end =3;
+	
 	@GetMapping("/recipe/count")
 	public HashMap<String, Integer> getCount(@RequestParam int rec_num){
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
@@ -56,28 +56,26 @@ public class RecipeController {
 	         @RequestParam(required = false) String food_cate,@RequestParam(required=false, defaultValue="0") int scroll){    
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
 		if(field!=null) {	//재료검색일 떄
-			if(scroll==0) {
-				start=0;
-			}
 			if(field.equals("재료")) {
-				List<Integer> numList = dao.getRec_nums(start, end, search);
+				List<Integer> numList = dao.getRec_nums(scroll*3, end, search);
 				for(int rec_num : numList) {
-					RecipeDto dto = dao.getIngreRecipe(rec_num);
+					RecipeDto dto = dao.getSelectedRecipe(rec_num);
 					list.add(dto);
 				}
 			}else {
-				list = dao.getList(start,end,search,"");
-				start+=3;
+				list = dao.getList(scroll*3,end,search,"");
 			}
-			start+=3;
 		}else {		//전체리스트나 제목으로 검색일 때
-			if(scroll==0) {
-				start=0;
-			}		
 			
-			list = dao.getList(start,end,"",food_cate);
-			 start+=3;
+			list = dao.getList(scroll*3,end,"",food_cate);
 		}
+		
+		TimeDiffrence td = new TimeDiffrence();
+		for(RecipeDto dto:list) {
+			String timeDiffer = td.formatTimeString(dto.getWriteday());
+			dto.setTimeDiffer(timeDiffer);
+		}
+		
 		return list;	
 	}
 	

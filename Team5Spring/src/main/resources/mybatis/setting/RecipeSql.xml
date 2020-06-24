@@ -21,14 +21,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 리스트 출력 -->
 	<select id="getRecipe" parameterType="HashMap" resultType="recipe_dto">
-		select * from recipe 
+		select r.*,c.nickname,c.profile from recipe r left join chef c on r.email=c.email 
 		<if test="search!=''and search!=null">
 			where subject like CONCAT('%',#{search},'%')
 		</if>
 		<if test="food_cate!=''and food_cate!=null">
 			where food_cate = #{food_cate}
 		</if>
-		order by writeday desc limit #{start},#{end}
+		order by r.rec_num desc limit #{start},#{end}
 	</select>
 	<!-- 재료를 검색해서 rec_num 구하기 -->
 	<select id="getRec_nums" parameterType="HashMap" resultType="int">
@@ -44,18 +44,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			order by rec_num desc limit #{start},#{end}
 		]]>
 	</select>
-	<!-- rec_num으로 recipe가져오기 -->
-	<select id="getIngreRecipe" parameterType="int" resultType="recipe_dto">
-		select * from recipe where rec_num=#{rec_num}
-	</select>
 	
 	<!-- total카운트 구하기-->
 	<select id="getTotalCount" resultType="int">
 		select count(*) from recipe
 	</select>
-	<!-- 선택 레시피 출력 -->
+	<!-- 선택 레시피 출력,rec_num으로 recipe가져오기 -->
 	<select id="getSelectOfRecipe" parameterType="int" resultType="recipe_dto">
-		select * from recipe where rec_num=#{rec_num}
+		select r.*,c.nickname,c.profile from recipe r left join chef c on r.email=c.email where rec_num=#{rec_num}
 	</select>
 	<!-- 선택 레시피의 재료 -->
 	<select id="getIngre" parameterType="int" resultType="ingre_dto">

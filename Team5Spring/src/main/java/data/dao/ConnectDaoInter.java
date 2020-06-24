@@ -11,6 +11,7 @@ public interface ConnectDaoInter {
 	public void updateScrapCount(String email,int check);
 	
 	//소식받기
+	public int checkNews(String receiver, String provider);
 	public void receiveNews(String receiver, String provider);
 	public void cutNews(String receiver, String provider);
 	public String getNickname(String provider);
