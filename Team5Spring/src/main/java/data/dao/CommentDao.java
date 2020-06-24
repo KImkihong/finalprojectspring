@@ -77,5 +77,11 @@ public class CommentDao extends SqlSessionDaoSupport implements CommentDaoInter 
 		// TODO Auto-generated method stub
 		return getSqlSession().selectOne("getComment", com_num) ;
 	}
+
+	@Override
+	public int getCount(int rec_num) {
+		// TODO Auto-generated method stub
+		return getSqlSession().selectOne("getCount", rec_num);
+	}
 	
 }
