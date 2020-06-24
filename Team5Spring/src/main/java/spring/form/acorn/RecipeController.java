@@ -91,7 +91,7 @@ public class RecipeController {
 	}
 	
 	@RequestMapping(value="/recipe/regist",consumes = {"multipart/form-data"}, method = RequestMethod.POST)
-	public void regist(MultipartHttpServletRequest request, @ModelAttribute("RecipeDto") RecipeDto rdto, BindingResult result) {
+	public int regist(MultipartHttpServletRequest request, @ModelAttribute("RecipeDto") RecipeDto rdto, BindingResult result) {
 		String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/recipe");
 		SpringFileWrite sfw = new SpringFileWrite();
 		String comp_photo="";
@@ -128,6 +128,8 @@ public class RecipeController {
 			}
 			dao.insertOrder(odto);
 		}
+		
+		return dao.getMaxCount();
 		
 	}
 	
