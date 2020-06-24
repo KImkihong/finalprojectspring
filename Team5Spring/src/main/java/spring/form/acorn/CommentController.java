@@ -2,7 +2,6 @@ package spring.form.acorn;
 
 import java.io.File;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +29,11 @@ public class CommentController {
 	
 	final int end =5;
 	
+	@GetMapping("/comment/count")
+	public int getCount(@RequestParam int rec_num) {
+		return dao.getCount(rec_num);
+	}
+	
 	@RequestMapping(value="/comment/regist", consumes = {"multipart/form-data"} ,method = RequestMethod.POST)
 	public int register(MultipartHttpServletRequest request, @ModelAttribute("CommentDto") CommentDto dto, BindingResult result) {
 		if(dto.getImagefile()!=null) {
@@ -46,7 +50,7 @@ public class CommentController {
 	}
 	
 	@GetMapping("/comment/list")
-	public HashMap<String, Object> getlist(@RequestParam int rec_num,
+	public List<CommentDto> getlist(@RequestParam int rec_num,
 			@RequestParam(required=false, defaultValue="0") int scroll){
 		
 		List<CommentDto> list = dao.getCommentlist(rec_num,scroll*5,end);
@@ -56,10 +60,7 @@ public class CommentController {
 			String timeDiffer = td.formatTimeString(dto.getCom_writeday());
 			dto.setTimeDiffer(timeDiffer);
 		}
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("totalcount", list.size());
-		map.put("list", list);
-		return map;
+		return list;
 	}
 	
 	@GetMapping("/comment/delete")
