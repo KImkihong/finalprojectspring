@@ -43,8 +43,7 @@ public class CommentController {
 			dto.setImage(fileName);
 			SpringFileWrite sfw = new SpringFileWrite();
 			sfw.writeFileRename(dto.getImagefile(), path, fileName);
-		}else
-			dto.setImage("basic_user.png");	
+		}
 		dao.insertComment(dto);	
 		
 		return 1;
