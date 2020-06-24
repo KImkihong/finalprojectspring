@@ -106,12 +106,6 @@ public class RecipeDao extends SqlSessionDaoSupport implements RecipeDaoInter {
 	}
 
 	@Override
-	public RecipeDto getIngreRecipe(int rec_num) {
-		// TODO Auto-generated method stub
-		return getSqlSession().selectOne("getIngreRecipe", rec_num);
-	}
-
-	@Override
 	public void updateReadcount(int rec_num) {
 		// TODO Auto-generated method stub
 		getSqlSession().update("updateReadcount", rec_num);
