@@ -51,23 +51,23 @@ public class RecipeController {
 	}
 	
 	@GetMapping("/recipe/list")
-	public List<RecipeDto> getList(@RequestParam(required = false) String field,
-	         @RequestParam(required = false) String search,
+	public List<RecipeDto> getList(@RequestParam(required = false) String search,
+			 @RequestParam(required=false, defaultValue="recipe") String sort,
 	         @RequestParam(required = false) String food_cate,@RequestParam(required=false, defaultValue="0") int scroll){    
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
-		if(field!=null) {	//재료검색일 떄
-			if(field.equals("재료")) {
-				List<Integer> numList = dao.getRec_nums(scroll*3, end, search);
+		if(search!=null) {	
+			if(search.substring(0, 1).equals("#")) {//재료검색일 떄
+				List<Integer> numList = dao.getRec_nums(scroll*3, end, search,sort);
 				for(int rec_num : numList) {
 					RecipeDto dto = dao.getSelectedRecipe(rec_num);
 					list.add(dto);
 				}
-			}else {
-				list = dao.getList(scroll*3,end,search,"");
+			}else {	//제목검색일 경우
+				list = dao.getList(scroll*3,end,search,"",sort);
 			}
-		}else {		//전체리스트나 제목으로 검색일 때
+		}else {		//전체리스트나 분류검색일때
 			
-			list = dao.getList(scroll*3,end,"",food_cate);
+			list = dao.getList(scroll*3,end,"",food_cate,sort);
 		}
 		
 		TimeDiffrence td = new TimeDiffrence();
@@ -75,7 +75,6 @@ public class RecipeController {
 			String timeDiffer = td.formatTimeString(dto.getWriteday());
 			dto.setTimeDiffer(timeDiffer);
 		}
-		
 		return list;	
 	}
 	

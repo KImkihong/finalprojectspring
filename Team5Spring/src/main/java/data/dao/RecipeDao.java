@@ -15,13 +15,14 @@ import data.dto.RecipeOrderDto;
 public class RecipeDao extends SqlSessionDaoSupport implements RecipeDaoInter {
 
 	@Override
-	public List<RecipeDto> getList(int start, int end,String search,String food_cate) {
+	public List<RecipeDto> getList(int start, int end,String search,String food_cate,String sort) {
 		// TODO Auto-generated method stub
 		HashMap<String,Object> map = new HashMap<String, Object>();
 		map.put("start",start);
 		map.put("end",end);
 		map.put("search",search);
 		map.put("food_cate",food_cate);
+		map.put("sort",sort);
 		return getSqlSession().selectList("getRecipe",map);
 	}
 	
@@ -92,7 +93,7 @@ public class RecipeDao extends SqlSessionDaoSupport implements RecipeDaoInter {
 	}
 
 	@Override
-	public List<Integer> getRec_nums(int start, int end, String search) {
+	public List<Integer> getRec_nums(int start, int end, String search,String sort) {
 		// TODO Auto-generated method stub
 		String searchlist = search.substring(1, search.length());
 		String [] ingreList = searchlist.split("#");
@@ -102,6 +103,7 @@ public class RecipeDao extends SqlSessionDaoSupport implements RecipeDaoInter {
 		map.put("end",end);
 		map.put("ingreList",ingreList);
 		map.put("count",ingreList.length-1);
+		map.put("sort",sort);
 		return getSqlSession().selectList("getRec_nums", map);
 	}
 
