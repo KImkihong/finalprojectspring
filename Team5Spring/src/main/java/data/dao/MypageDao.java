@@ -23,9 +23,13 @@ public class MypageDao extends SqlSessionDaoSupport implements MypageDaoInter {
 	}
 
 	@Override
-	public List<Integer> getMyScrap(String email) {
+	public List<Integer> getMyScrap(String email,int start,int end) {
 		// TODO Auto-generated method stub
-		return getSqlSession().selectList("getMyScrap", email);
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		map.put("start",start);
+		map.put("end",end);
+		map.put("email",email);
+		return getSqlSession().selectList("getMyScrap", map);
 	}
 
 	@Override
@@ -35,9 +39,13 @@ public class MypageDao extends SqlSessionDaoSupport implements MypageDaoInter {
 	}
 
 	@Override
-	public List<CommentDto> getMyComment(String email) {
+	public List<CommentDto> getMyComment(String email,int start,int end) {
 		// TODO Auto-generated method stub
-		return getSqlSession().selectList("getMyComment", email);
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		map.put("start",start);
+		map.put("end",end);
+		map.put("email",email);
+		return getSqlSession().selectList("getMyComment", map);
 	}
 
 	@Override

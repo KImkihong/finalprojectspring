@@ -35,16 +35,12 @@ public class RankingController {
 		int start = scroll*4;
 		int end = start+4;
 		List<HashMap<String,Object>> list= new ArrayList<HashMap<String,Object>>();
-		List<String> providerList= dao.getProviders(email);
-		if(start>=providerList.size())
-			return list;
-		if(end>providerList.size())
-			end = providerList.size();
-		for(int i=start;i<end;i++) {
+		List<String> providerList= dao.getProviders(email,start,end);
+		for(String provider:providerList) {
 			HashMap<String,Object> map = new HashMap<String, Object>();
-			ChefDto chef = dao.getProviderInfo(providerList.get(i));
+			ChefDto chef = dao.getProviderInfo(provider);
 			map.put("chef",chef);
-			List<RecipeDto> recipes = dao.getProvderRecipe(providerList.get(i));
+			List<RecipeDto> recipes = dao.getProvderRecipe(provider);
 			map.put("recipes",recipes);
 			list.add(map);
 		}

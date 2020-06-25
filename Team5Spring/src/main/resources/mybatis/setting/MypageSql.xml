@@ -9,16 +9,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from recipe where email=#{email} limit #{start},#{end}
 	</select>
 	<!-- 로그인된 회원이 스크랩한 레시피번호 -->
-	<select id="getMyScrap" parameterType="String" resultType="int">
-		select rec_num from scrap where email=#{email}
+	<select id="getMyScrap" parameterType="HashMap" resultType="int">
+		select rec_num from scrap where email=#{email} order by rec_num desc limit #{start},#{end}
 	</select>
 	<!-- 스크랩한 레시피 -->
 	<select id="getMyScrapRecipe" parameterType="int" resultType="recipe_dto">
 		select * from recipe where rec_num=#{rec_num}
 	</select>
 	<!-- 내가 쓴 댓글 가져오기 -->
-	<select id="getMyComment" parameterType="String" resultType="comment_recipe">
-		select * from comment where email=#{email}
+	<select id="getMyComment" parameterType="HashMap" resultType="comment_recipe">
+		select * from comment where email=#{email} order by com_writeday desc limit #{start},#{end}
 	</select>
 	<!-- 댓글정보에서 레시피정보 가지고 오기 -->
 	<select id="getCommentRecipe" parameterType="int" resultType="recipe_dto">

@@ -10,8 +10,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 내가 소식받기한 provider들 -->
-	<select id="getProviders" parameterType="String" resultType="String">
-		select provider from news where receiver=#{receiver}
+	<select id="getProviders" parameterType="HashMap" resultType="String">
+		select provider from news where receiver=#{receiver} limit #{start},#{end}
 	</select>
 	<!-- provider들의 정보-->
 	<select id="getProviderInfo" parameterType="String" resultType="chef_dto">
