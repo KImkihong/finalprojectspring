@@ -18,6 +18,7 @@ public class ConnectController {
 	
 	@GetMapping("/connect/scrapcheck")
 	public int checkscrap(@RequestParam String email, @RequestParam int rec_num) {
+		
 		int check =dao.checkScrap(email, rec_num);
 		return check;
 	}
@@ -59,6 +60,7 @@ public class ConnectController {
 	
 	@GetMapping("/connect/joayocheck")
 	public int checkjoayo(@RequestParam String email, @RequestParam int rec_num) {
+		
 		int check =dao.checkJoayo(email, rec_num);
 		return check;
 	}

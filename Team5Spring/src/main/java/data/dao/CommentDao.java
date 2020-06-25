@@ -34,21 +34,21 @@ public class CommentDao extends SqlSessionDaoSupport implements CommentDaoInter 
 		int relevel = dto.getRelevel();
 		//System.out.println(dto.getNum());
 		
-		//»õ±ÛÀÎÁö ´ä±ÛÀÎÁö ÆÇ´Ü
-		if(dto.getCom_num()==0) {	//»õ±Û
-			//»õ±ÛÀÎ °æ¿ì ±×·ì¹øÈ£´Â numÀÇ max°ª +1
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç´ï¿½
+		if(dto.getCom_num()==0) {	//ï¿½ï¿½ï¿½ï¿½
+			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½×·ï¿½ï¿½È£ï¿½ï¿½ numï¿½ï¿½ maxï¿½ï¿½ +1
 			regroup = this.getMaxNum()+1;
 			relevel = 0;
 			restep = 0;
 		}else {
-			//°°Àº ±×·ì Áß restep º¸´Ù Å« µ¥ÀÌÅÍ´Â 1Áõ°¡
+			//ï¿½ï¿½ï¿½ï¿½ ï¿½×·ï¿½ ï¿½ï¿½ restep ï¿½ï¿½ï¿½ï¿½ Å« ï¿½ï¿½ï¿½ï¿½ï¿½Í´ï¿½ 1ï¿½ï¿½ï¿½ï¿½
 			this.updateRestep(regroup, restep);
-			//db¿¡´Â +ÇØ¼­ ÀúÀå
+			//dbï¿½ï¿½ï¿½ï¿½ +ï¿½Ø¼ï¿½ ï¿½ï¿½ï¿½ï¿½
 			relevel=1;
 			restep++;
 		}
 		
-		//dto¿¡ »õ·Î ±¸ÇÑ 3°¡Áö ³Ö¾îÁÖ±â
+		//dtoï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 3ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¾ï¿½ï¿½Ö±ï¿½
 		dto.setRegroup(regroup);
 		dto.setRelevel(relevel);
 		dto.setRestep(restep);
@@ -76,6 +76,12 @@ public class CommentDao extends SqlSessionDaoSupport implements CommentDaoInter 
 	public CommentDto getComment(int com_num) {
 		// TODO Auto-generated method stub
 		return getSqlSession().selectOne("getComment", com_num) ;
+	}
+
+	@Override
+	public int getCount(int rec_num) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 }

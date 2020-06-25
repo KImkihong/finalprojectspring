@@ -31,6 +31,8 @@ public class CommentController {
 	
 	@GetMapping("/comment/count")
 	public int getCount(@RequestParam int rec_num) {
+		System.out.println(rec_num);
+		
 		return dao.getCount(rec_num);
 	}
 	
@@ -52,7 +54,7 @@ public class CommentController {
 	@GetMapping("/comment/list")
 	public List<CommentDto> getlist(@RequestParam int rec_num,
 			@RequestParam(required=false, defaultValue="0") int scroll){
-		
+			System.out.println(scroll);
 		List<CommentDto> list = dao.getCommentlist(rec_num,scroll*5,end);
 		
 		TimeDiffrence td = new TimeDiffrence();
