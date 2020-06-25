@@ -28,8 +28,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="food_cate!=''and food_cate!=null">
 			where food_cate = #{food_cate}
 		</if>
-		order by rec_num desc)b LEFT JOIN ${sort} c ON b.rec_num = c.rec_num
-		group by b.rec_num order by count(c.rec_num) desc limit #{start},#{end}
+		)b LEFT JOIN ${sort} c ON b.rec_num = c.rec_num
+		group by b.rec_num order by count(c.rec_num) desc,b.rec_num desc limit #{start},#{end}
 	</select>
 	<!-- 재료를 검색해서 rec_num 구하기 -->
 	<select id="getRec_nums" parameterType="HashMap" resultType="int">
@@ -41,8 +41,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</foreach>
 		<![CDATA[
 			) a group by rec_num having count(rec_num)>#{count}
-			order by rec_num desc)b LEFT JOIN ${sort} c ON b.rec_num = c.rec_num
-			group by b.rec_num order by count(c.rec_num) desc limit #{start},#{end}
+			)b LEFT JOIN ${sort} c ON b.rec_num = c.rec_num
+			group by b.rec_num order by count(c.rec_num) desc,b.rec_num desc limit #{start},#{end}
 		]]>
 	</select>
 	
