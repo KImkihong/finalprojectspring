@@ -39,6 +39,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 		 limit #{start},#{end}
 	</select>
+		<!-- 카운트 -->
+		<select id="getRecipeCount" parameterType="HashMap" resultType="int">
+			select count(*) from recipe  
+			<if test="search!=''and search!=null">
+				where subject like CONCAT('%',#{search},'%')
+			</if>
+			<if test="food_cate!=''and food_cate!=null">
+				where food_cate = #{food_cate}
+			</if>
+		</select>
+		
 	<!-- 재료를 검색해서 rec_num 구하기 -->
 	<select id="getRec_nums" parameterType="HashMap" resultType="int">
 		<![CDATA[
@@ -61,11 +72,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 			limit #{start},#{end}		
 	</select>
-	
-	<!-- total카운트 구하기-->
-	<select id="getTotalCount" resultType="int">
-		select count(*) from recipe
-	</select>
+		<!-- 카운트 -->
+		<select id="getRec_numsCount" parameterType="HashMap" resultType="int">
+			<![CDATA[
+				select count(*) from (select * from ingredient where
+			]]>
+			<foreach collection="ingreList" item="list" index="index" separator="or">
+				ingre_name like CONCAT('%',#{list},'%')
+			</foreach>
+			<![CDATA[
+				) a group by rec_num having count(rec_num)>#{count}
+			]]>		
+		</select>
+		
 	<!-- 선택 레시피 출력,rec_num으로 recipe가져오기 -->
 	<select id="getSelectOfRecipe" parameterType="int" resultType="recipe_dto">
 		select r.*,c.nickname,c.profile from recipe r left join chef c on r.email=c.email where rec_num=#{rec_num}

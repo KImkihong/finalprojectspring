@@ -57,28 +57,31 @@ public class RecipeController {
 		System.out.println(scroll);
 		System.out.println(search);
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
+		int count= 0;
 		if(search!=null) {	
 			if(search.substring(0, 1).equals("#")) {//���˻��� ��
 				List<Integer> numList = dao.getRec_nums(scroll*3, end, search,sort);
+				count=dao.getRec_numCount(search);
 				for(int rec_num : numList) {
 					RecipeDto dto = dao.getSelectedRecipe(rec_num);
 					list.add(dto);
 				}
 			}else {	//����˻��� ���
 				list = dao.getList(scroll*3,end,search,"",sort);
+				count=dao.getRecipeCount(search, "");
 			}
 		}else {		//��ü����Ʈ�� �з��˻��϶�
 			
 			list = dao.getList(scroll*3,end,"",food_cate,sort);
+			count=dao.getRecipeCount("",food_cate);
 		}
 		
 		TimeDiffrence td = new TimeDiffrence();
 		for(RecipeDto dto:list) {
 			String timeDiffer = td.formatTimeString(dto.getWriteday());
 			dto.setTimeDiffer(timeDiffer);
-		}
+		}		
 		
-		int count= list.size();
 		HashMap<String,Object> map = new HashMap<String, Object>();
 		map.put("count", count);
 		map.put("list", list);
