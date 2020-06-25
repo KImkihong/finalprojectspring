@@ -23,9 +23,13 @@ public class RankingDao extends SqlSessionDaoSupport implements RankingDaoInter 
 	}
 
 	@Override
-	public List<String> getProviders(String receiver) {
+	public List<String> getProviders(String receiver,int start,int end) {
 		// TODO Auto-generated method stub
-		return getSqlSession().selectList("getProviders", receiver);
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		map.put("start",start);
+		map.put("end",end);
+		map.put("receiver",receiver);
+		return getSqlSession().selectList("getProviders", map);
 	}
 
 	@Override

@@ -35,13 +35,9 @@ public class MypageController {
 		int start = scroll*3;
 		int end = start+3;
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
-		List<Integer> rec_nums = dao.getMyScrap(email);
-		if(start>=rec_nums.size())
-			return list;
-		if(end>rec_nums.size())
-			end = rec_nums.size();
-		for(int i=start;i<end;i++) {
-			RecipeDto dto = dao.getMyScrapRecipe(rec_nums.get(i));
+		List<Integer> rec_nums = dao.getMyScrap(email,start,end);
+		for(int rec_num:rec_nums) {
+			RecipeDto dto = dao.getMyScrapRecipe(rec_num);
 			list.add(dto);
 		}
 		return list;
@@ -53,16 +49,12 @@ public class MypageController {
 		int start = scroll*5;
 		int end = start+5;
 		List<HashMap<String,Object>> list= new ArrayList<HashMap<String,Object>>();
-		List<CommentDto> clist = dao.getMyComment(email);
-		if(start>=clist.size())
-			return list;
-		if(end>clist.size())
-			end = clist.size();
-		for(int i=start;i<end;i++) {
+		List<CommentDto> clist = dao.getMyComment(email,start,end);
+		for(CommentDto dto:clist) {
 			HashMap<String,Object> map = new HashMap<String, Object>();
-			String comment = clist.get(i).getContent();
+			String comment = dto.getContent();
 			map.put("comment",comment);
-			RecipeDto recipe = dao.getCommentRecipe(clist.get(i).getRec_num());
+			RecipeDto recipe = dao.getCommentRecipe(dto.getRec_num());
 			map.put("RecipeDto",recipe);
 			list.add(map);
 		}
