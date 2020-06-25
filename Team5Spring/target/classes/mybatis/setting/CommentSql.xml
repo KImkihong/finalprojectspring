@@ -17,9 +17,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="insertOfComment" parameterType="comment_dto">
 		insert into comment values (0,#{content},#{image},#{regroup},#{restep},#{relevel},now(),#{rec_num},#{email})
 	</insert>
-	<select id="getListOfComment" parameterType="HashMap" resultType="comment_dto">
+	<select id="getListOfComment" parameterType="int" resultType="comment_dto">
 		select a.*,c.nickname,c.profile from comment a left join chef c on a.email=c.email
-		where rec_num=#{rec_num} order by regroup asc,restep asc limit #{start},#{end}
+		where rec_num=#{rec_num} order by regroup asc,restep asc
 	</select>
 	<!-- 삭제 -->
 	<update id="deleteComment" parameterType="int">
