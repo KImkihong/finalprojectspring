@@ -24,13 +24,18 @@ public class MypageController {
 	@GetMapping("/mypage/recipe")
 	public HashMap<String,Object> getMyrecipe(@RequestParam String email,
 			@RequestParam(required=false, defaultValue="0") int scroll){
+		System.out.println(email);
+		System.out.println(scroll);
+		
 		final int end=3;
 		int count=0;
 		List<RecipeDto> list = dao.getMyRecipe(email,scroll*3,end);
 		count=dao.getMyRecipeCount(email);
 		HashMap<String,Object> map = new HashMap<String, Object>();
 		map.put("count", count);
-		map.put("list", list);		
+		map.put("list", list);	
+		System.out.println(count);
+		System.out.println(list.size());
 		return map;
 	}
 	
