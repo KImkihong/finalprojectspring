@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	<select id="getListOfComment" parameterType="int" resultType="comment_dto">
 		select a.*,c.nickname,c.profile from comment a left join chef c on a.email=c.email
-		where rec_num=#{rec_num} order by regroup asc,restep desc
+		where rec_num=#{rec_num} order by regroup asc,restep asc
 	</select>
 	<!-- 삭제 -->
 	<update id="deleteComment" parameterType="int">

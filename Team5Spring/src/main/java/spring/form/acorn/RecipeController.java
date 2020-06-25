@@ -51,8 +51,8 @@ public class RecipeController {
 	}
 	
 	@GetMapping("/recipe/list")
-	public List<RecipeDto> getList(@RequestParam(required = false) String search,
-			 @RequestParam(required=false, defaultValue="recipe") String sort,
+	public HashMap<String,Object> getList(@RequestParam(required = false) String search,
+			 @RequestParam(required=false, defaultValue="rec_num") String sort,
 	         @RequestParam(required = false) String food_cate,@RequestParam(required=false, defaultValue="0") int scroll){    
 		System.out.println(scroll);
 		System.out.println(search);
@@ -77,7 +77,12 @@ public class RecipeController {
 			String timeDiffer = td.formatTimeString(dto.getWriteday());
 			dto.setTimeDiffer(timeDiffer);
 		}
-		return list;	
+		
+		int count= list.size();
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		map.put("count", count);
+		map.put("list", list);
+		return map;	
 	}
 	
 	@GetMapping("/recipe/select")
