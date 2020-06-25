@@ -76,7 +76,6 @@ public class RecipeController {
 			String timeDiffer = td.formatTimeString(dto.getWriteday());
 			dto.setTimeDiffer(timeDiffer);
 		}
-		
 		return list;	
 	}
 	
