@@ -54,18 +54,19 @@ public class RecipeController {
 	public List<RecipeDto> getList(@RequestParam(required = false) String search,
 			 @RequestParam(required=false, defaultValue="recipe") String sort,
 	         @RequestParam(required = false) String food_cate,@RequestParam(required=false, defaultValue="0") int scroll){    
+		System.out.println(scroll);
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
 		if(search!=null) {	
-			if(search.substring(0, 1).equals("#")) {//Àç·á°Ë»öÀÏ ‹š
+			if(search.substring(0, 1).equals("#")) {//ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½
 				List<Integer> numList = dao.getRec_nums(scroll*3, end, search,sort);
 				for(int rec_num : numList) {
 					RecipeDto dto = dao.getSelectedRecipe(rec_num);
 					list.add(dto);
 				}
-			}else {	//Á¦¸ñ°Ë»öÀÏ °æ¿ì
+			}else {	//ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 				list = dao.getList(scroll*3,end,search,"",sort);
 			}
-		}else {		//ÀüÃ¼¸®½ºÆ®³ª ºÐ·ù°Ë»öÀÏ¶§
+		}else {		//ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ð·ï¿½ï¿½Ë»ï¿½ï¿½Ï¶ï¿½
 			
 			list = dao.getList(scroll*3,end,"",food_cate,sort);
 		}
@@ -102,7 +103,7 @@ public class RecipeController {
 				comp_photo+=fileName+",";
 			}			
 		}		
-		//¸¶Áö¸· ÄÞ¸¶Á¦°Å
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½
 		if(comp_photo.length()>0)
 			comp_photo = comp_photo.substring(0,comp_photo.length()-1);
 		rdto.setComp_photo(comp_photo);
@@ -143,7 +144,7 @@ public class RecipeController {
 			while(st.hasMoreTokens()) {
 				File file = new File(path+"\\"+st.nextToken());
 				if(file.exists())
-					file.delete();	//ÆÄÀÏÀÌ Á¸ÀçÇÏ¸é Áö¿ì±â
+					file.delete();	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 			}
 		}
 		String repre_photo=dto.getRepre_photo();
