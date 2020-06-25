@@ -55,6 +55,7 @@ public class RecipeController {
 			 @RequestParam(required=false, defaultValue="recipe") String sort,
 	         @RequestParam(required = false) String food_cate,@RequestParam(required=false, defaultValue="0") int scroll){    
 		System.out.println(scroll);
+		System.out.println(search);
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
 		if(search!=null) {	
 			if(search.substring(0, 1).equals("#")) {//���˻��� ��
