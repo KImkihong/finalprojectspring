@@ -184,7 +184,11 @@ public class RecipeController {
 	
 	@RequestMapping(value="/recipe/update",consumes = {"multipart/form-data"}, method = RequestMethod.POST)
 	public void update(MultipartHttpServletRequest request, @ModelAttribute("RecipeDto") RecipeDto rdto, BindingResult result) {
-		
+		//기존 정보 저장
+		RecipeDto ori_dto = dao.getSelectedRecipe(rdto.getRec_num());
+		List<IngredientDto> ori_ilist = dao.getIngre(rdto.getRec_num());
+		List<RecipeOrderDto> ori_olist = dao.getOrder(rdto.getRec_num());
+		String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/recipe");
 		
 	}
 }

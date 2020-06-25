@@ -100,7 +100,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 삭제 -->
 	<delete id="deleteOrder" parameterType="int">
-		delete from recip_order where rec_num=#{rec_num}
+		delete from recipe_order where rec_num=#{rec_num}
 	</delete>
 	<delete id="deleteIngredient" parameterType="int">
 		delete from ingredient where rec_num=#{rec_num}
