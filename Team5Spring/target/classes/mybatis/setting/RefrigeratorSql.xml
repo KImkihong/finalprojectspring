@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<![CDATA[
 			and sort='주재료') a
 			group by rec_num having count(rec_num)>1
-			order by count(rec_num) desc
+			order by count(rec_num) desc, rec_num desc
 		]]>
 	</select>
 	<!-- 주재료가 하나만 있는 레시피에서의 검색 -->
