@@ -54,4 +54,16 @@ public class MypageDao extends SqlSessionDaoSupport implements MypageDaoInter {
 		return getSqlSession().selectOne("getCommentRecipe", rec_num);
 	}
 
+	@Override
+	public int getMyRecipeCount(String email) {
+		// TODO Auto-generated method stub
+		return getSqlSession().selectOne("getMyRecipeCount", email);
+	}
+
+	@Override
+	public int getMyScrapCount(String email) {
+		// TODO Auto-generated method stub
+		return getSqlSession().selectOne("getMyScrapCount", email);
+	}
+
 }

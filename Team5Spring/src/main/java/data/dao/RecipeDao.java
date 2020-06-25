@@ -45,12 +45,6 @@ public class RecipeDao extends SqlSessionDaoSupport implements RecipeDaoInter {
 	}
 
 	@Override
-	public int getTotalCount() {
-		// TODO Auto-generated method stub
-		return getSqlSession().selectOne("getTotalCount");
-	}
-
-	@Override
 	public void deleteOrder(int rec_num) {
 		// TODO Auto-generated method stub
 		getSqlSession().delete("deleteOrder", rec_num);
@@ -117,6 +111,27 @@ public class RecipeDao extends SqlSessionDaoSupport implements RecipeDaoInter {
 	public int getReadcount(int rec_num) {
 		// TODO Auto-generated method stub
 		return getSqlSession().selectOne("getCountOfread", rec_num);
+	}
+
+	@Override
+	public int getRecipeCount(String search, String food_cate) {
+		// TODO Auto-generated method stub
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		map.put("search",search);
+		map.put("food_cate",food_cate);
+		return getSqlSession().selectOne("getRecipeCount", map);
+	}
+
+	@Override
+	public int getRec_numCount(String search) {
+		// TODO Auto-generated method stub
+		String searchlist = search.substring(1, search.length());
+		String [] ingreList = searchlist.split("#");
+		
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		map.put("ingreList",ingreList);
+		map.put("count",ingreList.length-1);
+		return getSqlSession().selectOne("getRec_numsCount", map);
 	}	
 
 }

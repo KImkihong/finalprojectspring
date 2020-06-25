@@ -62,7 +62,6 @@ public class CommentController {
 	
 	@GetMapping("/comment/delete")
 	public void delete(HttpServletRequest request, @RequestParam int com_num) {
-		System.out.println(com_num);
 		String image=dao.getComment(com_num).getImage();
 		if(image!=null) {
 			String path=request.getSession().getServletContext().getRealPath("/WEB-INF/image/comment");

@@ -51,31 +51,39 @@ public class RecipeController {
 	}
 	
 	@GetMapping("/recipe/list")
-	public List<RecipeDto> getList(@RequestParam(required = false) String search,
-			 @RequestParam(required=false, defaultValue="recipe") String sort,
+	public HashMap<String,Object> getList(@RequestParam(required = false) String search,
+			 @RequestParam(required=false, defaultValue="rec_num") String sort,
 	         @RequestParam(required = false) String food_cate,@RequestParam(required=false, defaultValue="0") int scroll){    
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
+		int count= 0;
 		if(search!=null) {	
 			if(search.substring(0, 1).equals("#")) {//재료검색일 떄
 				List<Integer> numList = dao.getRec_nums(scroll*3, end, search,sort);
+				count=dao.getRec_numCount(search);
 				for(int rec_num : numList) {
 					RecipeDto dto = dao.getSelectedRecipe(rec_num);
 					list.add(dto);
 				}
 			}else {	//제목검색일 경우
 				list = dao.getList(scroll*3,end,search,"",sort);
+				count=dao.getRecipeCount(search, "");
 			}
 		}else {		//전체리스트나 분류검색일때
 			
 			list = dao.getList(scroll*3,end,"",food_cate,sort);
+			count=dao.getRecipeCount("",food_cate);
 		}
 		
 		TimeDiffrence td = new TimeDiffrence();
 		for(RecipeDto dto:list) {
 			String timeDiffer = td.formatTimeString(dto.getWriteday());
 			dto.setTimeDiffer(timeDiffer);
-		}
-		return list;	
+		}		
+		
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		map.put("count", count);
+		map.put("list", list);
+		return map;	
 	}
 	
 	@GetMapping("/recipe/select")
