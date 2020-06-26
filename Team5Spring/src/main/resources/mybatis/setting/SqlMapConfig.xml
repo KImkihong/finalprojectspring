@@ -15,5 +15,6 @@
 		<mapper resource="mybatis/setting/CommentSql.xml"/>
 		<mapper resource="mybatis/setting/RankingSql.xml"/>
 		<mapper resource="mybatis/setting/RefrigeratorSql.xml"/>
+		<mapper resource="mybatis/setting/MypageSql.xml"/>
 	</mappers>
 </configuration>

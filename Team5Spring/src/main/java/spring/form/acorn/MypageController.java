@@ -22,25 +22,35 @@ public class MypageController {
 	private MypageDaoInter dao;
 	
 	@GetMapping("/mypage/recipe")
-	public List<RecipeDto> getMyrecipe(@RequestParam String email,
+	public HashMap<String,Object> getMyrecipe(@RequestParam String email,
 			@RequestParam(required=false, defaultValue="0") int scroll){
 		final int end=3;
+		int count=0;
 		List<RecipeDto> list = dao.getMyRecipe(email,scroll*3,end);
-		return list;
+		count=dao.getMyRecipeCount(email);
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		map.put("count", count);
+		map.put("list", list);		
+		return map;
 	}
 	
 	@GetMapping("/mypage/scrap")
-	public List<RecipeDto> getMyscrap(@RequestParam String email,
+	public HashMap<String,Object> getMyscrap(@RequestParam String email,
 			@RequestParam(required=false, defaultValue="0") int scroll){
 		int start = scroll*3;
 		int end = start+3;
+		int count=0;
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
 		List<Integer> rec_nums = dao.getMyScrap(email,start,end);
+		count=dao.getMyScrapCount(email);
 		for(int rec_num:rec_nums) {
 			RecipeDto dto = dao.getMyScrapRecipe(rec_num);
 			list.add(dto);
 		}
-		return list;
+		HashMap<String,Object> map = new HashMap<String, Object>();
+		map.put("count", count);
+		map.put("list", list);		
+		return map;
 	}
 	
 	@GetMapping("/mypage/comment")
