@@ -39,7 +39,7 @@ public class TimeDiffrence {
             // hour
             msg = (diffTime) + "시간 전";
          } else if ((diffTime /= TIME_MAXIMUM.HOUR) < TIME_MAXIMUM.DAY ||(diffTime /= TIME_MAXIMUM.DAY) < TIME_MAXIMUM.MONTH){
-            msg = date.substring(5,7)+"월 "+date.substring(8, 10)+"일";
+            msg = date.substring(5, 7)+"월 "+date.substring(8, 10)+"일";
          } else {
             msg = date.substring(0, 4)+"년 "+date.substring(5, 7)+"월 "+date.substring(8, 10)+"일";
          }
