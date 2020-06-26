@@ -3,30 +3,32 @@ package data.dao;
 import data.dto.ChefDto;
 
 public interface ChefDaoInter {
-	//È¸¿ø°¡ÀÔ
+	//È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public void insertChef(ChefDto dto);
-	//Å»Åð
+	//Å»ï¿½ï¿½
 	public void deleteChef(String email);
 	public void insertWithdraw(String email);
 	public void updateWithdraq(String email,String reason);
-	//·Î±×ÀÎ
+	//ï¿½Î±ï¿½ï¿½ï¿½
 	public int login(String email,String pass);
-	//È¸¿øÁ¤º¸ ¼öÁ¤½Ã ±âÁ¸ Á¤º¸
+	//È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public ChefDto getChef(String email);
-	//±âÁ¸ÇÁ·ÎÇÊ»çÁø 
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê»ï¿½ï¿½ï¿½ 
 	public String getprofile(String email);
-	//ÀÏ¹ÝÁ¤º¸ ¼öÁ¤
+	//ï¿½Ï¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public void updateInfo(ChefDto dto);
-	//ºñ¹ø¼öÁ¤
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public void updatePass(String pass, String newpass, String email);
-	//ÀÌ¸ÞÀÏ(¾ÆÀÌµð)Áßº¹Ã¼Å©
+	//ï¿½Ì¸ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½Ìµï¿½)ï¿½ßºï¿½Ã¼Å©
 	public int checkEamil(String email);
-	//´Ð³×ÀÓ Áßº¹Ã¼Å©
+	//ï¿½Ð³ï¿½ï¿½ï¿½ ï¿½ßºï¿½Ã¼Å©
 	public int checkNickname(String nickname);
-	//¾ÆÀÌµð Ã£±â
+	//ï¿½ï¿½ï¿½Ìµï¿½ Ã£ï¿½ï¿½
 	public String findId(String name, String hp);
-	//ºñ¹øÃ£±â ÇÒ¶§ ±âÁ¸ ºñ¹ø¾ò±â
+	//ï¿½ï¿½ï¿½Ã£ï¿½ï¿½ ï¿½Ò¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public String findPass(String name, String email);
-	//»õ·Î¿î ºñ¹Ð¹øÈ£ ·£´ý¹®ÀÚ »ý¼º
+	//ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½Ð¹ï¿½È£ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public String RandomPass();
+	
+	public ChefDto getDataOfChefNick(String nickname);
 }
