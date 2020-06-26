@@ -24,8 +24,6 @@ public class MypageController {
 	@GetMapping("/mypage/recipe")
 	public HashMap<String,Object> getMyrecipe(@RequestParam String email,
 			@RequestParam(required=false, defaultValue="0") int scroll){
-		System.out.println(email);
-		System.out.println(scroll);
 		
 		final int end=3;
 		int count=0;
@@ -54,7 +52,8 @@ public class MypageController {
 		}
 		HashMap<String,Object> map = new HashMap<String, Object>();
 		map.put("count", count);
-		map.put("list", list);		
+		map.put("list", list);	
+		System.out.println(count);
 		return map;
 	}
 	
