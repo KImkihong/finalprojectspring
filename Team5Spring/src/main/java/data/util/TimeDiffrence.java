@@ -31,17 +31,17 @@ public class TimeDiffrence {
          
          if (diffTime < TIME_MAXIMUM.SEC) {
             // sec
-            msg = "ë°©ê¸ˆ ì „";
+            msg = "¹æ±Ý Àü";
          } else if ((diffTime /= TIME_MAXIMUM.SEC) < TIME_MAXIMUM.MIN) {
             // min
-            msg = diffTime + "ë¶„ ì „";
+            msg = diffTime + "ºÐ Àü";
          } else if ((diffTime /= TIME_MAXIMUM.MIN) < TIME_MAXIMUM.HOUR) {
             // hour
-            msg = (diffTime) + "ì‹œê°„ ì „";
+            msg = (diffTime) + "½Ã°£ Àü";
          } else if ((diffTime /= TIME_MAXIMUM.HOUR) < TIME_MAXIMUM.DAY ||(diffTime /= TIME_MAXIMUM.DAY) < TIME_MAXIMUM.MONTH){
-            msg = date.substring(5, 7)+"ì›” "+date.substring(8, 10)+"ì¼";
+            msg = date.substring(5, 7)+"¿ù "+date.substring(8, 10)+"ÀÏ";
          } else {
-            msg = date.substring(0, 4)+"ë…„ "+date.substring(5, 7)+"ì›” "+date.substring(8, 10)+"ì¼";
+            msg = date.substring(0, 4)+"³â "+date.substring(5, 7)+"¿ù "+date.substring(8, 10)+"ÀÏ";
          }
       } catch (ParseException e) {
          // TODO Auto-generated catch block

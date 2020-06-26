@@ -27,6 +27,7 @@ public class ConnectController {
 	public void onscrap(@RequestParam String email, @RequestParam int rec_num) {
 		String chefemail=dao.getEmail(rec_num);
 		int check =dao.checkScrap(email, rec_num);
+		System.out.println(check);
 		if(check==0) {
 			dao.insertScrap(email, rec_num);
 		}
@@ -46,7 +47,7 @@ public class ConnectController {
 	public String onnews(@RequestParam String provider, @RequestParam String receiver) {
 		dao.receiveNews(receiver, provider);
 		dao.upNewsCount(provider);
-		String msg = dao.getNickname(provider)+"ï¿½ï¿½ï¿½ï¿½ ï¿½Ò½Ä¹Þ±â°¡ ï¿½Ï·ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½";
+		String msg = dao.getNickname(provider)+"´ÔÀÇ ¼Ò½Ä¹Þ±â°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù";
 		return msg;
 	}
 	
@@ -54,7 +55,7 @@ public class ConnectController {
 	public String offnews(@RequestParam String provider, @RequestParam String receiver) {
 		dao.cutNews(receiver, provider);
 		dao.downNewsCount(provider);
-		String msg = dao.getNickname(provider)+"ï¿½ï¿½ï¿½ï¿½ ï¿½Ò½Ä¹Þ±â°¡ ï¿½ï¿½ÒµÇ¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½";
+		String msg = dao.getNickname(provider)+"´ÔÀÇ ¼Ò½Ä¹Þ±â¸¦ Ãë¼ÒÇß½À´Ï´Ù";
 		return msg;
 	}
 	
