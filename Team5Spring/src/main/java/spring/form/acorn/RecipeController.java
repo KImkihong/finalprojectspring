@@ -51,11 +51,15 @@ public class RecipeController {
 	}
 	
 	@GetMapping("/recipe/list")
-	public HashMap<String,Object> getList(@RequestParam(required = false) String search,
+	public HashMap<String,Object> getList(HttpServletRequest r,@RequestParam(required = false) String search,
 			 @RequestParam(required=false, defaultValue="rec_num") String sort,
 	         @RequestParam(required = false) String food_cate,@RequestParam(required=false, defaultValue="0") int scroll){    
-		System.out.println(scroll);
-		System.out.println(search);
+		
+		System.out.println(r.getSession().getServletContext().getRealPath("/WEB-INF"));
+		
+		System.out.println("search : "+search);
+		System.out.println("food_cate : "+food_cate);
+		System.out.println("sort : "+sort);
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
 		int count= 0;
 		if(search!=null) {	
@@ -81,6 +85,8 @@ public class RecipeController {
 			String timeDiffer = td.formatTimeString(dto.getWriteday());
 			dto.setTimeDiffer(timeDiffer);
 		}		
+		
+		
 		
 		HashMap<String,Object> map = new HashMap<String, Object>();
 		map.put("count", count);
