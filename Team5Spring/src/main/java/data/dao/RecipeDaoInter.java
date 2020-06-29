@@ -28,5 +28,8 @@ public interface RecipeDaoInter {
 	public void deleteRecipe(int rec_num);
 	//count
 	public int getReadcount(int rec_num);
+	//update
+	public void updateRecipe(RecipeDto dto);
+	public List<String> getImage(int rec_num);
 	
 }
