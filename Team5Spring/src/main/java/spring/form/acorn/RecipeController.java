@@ -261,8 +261,24 @@ public class RecipeController {
 		}
 		
 		//기존 이미지들 얻어오기
+		List<String> ori_step= dao.getImage(rdto.getRec_num());
+		//생존 이미지들 얻어오기
+		List<String> live_step = new ArrayList<String>();
+		for(RecipeOrderDto dto:rdto.getOrderList()) {
+			if(dto.getPhoto()!=null)
+				live_step.add(dto.getPhoto());
+		}
+		//생존하지 못한 놈들 지우기
+		for(String step:ori_step) {
+			if(!live_step.contains(step)) {
+				File file = new File(path+"\\"+step);
+				if(file.exists())
+					file.delete();
+			}				
+		}
 		//레시피 순서 삭제
 		dao.deleteOrder(rdto.getRec_num());
+		//
 		
 		//재료 기존꺼 삭제후 저장
 		dao.deleteIngre(rdto.getRec_num());
