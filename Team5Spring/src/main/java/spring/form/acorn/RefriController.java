@@ -57,6 +57,8 @@ public class RefriController {
 			List<IngredientDto> ilist = dao.getIngreOfRefri(num);
 			dto.setIngreList(ilist);
 			list.add(dto);
+			System.out.println(dto.getIngreList().get(0).getIngre_name());
+			System.out.println(dto.getIngreList().get(0).getSort());
 		}
 		return list;
 	}
