@@ -35,4 +35,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getRefrigIngreRecipe" parameterType="int" resultType="recipe_dto">
 		select r.*,c.nickname,c.profile from recipe r left join chef c on r.email=c.email where rec_num=#{rec_num}
 	</select>
+	<select id="getIngreOfRefri" parameterType="int" resultType="ingre_dto">
+		select ingre_name from ingredient where rec_num=#{rec_num}
+	</select>
 </mapper>
