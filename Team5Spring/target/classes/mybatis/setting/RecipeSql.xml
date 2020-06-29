@@ -22,11 +22,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 리스트 출력 -->
 	<select id="getRecipe" parameterType="HashMap" resultType="recipe_dto">
 		select b.* from (select r.*,c.nickname,c.profile from recipe r left join chef c on r.email=c.email 
-		<if test="search!=''and search!=null">
+		<if test="search!=null and food_cate==null">
 			where subject like CONCAT('%',#{search},'%')
 		</if>
-		<if test="food_cate!=''and food_cate!=null">
+		<if test="food_cate!=null and search==null">
 			where food_cate = #{food_cate}
+		</if>
+		<if test="search!=null and food_cate!=null">
+			where subject like CONCAT('%',#{search},'%') and food_cate = #{food_cate}
 		</if>
 		)b LEFT JOIN
 		<if test="sort.equals('scrap')">
@@ -42,18 +45,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<!-- 카운트 -->
 		<select id="getRecipeCount" parameterType="HashMap" resultType="int">
 			select count(*) from recipe  
-			<if test="search!=''and search!=null">
+			<if test="search!=null and food_cate==null">
 				where subject like CONCAT('%',#{search},'%')
 			</if>
-			<if test="food_cate!=''and food_cate!=null">
+			<if test="food_cate!=null and search==null">
 				where food_cate = #{food_cate}
+			</if>
+			<if test="search!=null and food_cate!=null">
+				where subject like CONCAT('%',#{search},'%') and food_cate = #{food_cate}
 			</if>
 		</select>
 		
 	<!-- 재료를 검색해서 rec_num 구하기 -->
 	<select id="getRec_nums" parameterType="HashMap" resultType="int">
 		<![CDATA[
-			select b.rec_num from (select rec_num from (select * from ingredient where
+			select d.rec_num from (select b.rec_num from (select rec_num from (select * from ingredient where
 		]]>
 		<foreach collection="ingreList" item="list" index="index" separator="or">
 			ingre_name like CONCAT('%',#{list},'%')
@@ -61,14 +67,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<![CDATA[
 			) a group by rec_num having count(rec_num)>#{count}
 		]]>
-			)b LEFT JOIN
+			)b
+		<if test="food_cate!=null">
+			left join recipe f on b.rec_num = f.rec_num where food_cate=#{food_cate}
+		</if>	
+			)d LEFT JOIN
 		<if test="sort.equals('scrap')">
-			${sort} c ON b.rec_num = c.rec_num
-			group by b.rec_num order by count(c.rec_num) desc,b.rec_num desc
+			${sort} c ON d.rec_num = c.rec_num
+			group by d.rec_num order by count(c.rec_num) desc,d.rec_num desc
 		</if>
 		<if test="!sort.equals('scrap')">
-			recipe c ON b.rec_num = c.rec_num
-			group by b.rec_num order by c.${sort} desc
+			recipe c ON d.rec_num = c.rec_num
+			group by d.rec_num order by c.${sort} desc
 		</if>
 			limit #{start},#{end}		
 	</select>
@@ -118,5 +128,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 업데이트 -->
-	
+	<update id="updaterecipe" parameterType="recipe_dto">
+		update recipe set portion=#{portion},time=#{time},difficult=#{difficult},repre_photo=#{repre_photo},comp_photo=#{comp_photo},
+		food_cate=#{food_cate},subject=#{subject},summary=#{summary},tip=#{tip} where rec_num=#{rec_num}
+	</update>
+	<select id="getImage" parameterType="int" resultType="String">
+		select photo from recipe_order where rec_num=#{rec_num} and photo is not null
+	</select>
 </mapper>

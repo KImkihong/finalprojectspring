@@ -5,8 +5,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="ranking">
 	<!-- 쉐프 순위 가져오기 -->
-	<select id="chefSorting" parameterType="HashMap" resultType="chef_dto">
-		select * from chef order by ${standard} desc limit #{start},#{end}
+	<select id="chefSorting" resultType="chef_dto">
+		select a.*,scrapcount+joayocount+(newscount*2)+(recipecount*3) score from 
+		(select c.*,count(r.rec_num) recipecount from chef c left join recipe r on r.email = c.email group by r.email having count(r.rec_num)>2) a
+		order by score desc,recipecount desc,newscount desc,joayocount desc,scrapcount desc,joindate desc limit 0,10
 	</select>
 	
 	<!-- 내가 소식받기한 provider들 -->
@@ -19,7 +21,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<!-- provider들의 recipe -->
 	<select id="getProvderRecipe" parameterType="String" resultType="recipe_dto">
-		select * from recipe where email=#{provider} order by writeday desc limit 0,3
-	</select>
-	
+		select * from recipe where email=#{provider} order by writeday desc limit 0,2
+	</select>	
 </mapper>

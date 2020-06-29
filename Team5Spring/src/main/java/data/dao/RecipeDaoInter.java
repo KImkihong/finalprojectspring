@@ -9,7 +9,7 @@ import data.dto.RecipeOrderDto;
 public interface RecipeDaoInter {
 	//selectList
 	public List<RecipeDto> getList(int start,int end,String search,String food_cate,String sort);
-	public List<Integer> getRec_nums(int start,int end,String search,String sort);
+	public List<Integer> getRec_nums(int start,int end,String search,String sort,String food_cate);
 	public int getRecipeCount(String search,String food_cate);
 	public int getRec_numCount(String search);
 	public void updateReadcount(int rec_num);
@@ -28,5 +28,8 @@ public interface RecipeDaoInter {
 	public void deleteRecipe(int rec_num);
 	//count
 	public int getReadcount(int rec_num);
+	//update
+	public void updateRecipe(RecipeDto dto);
+	public List<String> getImage(int rec_num);
 	
 }

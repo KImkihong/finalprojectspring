@@ -15,6 +15,20 @@ public class ChefDto {
 	private String profile;
 	private int scrapcount;
 	private int joayocount;
+	private int recipecount;
+	private int score;
+	public int getRecipecount() {
+		return recipecount;
+	}
+	public void setRecipecount(int recipecount) {
+		this.recipecount = recipecount;
+	}
+	public int getScore() {
+		return score;
+	}
+	public void setScore(int score) {
+		this.score = score;
+	}
 	public MultipartFile getProfileimage() {
 		return profileimage;
 	}

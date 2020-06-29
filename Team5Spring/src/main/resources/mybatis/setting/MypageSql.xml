@@ -24,12 +24,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getMyScrapRecipe" parameterType="int" resultType="recipe_dto">
 		select r.*,c.nickname,c.profile from recipe r left join chef c on r.email=c.email where rec_num=#{rec_num}
 	</select>
-	<!-- 내가 쓴 댓글 가져오기 -->
-	<select id="getMyComment" parameterType="HashMap" resultType="comment_dto">
-		select * from comment where email=#{email} order by com_writeday desc limit #{start},#{end}
-	</select>
-	<!-- 댓글정보에서 레시피정보 가지고 오기 -->
-	<select id="getCommentRecipe" parameterType="int" resultType="recipe_dto">
-		select r.*,c.nickname,c.profile from recipe r left join chef c on r.email=c.email where rec_num=#{rec_num}
-	</select>
 </mapper>
