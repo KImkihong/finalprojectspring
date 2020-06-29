@@ -37,12 +37,8 @@ public class ConnectController {
 	}
 	
 	@GetMapping("/connect/newscheck")
-	public int checknews(@RequestParam String provider, @RequestParam String receiver) {
-		System.out.println(provider);
-		System.out.println(receiver);
+	public int checkjoayo(@RequestParam String provider, @RequestParam String receiver) {
 		int check =dao.checkNews(receiver, provider);
-		
-		System.out.println(check);
 		return check;
 	}
 	
@@ -50,9 +46,7 @@ public class ConnectController {
 	public String onnews(@RequestParam String provider, @RequestParam String receiver) {
 		dao.receiveNews(receiver, provider);
 		dao.upNewsCount(provider);
-		String msg = dao.getNickname(provider)+"ï¿½ï¿½ï¿½ï¿½ ï¿½Ò½Ä¹Þ±â°¡ ï¿½Ï·ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½";
-		System.out.println(provider);
-		System.out.println(receiver);
+		String msg = dao.getNickname(provider)+"´ÔÀÇ ¼Ò½Ä¹Þ±â°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù";
 		return msg;
 	}
 	
@@ -60,9 +54,7 @@ public class ConnectController {
 	public String offnews(@RequestParam String provider, @RequestParam String receiver) {
 		dao.cutNews(receiver, provider);
 		dao.downNewsCount(provider);
-		String msg = dao.getNickname(provider)+"ï¿½ï¿½ï¿½ï¿½ ï¿½Ò½Ä¹Þ±â¸¦ ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½";
-		System.out.println(provider);
-		System.out.println(receiver);
+		String msg = dao.getNickname(provider)+"´ÔÀÇ ¼Ò½Ä¹Þ±â¸¦ Ãë¼ÒÇß½À´Ï´Ù";
 		return msg;
 	}
 	

@@ -184,7 +184,7 @@ public class RecipeController {
 		SpringFileWrite sfw = new SpringFileWrite();
 		
 		//대표사진 교체
-		if(ori_dto.getRepre_photofile()!=null) {	//교체 함
+		if(rdto.getRepre_photofile()!=null) {	//교체 함
 			String fileName = new Date().getTime()+"_"+rdto.getRepre_photofile().getOriginalFilename();
 			rdto.setRepre_photo(fileName);
 			sfw.writeFileRename(rdto.getRepre_photofile(), path, fileName);
@@ -193,7 +193,7 @@ public class RecipeController {
 			if(file.exists())
 				file.delete();				
 		}else {			
-			rdto.setRepre_photo(rdto.getRepre_photo());
+			rdto.setRepre_photo(ori_dto.getRepre_photo());
 		}
 		
 		//완성사진 교체
@@ -278,7 +278,16 @@ public class RecipeController {
 		}
 		//레시피 순서 삭제
 		dao.deleteOrder(rdto.getRec_num());
-		//
+		//순서 다시 저장
+		for(RecipeOrderDto odto:rdto.getOrderList()) {
+			odto.setRec_num(rdto.getRec_num());
+			if(odto.getPhotofile()!=null) {
+				String fileName = new Date().getTime()+"_"+odto.getPhotofile().getOriginalFilename();
+				odto.setPhoto(fileName);
+				sfw.writeFileRename(odto.getPhotofile(), path, fileName);
+			}
+			dao.insertOrder(odto);
+		}
 		
 		//재료 기존꺼 삭제후 저장
 		dao.deleteIngre(rdto.getRec_num());

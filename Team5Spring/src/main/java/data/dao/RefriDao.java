@@ -6,6 +6,7 @@ import java.util.List;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.stereotype.Repository;
 
+import data.dto.IngredientDto;
 import data.dto.RecipeDto;
 
 @Repository
@@ -48,6 +49,12 @@ public class RefriDao extends SqlSessionDaoSupport implements RefriDaoInter {
 	public RecipeDto getIngreRecipe(int rec_num) {
 		// TODO Auto-generated method stub
 		return getSqlSession().selectOne("getRefrigIngreRecipe", rec_num);
+	}
+
+	@Override
+	public List<IngredientDto> getIngreOfRefri(int rec_num) {
+		// TODO Auto-generated method stub
+		return getSqlSession().selectList("getIngreOfRefri", rec_num);
 	}	
 
 }
