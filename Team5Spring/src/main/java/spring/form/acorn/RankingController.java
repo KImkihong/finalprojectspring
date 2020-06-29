@@ -23,10 +23,8 @@ public class RankingController {
 	
 	
 	@GetMapping("/ranking/sorting")
-	public List<ChefDto> chefSorting(@RequestParam String standard,
-			@RequestParam(required=false, defaultValue="0") int scroll){
-		final int end =8;
-		return dao.chefSorting(standard,scroll*8,end);
+	public List<ChefDto> chefSorting(){
+		return dao.chefSorting();
 	}
 	
 	@GetMapping("/ranking/news")

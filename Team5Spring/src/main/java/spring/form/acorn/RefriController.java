@@ -37,10 +37,7 @@ public class RefriController {
 	}
 	
 	@PostMapping("/refri/search")
-	public List<RecipeDto> search(@RequestParam List<Integer> refrig_num,
-			@RequestParam(required=false, defaultValue="0") int scroll) {
-		int start = scroll*3;
-		int end = start+3;
+	public List<RecipeDto> search(@RequestParam List<Integer> refrig_num) {
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
 		
 		String [] ingrelist = new String[refrig_num.size()];
@@ -49,15 +46,9 @@ public class RefriController {
 			ingrelist[i] = dao.getRefriIngre(refrig_num.get(i));
 		}
 		
-		List<Integer> numList = dao.getRec_nums(ingrelist);			
-		List<Integer> numList2 = dao.getOneIngreRec_nums(ingrelist);
-		numList.addAll(numList2);
-		if(start>=numList.size())
-			return list;
-		if(end>numList.size())
-			end = numList.size();
-		for(int i=start;i<end;i++) {
-			RecipeDto dto = dao.getIngreRecipe(numList.get(i));
+		List<Integer> numList = dao.getRec_nums(ingrelist);
+		for(int num:numList) {
+			RecipeDto dto = dao.getIngreRecipe(num);
 			list.add(dto);
 		}
 		return list;

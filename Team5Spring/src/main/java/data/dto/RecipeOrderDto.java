@@ -8,7 +8,6 @@ public class RecipeOrderDto {
 	private String content;
 	private MultipartFile photofile;
 	private String photo;
-	
 	public MultipartFile getPhotofile() {
 		return photofile;
 	}

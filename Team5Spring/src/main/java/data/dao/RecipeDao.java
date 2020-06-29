@@ -132,6 +132,18 @@ public class RecipeDao extends SqlSessionDaoSupport implements RecipeDaoInter {
 		map.put("ingreList",ingreList);
 		map.put("count",ingreList.length-1);
 		return getSqlSession().selectOne("getRec_numsCount", map);
+	}
+
+	@Override
+	public void updateRecipe(RecipeDto dto) {
+		// TODO Auto-generated method stub
+		getSqlSession().update("updaterecipe", dto);
+	}
+
+	@Override
+	public List<String> getImage(int rec_num) {
+		// TODO Auto-generated method stub
+		return getSqlSession().selectList("getImage", rec_num);
 	}	
 
 }

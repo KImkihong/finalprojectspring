@@ -13,13 +13,9 @@ import data.dto.RecipeDto;
 public class RankingDao extends SqlSessionDaoSupport implements RankingDaoInter {
 
 	@Override
-	public List<ChefDto> chefSorting(String standard,int start,int end) {
+	public List<ChefDto> chefSorting() {
 		// TODO Auto-generated method stub
-		HashMap<String,Object> map = new HashMap<String, Object>();
-		map.put("start",start);
-		map.put("end",end);
-		map.put("standard",standard);
-		return getSqlSession().selectList("chefSorting", map);
+		return getSqlSession().selectList("chefSorting");
 	}
 
 	@Override

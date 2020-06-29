@@ -118,5 +118,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 업데이트 -->
-	
+	<update id="updaterecipe" parameterType="recipe_dto">
+		update recipe set portion=#{portion},time=#{time},difficult=#{difficult},repre_photo=#{repre_photo},comp_photo=#{comp_photo},
+		food_cate=#{food_cate},subject=#{subject},summary=#{summary},tip=#{tip} where rec_num=#{rec_num}
+	</update>
+	<select id="getImage" parameterType="int" resultType="String">
+		select photo from recipe_order where rec_num=#{rec_num} and photo is not null
+	</select>
 </mapper>
