@@ -38,7 +38,7 @@ public class ConnectController {
 	
 	@GetMapping("/connect/newscheck")
 	public int checkjoayo(@RequestParam String provider, @RequestParam String receiver) {
-		int check =dao.checkNews(provider, receiver);
+		int check =dao.checkNews(receiver, provider);
 		return check;
 	}
 	
