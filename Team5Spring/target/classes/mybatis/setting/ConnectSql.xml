@@ -43,13 +43,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from news where receiver=#{receiver} and provider=#{provider}
 	</delete>
 	<select id="getNickname" parameterType="String" resultType="String">
-		select nickname from chef where provider=#{provider}
+		select nickname from chef where email=#{provider}
 	</select>
 	<update id="upNewsCount" parameterType="String">
-		update chef set newscount= newscount+1 where email=#{emial}
+		update chef set newscount= newscount+1 where email=#{email}
 	</update>
 	<update id="downNewsCount" parameterType="String">
-		update chef set newscount= newscount-1 where email=#{emial}
+		update chef set newscount= newscount-1 where email=#{email}
 	</update>
 	
 	<!-- 3.좋아요 -->
