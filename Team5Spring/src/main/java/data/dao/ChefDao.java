@@ -122,5 +122,11 @@ public class ChefDao extends SqlSessionDaoSupport implements ChefDaoInter {
 		
 		getSqlSession().update("updateWithdraw", map);
 	}
+	
+	@Override
+	public ChefDto getDataOfChefNick(String nickname) {
+		// TODO Auto-generated method stub
+		return getSqlSession().selectOne("getDataOfChefNick", nickname);
+	}
 
 }

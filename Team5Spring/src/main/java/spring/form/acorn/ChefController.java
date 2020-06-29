@@ -161,5 +161,10 @@ public class ChefController {
 		return success;
 	}
 	
+	@GetMapping("/chef/mypage")
+	public ChefDto mypageInfo(@RequestParam String nick) {
+		ChefDto dto = dao.getDataOfChefNick(nick);
+		return dto;
+	}	
 	
 }

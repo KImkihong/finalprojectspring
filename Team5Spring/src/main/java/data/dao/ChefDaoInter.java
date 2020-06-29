@@ -29,4 +29,6 @@ public interface ChefDaoInter {
 	public String findPass(String name, String email);
 	//새로운 비밀번호 랜덤문자 생성
 	public String RandomPass();
+	
+	public ChefDto getDataOfChefNick(String nickname);
 }

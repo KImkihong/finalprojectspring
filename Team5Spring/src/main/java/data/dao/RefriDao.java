@@ -43,12 +43,6 @@ public class RefriDao extends SqlSessionDaoSupport implements RefriDaoInter {
 		// TODO Auto-generated method stub
 		return getSqlSession().selectList("getRefrigRec_nums", ingrelist);
 	}
-	
-	@Override
-	public List<Integer> getOneIngreRec_nums(String[] ingrelist) {
-		// TODO Auto-generated method stub
-		return getSqlSession().selectList("getOneIngreRec_num", ingrelist);
-	}
 
 	@Override
 	public RecipeDto getIngreRecipe(int rec_num) {
