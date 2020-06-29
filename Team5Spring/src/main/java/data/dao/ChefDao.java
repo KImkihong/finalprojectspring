@@ -129,10 +129,6 @@ public class ChefDao extends SqlSessionDaoSupport implements ChefDaoInter {
 		return getSqlSession().selectOne("getDataOfChefNick", nickname);
 	}
 
-	@Override
-	public ChefDto getDataOfChefNick(String nickname) {
-		// TODO Auto-generated method stub
-		return getSqlSession().selectOne("getDataOfChefNick", nickname);
-	}
+	
 
 }

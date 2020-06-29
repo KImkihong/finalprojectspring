@@ -40,7 +40,7 @@ public class ConnectController {
 	public int checknews(@RequestParam String provider, @RequestParam String receiver) {
 		System.out.println(provider);
 		System.out.println(receiver);
-		int check =dao.checkNews(provider, receiver);
+		int check =dao.checkNews(receiver, provider);
 		
 		System.out.println(check);
 		return check;
