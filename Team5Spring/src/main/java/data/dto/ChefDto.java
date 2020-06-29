@@ -16,6 +16,13 @@ public class ChefDto {
 	private int scrapcount;
 	private int joayocount;
 	private int recipecount;
+	private int newscount;
+	public int getNewscount() {
+		return newscount;
+	}
+	public void setNewscount(int newscount) {
+		this.newscount = newscount;
+	}
 	private int score;
 	public int getRecipecount() {
 		return recipecount;
