@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import data.dao.RefriDaoInter;
+import data.dto.IngredientDto;
 import data.dto.RecipeDto;
 import data.util.TimeDiffrence;
 
@@ -53,6 +54,8 @@ public class RefriController {
 			RecipeDto dto = dao.getIngreRecipe(num);
 			String timeDiffer = td.formatTimeString(dto.getWriteday());
 			dto.setTimeDiffer(timeDiffer);
+			List<IngredientDto> ilist = dao.getIngreOfRefri(num);
+			dto.setIngreList(ilist);
 			list.add(dto);
 		}
 		return list;
