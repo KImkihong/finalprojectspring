@@ -58,13 +58,13 @@ public class RecipeController {
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
 		int count= 0;
 		if(search!=null && search.substring(0, 1).equals("#")) {	//재료검색일 때
-				List<Integer> numList = dao.getRec_nums(scroll*5, end, search,sort);
-				count=dao.getRec_numCount(search);
+				List<Integer> numList = dao.getRec_nums(scroll*5, end, search,sort,food_cate);
+				count=dao.getRec_numCount(search,food_cate);
 				for(int rec_num : numList) {
 					RecipeDto dto = dao.getSelectedRecipe(rec_num);
 					list.add(dto);
 				}
-		}else {		//전체리스트, 분류검색,제목검색 일때			
+		}else {		//전체리스트, 분류검색,제목검색 일때
 			list = dao.getList(scroll*5,end,search,food_cate,sort);
 			count=dao.getRecipeCount(search, food_cate);
 		}
@@ -184,7 +184,7 @@ public class RecipeController {
 		SpringFileWrite sfw = new SpringFileWrite();
 		
 		//대표사진 교체
-		if(ori_dto.getRepre_photofile()!=null) {	//교체 함
+		if(rdto.getRepre_photofile()!=null) {	//교체 함
 			String fileName = new Date().getTime()+"_"+rdto.getRepre_photofile().getOriginalFilename();
 			rdto.setRepre_photo(fileName);
 			sfw.writeFileRename(rdto.getRepre_photofile(), path, fileName);
@@ -193,7 +193,7 @@ public class RecipeController {
 			if(file.exists())
 				file.delete();				
 		}else {			
-			rdto.setRepre_photo(rdto.getRepre_photo());
+			rdto.setRepre_photo(ori_dto.getRepre_photo());
 		}
 		
 		//완성사진 교체
@@ -261,8 +261,33 @@ public class RecipeController {
 		}
 		
 		//기존 이미지들 얻어오기
+		List<String> ori_step= dao.getImage(rdto.getRec_num());
+		//생존 이미지들 얻어오기
+		List<String> live_step = new ArrayList<String>();
+		for(RecipeOrderDto dto:rdto.getOrderList()) {
+			if(dto.getPhoto()!=null)
+				live_step.add(dto.getPhoto());
+		}
+		//생존하지 못한 놈들 지우기
+		for(String step:ori_step) {
+			if(!live_step.contains(step)) {
+				File file = new File(path+"\\"+step);
+				if(file.exists())
+					file.delete();
+			}				
+		}
 		//레시피 순서 삭제
 		dao.deleteOrder(rdto.getRec_num());
+		//순서 다시 저장
+		for(RecipeOrderDto odto:rdto.getOrderList()) {
+			odto.setRec_num(rdto.getRec_num());
+			if(odto.getPhotofile()!=null) {
+				String fileName = new Date().getTime()+"_"+odto.getPhotofile().getOriginalFilename();
+				odto.setPhoto(fileName);
+				sfw.writeFileRename(odto.getPhotofile(), path, fileName);
+			}
+			dao.insertOrder(odto);
+		}
 		
 		//재료 기존꺼 삭제후 저장
 		dao.deleteIngre(rdto.getRec_num());
