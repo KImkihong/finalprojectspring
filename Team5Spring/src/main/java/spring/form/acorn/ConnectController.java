@@ -1,6 +1,6 @@
 package spring.form.acorn;
 
-         
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +18,6 @@ public class ConnectController {
 	
 	@GetMapping("/connect/scrapcheck")
 	public int checkscrap(@RequestParam String email, @RequestParam int rec_num) {
-		
 		int check =dao.checkScrap(email, rec_num);
 		return check;
 	}
@@ -39,10 +38,7 @@ public class ConnectController {
 	
 	@GetMapping("/connect/newscheck")
 	public int checkjoayo(@RequestParam String provider, @RequestParam String receiver) {
-		
-		System.out.println(provider);
-		System.out.println(receiver);
-		int check =dao.checkNews(provider, receiver);
+		int check =dao.checkNews(receiver, provider);
 		return check;
 	}
 	
@@ -50,7 +46,7 @@ public class ConnectController {
 	public String onnews(@RequestParam String provider, @RequestParam String receiver) {
 		dao.receiveNews(receiver, provider);
 		dao.upNewsCount(provider);
-		String msg = dao.getNickname(provider)+"ï¿½ï¿½ï¿½ï¿½ ï¿½Ò½Ä¹Þ±â°¡ ï¿½Ï·ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½";
+		String msg = dao.getNickname(provider)+"´ÔÀÇ ¼Ò½Ä¹Þ±â°¡ ¿Ï·áµÇ¾ú½À´Ï´Ù";
 		return msg;
 	}
 	
@@ -58,13 +54,12 @@ public class ConnectController {
 	public String offnews(@RequestParam String provider, @RequestParam String receiver) {
 		dao.cutNews(receiver, provider);
 		dao.downNewsCount(provider);
-		String msg = dao.getNickname(provider)+"ï¿½ï¿½ï¿½ï¿½ ï¿½Ò½Ä¹Þ±â¸¦ ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½";
+		String msg = dao.getNickname(provider)+"´ÔÀÇ ¼Ò½Ä¹Þ±â¸¦ Ãë¼ÒÇß½À´Ï´Ù";
 		return msg;
 	}
 	
 	@GetMapping("/connect/joayocheck")
 	public int checkjoayo(@RequestParam String email, @RequestParam int rec_num) {
-		
 		int check =dao.checkJoayo(email, rec_num);
 		return check;
 	}
