@@ -58,13 +58,13 @@ public class RecipeController {
 		List<RecipeDto> list = new ArrayList<RecipeDto>();
 		int count= 0;
 		if(search!=null && search.substring(0, 1).equals("#")) {	//재료검색일 때
-				List<Integer> numList = dao.getRec_nums(scroll*5, end, search,sort);
+				List<Integer> numList = dao.getRec_nums(scroll*5, end, search,sort,food_cate);
 				count=dao.getRec_numCount(search);
 				for(int rec_num : numList) {
 					RecipeDto dto = dao.getSelectedRecipe(rec_num);
 					list.add(dto);
 				}
-		}else {		//전체리스트, 분류검색,제목검색 일때			
+		}else {		//전체리스트, 분류검색,제목검색 일때
 			list = dao.getList(scroll*5,end,search,food_cate,sort);
 			count=dao.getRecipeCount(search, food_cate);
 		}

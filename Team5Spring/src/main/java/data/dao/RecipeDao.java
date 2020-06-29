@@ -87,7 +87,7 @@ public class RecipeDao extends SqlSessionDaoSupport implements RecipeDaoInter {
 	}
 
 	@Override
-	public List<Integer> getRec_nums(int start, int end, String search,String sort) {
+	public List<Integer> getRec_nums(int start, int end, String search,String sort,String food_cate) {
 		// TODO Auto-generated method stub
 		String searchlist = search.substring(1, search.length());
 		String [] ingreList = searchlist.split("#");
@@ -98,6 +98,7 @@ public class RecipeDao extends SqlSessionDaoSupport implements RecipeDaoInter {
 		map.put("ingreList",ingreList);
 		map.put("count",ingreList.length-1);
 		map.put("sort",sort);
+		map.put("food_cate",food_cate);
 		return getSqlSession().selectList("getRec_nums", map);
 	}
 
