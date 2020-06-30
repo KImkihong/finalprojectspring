@@ -16,7 +16,7 @@ public class ConnectController {
 	@Autowired
 	private ConnectDaoInter dao;
 	
-	@GetMapping("/")
+	@GetMapping("/main.do")
 	public String start() {
 		return "hello";
 	}
