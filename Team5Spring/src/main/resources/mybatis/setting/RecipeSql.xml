@@ -85,14 +85,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<!-- 카운트 -->
 		<select id="getRec_numsCount" parameterType="HashMap" resultType="int">
 			<![CDATA[
-				select count(*) from (select * from (select * from ingredient where
+				select count(*) from (select b.rec_num from (select * from (select * from ingredient where
 			]]>
 			<foreach collection="ingreList" item="list" index="index" separator="or">
 				ingre_name like CONCAT('%',#{list},'%')
 			</foreach>
 			<![CDATA[
 				) a group by rec_num having count(rec_num)>#{count}) b
-			]]>		
+			]]>
+			<if test="food_cate!=null">
+				left join recipe f on b.rec_num = f.rec_num where food_cate=#{food_cate}
+			</if>
+			)d					
 		</select>
 		
 	<!-- 선택 레시피 출력,rec_num으로 recipe가져오기 -->

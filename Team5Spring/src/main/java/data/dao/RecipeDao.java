@@ -124,13 +124,14 @@ public class RecipeDao extends SqlSessionDaoSupport implements RecipeDaoInter {
 	}
 
 	@Override
-	public int getRec_numCount(String search) {
+	public int getRec_numCount(String search,String food_cate) {
 		// TODO Auto-generated method stub
 		String searchlist = search.substring(1, search.length());
 		String [] ingreList = searchlist.split("#");
 		
 		HashMap<String,Object> map = new HashMap<String, Object>();
 		map.put("ingreList",ingreList);
+		map.put("food_cate",food_cate);
 		map.put("count",ingreList.length-1);
 		return getSqlSession().selectOne("getRec_numsCount", map);
 	}

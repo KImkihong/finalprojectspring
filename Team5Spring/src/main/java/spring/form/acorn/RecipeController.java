@@ -59,7 +59,7 @@ public class RecipeController {
 		int count= 0;
 		if(search!=null && search.substring(0, 1).equals("#")) {	//재료검색일 때
 				List<Integer> numList = dao.getRec_nums(scroll*5, end, search,sort,food_cate);
-				count=dao.getRec_numCount(search);
+				count=dao.getRec_numCount(search,food_cate);
 				for(int rec_num : numList) {
 					RecipeDto dto = dao.getSelectedRecipe(rec_num);
 					list.add(dto);
@@ -197,7 +197,7 @@ public class RecipeController {
 		}
 		
 		//완성사진 교체
-		if(rdto.getComp_photoList()!=null) { //사진이 추가된 경우	
+		if(rdto.getComp_photoList().size()!=0) { //사진이 추가된 경우	
 			List<MultipartFile> curr_compfiles = rdto.getComp_photoList();
 			if(delcomp!=null) {	//삭제된 사진이 있을 경우
 				//일단 삭제
