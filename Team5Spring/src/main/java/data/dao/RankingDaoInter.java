@@ -11,4 +11,5 @@ public interface RankingDaoInter {
 	public List<String> getProviders(String receiver,int start,int end);
 	public ChefDto getProviderInfo(String provider);
 	public List<RecipeDto> getProvderRecipe(String provider);
+	public int getProvderRecipeCount(String provider);
 }
