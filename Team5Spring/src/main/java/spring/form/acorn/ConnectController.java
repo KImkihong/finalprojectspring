@@ -16,6 +16,11 @@ public class ConnectController {
 	@Autowired
 	private ConnectDaoInter dao;
 	
+	@GetMapping("/")
+	public String start() {
+		return "hello";
+	}
+	
 	@GetMapping("/connect/scrapcheck")
 	public int checkscrap(@RequestParam String email, @RequestParam int rec_num) {
 		int check =dao.checkScrap(email, rec_num);
