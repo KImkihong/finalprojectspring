@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="mypage">
 	<!-- 로그인된 회원의 레시피들 -->
 	<select id="getMyRecipe" parameterType="HashMap" resultType="recipe_dto">
-		select * from recipe where email=#{email} limit #{start},#{end}
+		select * from recipe where email=#{email} order by rec_num desc limit #{start},#{end}
 	</select>
 		<!-- 카운트 -->
 		<select id="getMyRecipeCount" parameterType="String" resultType="int">
