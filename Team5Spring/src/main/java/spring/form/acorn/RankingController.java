@@ -29,7 +29,7 @@ public class RankingController {
 	}
 	
 	@GetMapping("/ranking/news")
-	public HashMap<String,Object> mynews(@RequestParam String email,
+	public List<HashMap<String,Object>> mynews(@RequestParam String email,
 			@RequestParam(required=false, defaultValue="0") int scroll){
 		int start = scroll*4;
 		int end = start+4;
@@ -48,10 +48,6 @@ public class RankingController {
 			map.put("recipes",recipes);
 			list.add(map);
 		}
-		int count= dao.getProvderRecipeCount(email);
-		HashMap<String,Object> map2 = new HashMap<String, Object>();
-		map2.put("list",list);
-		map2.put("count",count);
-		return map2;
+		return list;
 	}
 }

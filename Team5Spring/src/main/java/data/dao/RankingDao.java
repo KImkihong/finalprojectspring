@@ -40,10 +40,4 @@ public class RankingDao extends SqlSessionDaoSupport implements RankingDaoInter 
 		return getSqlSession().selectList("getProvderRecipe", provider);
 	}
 
-	@Override
-	public int getProvderRecipeCount(String provider) {
-		// TODO Auto-generated method stub
-		return getSqlSession().selectOne("getProvderRecipeCount", provider);
-	}
-
 }
