@@ -18,10 +18,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	<!-- 탈퇴 DB에 저장 -->
 	<insert id="insertWithdraw" parameterType="String">
-		insert into withdraw (email,name,hp) (select email,name,hp from chef where email=#{email})
+		insert into withdrawchef (email,name,hp) (select email,name,hp from chef where email=#{email})
 	</insert>
 	<update id="updateWithdraw" parameterType="HashMap">
-		update withdraw set withdrawdate=now(), reason=#{reason} where email=#{email}
+		update withdrawchef set withdrawdate=now(), reason=#{reason} where email=#{email}
 	</update>
 	
 	<select id="getDataOfChef" parameterType="String" resultType="chef_dto">
