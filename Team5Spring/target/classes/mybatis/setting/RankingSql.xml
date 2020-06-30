@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	<!-- provider들의 정보-->
 	<select id="getProviderInfo" parameterType="String" resultType="chef_dto">
-		select c.*,count(r.rec_num) recipecount from chef c left join recipe r on r.email = c.email where email=#{provider}
+		select c.*,count(r.rec_num) recipecount from chef c left join recipe r on r.email = c.email where c.email=#{provider}
 	</select>
 	<!-- provider들의 recipe -->
 	<select id="getProvderRecipe" parameterType="String" resultType="recipe_dto">
