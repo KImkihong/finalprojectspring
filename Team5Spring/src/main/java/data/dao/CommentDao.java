@@ -44,7 +44,8 @@ public class CommentDao extends SqlSessionDaoSupport implements CommentDaoInter 
 			//같은 그룹 중 restep 보다 큰 데이터는 1증가
 			this.updateRestep(regroup, restep);
 			//db에는 +해서 저장
-			relevel=1;
+			if(relevel<2)
+				relevel++;
 			restep++;
 		}
 		

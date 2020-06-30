@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import data.dao.MypageDaoInter;
 import data.dto.RecipeDto;
+import data.util.TimeDiffrence;
 
 @RestController
 @CrossOrigin
@@ -27,6 +28,11 @@ public class MypageController {
 		int count=0;
 		List<RecipeDto> list = dao.getMyRecipe(email,scroll*5,end);
 		count=dao.getMyRecipeCount(email);
+		TimeDiffrence td = new TimeDiffrence();
+		for(RecipeDto dto:list) {
+			String timeDiffer = td.formatTimeString(dto.getWriteday());
+			dto.setTimeDiffer(timeDiffer);
+		}		
 		HashMap<String,Object> map = new HashMap<String, Object>();
 		map.put("count", count);
 		map.put("list", list);		
@@ -46,6 +52,11 @@ public class MypageController {
 			RecipeDto dto = dao.getMyScrapRecipe(rec_num);
 			list.add(dto);
 		}
+		TimeDiffrence td = new TimeDiffrence();
+		for(RecipeDto dto:list) {
+			String timeDiffer = td.formatTimeString(dto.getWriteday());
+			dto.setTimeDiffer(timeDiffer);
+		}		
 		HashMap<String,Object> map = new HashMap<String, Object>();
 		map.put("count", count);
 		map.put("list", list);		
