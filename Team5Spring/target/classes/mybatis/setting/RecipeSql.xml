@@ -85,7 +85,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<!-- 카운트 -->
 		<select id="getRec_numsCount" parameterType="HashMap" resultType="int">
 			<![CDATA[
-				select d.rec_num from (select count(*) from (select * from (select * from ingredient where
+				select count(*) from (select b.rec_num from (select * from (select * from ingredient where
 			]]>
 			<foreach collection="ingreList" item="list" index="index" separator="or">
 				ingre_name like CONCAT('%',#{list},'%')
