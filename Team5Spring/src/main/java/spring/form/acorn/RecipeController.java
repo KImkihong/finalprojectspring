@@ -197,7 +197,7 @@ public class RecipeController {
 		}
 		
 		//완성사진 교체
-		if(rdto.getComp_photoList().size()!=0) { //사진이 추가된 경우	
+		if(rdto.getComp_photoList()!=null) { //사진이 추가된 경우	
 			List<MultipartFile> curr_compfiles = rdto.getComp_photoList();
 			if(delcomp!=null) {	//삭제된 사진이 있을 경우
 				//일단 삭제
@@ -227,6 +227,7 @@ public class RecipeController {
 				rdto.setComp_photo(compfiles);
 			}else {	//삭제된 사진 없이 추가만된 경우
 				String files = ori_dto.getComp_photo();
+				System.out.println(curr_compfiles.size());
 				for(MultipartFile comfile:curr_compfiles) {
 					String fileName = new Date().getTime()+"_"+comfile.getOriginalFilename();
 					sfw.writeFileRename(comfile, path, fileName);
